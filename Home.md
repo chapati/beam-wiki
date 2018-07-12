@@ -17,6 +17,7 @@
 1. Сетевые, асинхронные дела и P2P
    * [Grin & P2P](https://github.com/beam-mw/grin/wiki/Grin-&-P2P)
    * [Proposal for I/O layer and P2P](https://github.com/beam-mw/grin/wiki/Proposal-for-I-O-layer-and-P2P)
+   * [About secure channels](https://github.com/beam-mw/beam/wiki/About-secure-channels)
 1. Взаимодействие кошельков:
    * [Кошелёк A передаёт монеты кошельку B](https://github.com/sergorl/docs/blob/master/wallet_send.md)
    * [Кошелёк B принимает монеты от кошелька А](https://github.com/sergorl/docs/blob/master/wallet_receive.md)
