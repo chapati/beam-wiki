@@ -106,13 +106,13 @@ The following is validated:
 * Each element must have a valid signature
 * Timelocks of all the kernels must be valid for the current height
 
-Next, we define the <b>&Sigma;</b> as a sum of all inputs minus all outputs:
+Next, we define the <b>&Sigma;</b> as a sum of all outputs minus all inputs:
 
-<b>&Sigma;</b> = &Sigma;(UTXO-In.Commit) - &Sigma;(UTXO-Out.Commit) + &Sigma;(Kernel-In.Excess) - &Sigma;(Kernel-Out.Excess) - m_Offset &middot; G
+<b>&Sigma;</b> = &Sigma;(UTXO-Out.Commit) - &Sigma;(UTXO-In.Commit) + &Sigma;(Kernel-Out.Excess) - &Sigma;(Kernel-In.Excess) + m_Offset &middot; G
 
 In case of transaction validation there are transaction fees that are considered lost, i.e. they are implicit outputs. So, the validation formula is:
 
-<b>&Sigma;</b> - &Sigma;(Fees)&middot;H = 0
+<b>&Sigma;</b> + &Sigma;(Fees)&middot;H = 0
 
 # Block body
 Contains all that is included in a transaction. In addition:
@@ -125,9 +125,9 @@ Contains all that is included in a transaction. In addition:
 
 The block body is validated similar to a transaction, keeping in mind however that this may be a _Macroblock_, i.e. a merged block for a specific height range (applicable to the Timelock validation of kernels).
 
-Then <b>&Sigma;</b> is calculated. But in contrast to transaction the Fees should not be subtracted, because they must have already been consumed by explicit output UTXO(s) (injected by the miner). Instead the explicit Subsidy must be accounted as an input. Hence the formula is:
+Then <b>&Sigma;</b> is calculated. But in contrast to transaction the Fees should not be added, because they must have already been consumed by explicit output UTXO(s) (injected by the miner). Instead the explicit Subsidy must be accounted as an input. Hence the formula is:
 
-<b>&Sigma;</b> + m_Subsidy&middot;H = 0
+<b>&Sigma;</b> - m_Subsidy&middot;H = 0
 
 In addition the Verifier must verify that the Coinbase UTXOs are properly tagged, and unspent unless the coinbase maturity is reached.
 For a single block verification the sum of all Coinbase UTXO amount must be equal to the single block Coinbase emission as defined by the system rules.
