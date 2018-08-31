@@ -14,7 +14,8 @@ Stands for _Merkle Mountain Range_, which is a fancy term to describe a (potenti
 
 The underlying objects that are represented by the leaf nodes are converted to hashes according to a specific scheme applicable to the specific object kind (Means - Merkle trees in BEAM never contain _raw objects_, to prevent possible ambiguity attacks).
 
-The hashing used is SHA-256. Non-leaf node hashes are calculated according to `Hash ( Left-Child | Right->Child )`.
+The hashing used is SHA-256. Non-leaf node hashes are calculated according to
+> `Hash ( Left-Child | Right->Child )`
 
 The tree fill order is left-to-right, whereas at each height two adjacent nodes form a parent node. This forms a sequence of complete trees of decreasing height (a.k.a. Mountain Range). Then adjacent trees are grouped from right to left, and form a mutual parent node, whose children are the roots of those trees. So it's like a regular Merkle tree, except the fact that the root node of the right child is "promoted" to the height of the left tree.
 
