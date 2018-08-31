@@ -15,14 +15,6 @@
 1. [MMR-деревья, pruning и Merkle Proof](https://github.com/beam-mw/beam/wiki/MMR-%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D1%8C%D1%8F,-pruning-%D0%B8-Merkle-Proof)
    * [Еще 1 пропозал, как их эффективно хранить и манипулировать](https://github.com/beam-mw/beam/wiki/Proposal-on-PMMR-trees-storing-and-manipulation)
 1. Сетевые, асинхронные дела и P2P
-   * [Grin & P2P](https://github.com/beam-mw/beam/wiki/Grin-&-P2P)
    * [Proposal for I/O layer and P2P](https://github.com/beam-mw/beam/wiki/Proposal-for-I-O-layer-and-P2P)
    * [About secure channels](https://github.com/beam-mw/beam/wiki/About-secure-channels)
-1. Взаимодействие кошельков:
-   * [Кошелёк A передаёт монеты кошельку B](https://github.com/sergorl/docs/blob/master/wallet_send.md)
-   * [Кошелёк B принимает монеты от кошелька А](https://github.com/sergorl/docs/blob/master/wallet_receive.md)
-1. [Криптографические примитивы grin'a](https://github.com/sergorl/docs/blob/master/keychain.md)
-
-[План работы](https://github.com/beam-mw/beam/wiki/%D0%9F%D0%BB%D0%B0%D0%BD-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-(%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D0%BF%D1%80%D0%B8%D0%B1%D0%BB%D0%B8%D0%B7%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9))
-
 
