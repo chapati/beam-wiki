@@ -99,7 +99,7 @@ Consists of the following:
  * Output Kernels
  * `ECC::Scalar m_Offset`
 
-## Transaction validation
+## Context-free Transaction validation
 
 The following is validated:
 * All the transaction elements (UTXOs, Kernels) must be specified in a well-defined order (there's a comparison function for each transaction element type).
@@ -121,7 +121,12 @@ Contains all that is included in a transaction. In addition:
 * `bool m_SubsidyClosing`
   * If set - means from the next block only coinbase subsidy should be allowed
 
-## Block body validation (context-free)
+Since blocks may be arbitrary large (when merged) - there are different underlying techniccal representations of the Block body. In a simple case it contains just arrays of all the transaction elements (like a Transaction object). But larger blocks don't keep all the data pre-loaded, instead it's read sequentially from files.
+
+There is an `Transaction::IReader` interface used to iterate sequentially over the transaction elements, and it's used by the context-free validation code, regardless to the actual data representation details.
+
+
+## Context-free Block body validation
 
 The block body is validated similar to a transaction, keeping in mind however that this may be a _Macroblock_, i.e. a merged block for a specific height range (applicable to the Timelock validation of kernels).
 
