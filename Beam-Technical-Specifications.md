@@ -3,3 +3,4 @@ BEAM implements the MW protocol (with some extensions), which is based on ellipt
 * [Cryptographic primitives](https://github.com/beam-mw/beam/wiki/Cryptographic-primitives)
 * [Merkle trees](https://github.com/beam-mw/beam/wiki/Merkle-trees)
 * [Core transaction elements](https://github.com/beam-mw/beam/wiki/Core-transaction-elements)
+* [System State](https://github.com/beam-mw/beam/wiki/System-state,-header,-block)
