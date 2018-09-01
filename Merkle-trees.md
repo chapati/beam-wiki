@@ -55,3 +55,34 @@ We use an efficient encoding scheme in a situation where the Prover is supposed 
 
 This both saves the proof size and the verification complexity.
 
+# Radix Tree
+
+(a.k.a. Patricia tree, Merklish (?) tree)
+
+BEAM makes use of special Radix trees, with the following properties:
+* It's a variant of a Merkle tree. Means - leaf elements represented by hashes, non-leaf nodes have exactly 2 children, and their hash is evaluated accordingly.
+* It's also a binary search tree, which means:
+  * logarithmic search, modification
+  * Option to search by either exact or partial key, find elements within key ranges, and etc.
+* The internal tree structure is fully defined by the set of contained elements. Regardless to the _history_ (i.e. in which order they were inserted/removed).
+
+The search key is an opaque bits sequence, whereas the length of this sequence must be equal among all the elements contained in the Radix tree. It may, however, be different for different tree instances, which are supposed to contain objects of different kinds (UTXOs, kernels, etc.).
+
+Our Radix trees have the following properties:
+* 1bit - radix. 
+   * Means - the key bits are evaluated one-by-one, and each bit is potentially a junction.
+   * Non-leaf nodes always have exactly 2 children
+* Lazy split
+   * Unlike classical radix trees, our trees have non-leaf nodes only where splitting is needed.
+   * In particular if there's only 1 element - there is indeed just a single leaf node.
+* Lazy evaluate
+   * Merkle hashes are not immediately recalculated when the tree is modified, instead they're just marked _dirty_.
+   * They are re-evaluated (recursively) only when needed and only if _dirty_.
+* Intrusive-container-like semantics
+   * To insert an element into the tree it's first allocated with the key (as a single allocation block).
+   * The key of the allocated leaf node is used by the non-leaf nodes (they have a pointer to the same key).
+* No pointer to parent
+   * To save space pointers to parent are omitted.
+   * To allow this - during the operation we keep a _Cursor_, which contains the pointers to all the passed nodes to the point.
+
+Speaking technically, non-leaf nodes are allocated/destroyed on-demand, they have the pointer to the key (of one of the leaf nodes contained beneath), and the bit count remaining to the next node. Either the next node is the leaf or not - is determined by the total path length - is it equal to the assumed key length (which is known and supposed to be equal for all the contained elements).
