@@ -73,4 +73,23 @@ All the Verifier needs is the proof, and the System Definition Hash. In addition
 * For UTXOs and Kernels the Verifier knows the hashing direction of the last 2 elements.
 * For inherited System State the Verifier knows the whole Merkle path, hence all the hashing directions are deduced automatically.
 
+# History compression, Macroblocks
 
+BEAM fully supports the excellent MW feature of history compression with removal of the spent outputs. However unlike what was written in the original MW whitepaper (published by monsieur Tom Elvis Jedusor) - there is no need to provide Merkle proofs or other supplementary info.
+
+The "compressed history" in BEAM is actually just a one huge block, which we call a _Macroblock_, which contains a single huge transaction, which is interpreted (almost) as a regular block/transaction. And this is where the System Definition Hash is of critical importance.
+
+No matter how big the compressed history is, the only thing that matters is the final system state, and it's verified according to the expected System Definition Hash. This is how the authenticity of the compressed history is verified.
+
+# How Macroblocks are generated and used in BEAM
+
+There is an implementation of the merging two consequent (macro)blocks. It's a sort of a "merge sort" of all the transaction elements (which must be sorted both in input and the resulting blocks), with removal of spent elements. Using this implementation an arbitrary number of blocks may be merged by recursive halving.
+
+Our initial design was to generate and keep a _cascade_ of macroblocks. Means, the Node each time merges several blocks at the tail, and then they are iteratively merged to the last merged macroblock, only if they are of the same complexity. This means at any moment we have a list of macroblocks of decreasing size, overall O(log(Height)) such blocks.
+
+Then, to import a compressed history, the (other) Node downloads the most recent list of the consecutive macroblocks and interprets them according to their order.
+
+But later we abandoned this idea, mostly because of the hassles for the client to download a list of the macroblocks, especially given the fact they are constantly created and deleted by the generating Node.
+
+So currently the Node just creates a single macroblock once in a while (1 day by default), whereas the cascade-merge is used only internally by the Node to generate each time the new macroblock incrementally.
+Worth to note that during the macroblock generation, which can be a time-consuming operation, the Node is not paralyzed, and works as usual.
