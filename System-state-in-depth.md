@@ -54,7 +54,7 @@ So, Kernel proof is the best verification of the transaction, no matter if UTXOs
 
 # Inherited states
 
-Implemented in terms of the **D-MMR** (Distributed MMR). The lead nodes are the System State Hashes (not to be confused with the System Definition Hashes). Apart from the somewhat sophisticated D-MMR, the rest is straighforward (generating and verifying proofs).
+Implemented in terms of the **D-MMR** (Distributed MMR). The leaf nodes are the System State Hashes (not to be confused with the System Definition Hashes). Apart from the somewhat sophisticated D-MMR, the rest is straighforward (generating and verifying proofs).
 
 They are needed in 2 scenarios:
 * Simple scenario: a client was offline for a while, then comes back, and wants to ensure the last State that it observed is still a part of the current consensus branch.
