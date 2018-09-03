@@ -62,6 +62,8 @@ All the private keys are generated via KDF. In BEAM it's implemented via the Non
 
 Implemented according to the standard, consists of a pair `[e,k]`, whereas `e` is the challenge, and `k` is the blinded private key. Supports multisignature of course.
 
+**Note**: Current format doesn't permit batch verification. Can be changed in the future (to `[P,k]`)
+
 Specifically the scheme is the following. Given a message hash `M`, private key `sk`, public key `pk = G * sk`:
 
 * Prover
