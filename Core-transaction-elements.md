@@ -66,7 +66,7 @@ Consists of the following:
 
 The Hash of the kernel is evaluated, and then it's signed by the Schnorr's signature. The Hash evaluation formula is:
 
->     M = m_Fee | m_Height;
+>     M = m_Fee | m_Height | m_Excess | m_Multiplier;
 >     if Hashlock specified
 >     M = M | true | Hash(Hashlock.Preimage);
 >     else
@@ -79,16 +79,15 @@ The Hash of the kernel is evaluated, and then it's signed by the Schnorr's signa
 > 
 >     KernelHash = Hash(M)
 
-The formula accounts for all the members except except the signature and the excess (which is a signature public key). It's also unambiguous (i.e. explicit separation for optional input fields).
+The formula accounts for all the members except except the signature. It's also unambiguous (i.e. explicit separation for optional input fields).
+
+**Note**: The excess, which is a signature public key, is also included. This is an intentional design decision, to make the kernel's excess also immutable after it has been signed (otherwise any party could modify the excess and keep the signature correct).
 
 ## Kernel ID
 
-According to the system rules every kernel has a unique ID (duplicate IDs are banned). It's calculated by the formula:
->     KernelID = Hash( KernelHash | m_Excess | m_Multiplier );
->     if (KernelID == 0)
->        KernelID = 1;
-In addition to the kernel parameters (encapsulated within `KernelHash`) it also accounts for the kernel excess.
-In addition there are forbidden values (reserved for internal system use). Currently it's only 0.
+According to the system rules every kernel has a unique ID (duplicate IDs are banned). Its value is identical to the `KernelHash`, except there are "forbidden" values, which are reserved for the internal system use. So if the kernel ID happens to be equal to a forbidden value (which is highly unlikely), its value is mutated.
+
+Currently the only forbidden value is 0.
 
 # Transaction
 Consists of the following:
