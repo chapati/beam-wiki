@@ -86,3 +86,11 @@ Our Radix trees have the following properties:
    * To allow this - during the operation we keep a _Cursor_, which contains the pointers to all the passed nodes to the point.
 
 Speaking technically, non-leaf nodes are allocated/destroyed on-demand, they have the pointer to the key (of one of the leaf nodes contained beneath), and the bit count remaining to the next node. Either the next node is the leaf or not - is determined by the total path length - is it equal to the assumed key length (which is known and supposed to be equal for all the contained elements).
+
+## Merkle disproof
+
+Surprisingly using those radix trees it's possible  to prove (with some assumptions) that there is no queried element.
+
+If there is no queried element - the Prover can present its two closest siblings (or one if it's the maximum/minimum) with their Merkle proofs, which the Verifier can verify indeed belong to adjacent elements.
+
+The Verifier needs, however, to assume that the tree was built according to the rules. In particular when querying for multiple elements, both existing and non-existing, the Verifier should verify that indeed all the presented proofs are in agreement with the assumed element order.
