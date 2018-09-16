@@ -5,4 +5,6 @@ BEAM implements the MW protocol (with some extensions), which is based on ellipt
 * [Core transaction elements](https://github.com/beam-mw/beam/wiki/Core-transaction-elements)
 * [Blocks, headers, System States: concept, relevant structures and values](https://github.com/beam-mw/beam/wiki/System-state,-header,-block)
 * [System State in-depth](https://github.com/beam-mw/beam/wiki/System-state-in-depth)
+* Node
+  * [Initial synchronization](https://github.com/beam-mw/beam/wiki/Node-initial-synchronization)
 
