@@ -4,3 +4,4 @@
 
 ## Thoughts
 * [Eliminating transaction kernels](https://github.com/beam-mw/beam/wiki/Thoughts:-eliminating-transaction-kernels)
+* [Transaction graph obfuscation](https://github.com/beam-mw/beam/wiki/Transaction-graph-obfuscation)
