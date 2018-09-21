@@ -17,7 +17,7 @@ If this is indeed the case, i.e. transactions are just broadcasted as-is to the 
 
 Is the transaction graph really important? It is. Moreover, in MW hiding the transaction graph seems to be way more important than hiding the user identities.
 
-MW transaction is anonymous, but it reveals one important thing: there is clearly a <u>relation</u> between the users. So looking at the transaction graph attacker sees the "relation" graph. If arbitrary user gets revealed (for whatever reason) - he can disclose the related users, and the attacker known for sure there is a relation.
+MW transaction is anonymous, but it reveals one important thing: there is clearly a <u>relation</u> between the users. So looking at the transaction graph attacker sees the "relation" graph. If arbitrary user gets revealed (for whatever reason) - he can disclose the related users, and the attacker knows for sure there is a relation.
 
 #### Example
 
@@ -29,9 +29,9 @@ In contrast, if we assume that the user identity are not well concealed, but the
 
 ### Are there existing solutions?
 
-Of course. There are known solutions: CoinSchuffle, ValueSchuffle, but they are not perfect.
+Of course. There are known solutions: CoinShuffle, ValueShuffle, but they are not perfect.
 * This requires groups of unrelated people to cooperate
-* Attacker may create many malicious users "for free", that would pretend to participate in CoinSchuffle, but in practice can:
+* Attacker may create many malicious users "for free", that would pretend to participate in CoinShuffle, but in practice can:
    * Learn the transaction graph. Would act as unrelated users, but actually belong to the attacker.
    * DoS attack: created invalid transactions (reference non-existing inputs, etc.)
 
@@ -42,7 +42,7 @@ This means in turn that the majority of users may decide to skip this obfuscatio
 
 Given the fact that MW transactions are merged non-interactively - Nodes can automatically obfuscate the original transaction graph up to some degree. It may not necessarily replace, but complement transparently the obfuscation done by the users.
 
-This can easily be done in a modified Dandelion. Though originally developed to conceal the user identity, it can be adopted to obfuscate transaction graph during the stem phase, where the transactions get passed through several nodes, but before they are broadcast to the entire network.
+This can easily be done in a modified Dandelion. Though originally developed to conceal the user identity, it can be adopted to obfuscate transaction graph during the stem phase, where the transactions get passed through several nodes, but before they are broadcasted to the entire network.
 
 ### Non-interactive merge
 
