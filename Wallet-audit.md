@@ -49,8 +49,6 @@ Note: If the other transaction party is also a business wallet, which is obliged
 
 First the business wallet collects all the info that it's going to reveal to the auditor, saves it, and computes its Hash. This is the commitment to the transaction details. The kernel _Excess_ is derived from this value.
 
-Note: In case the business wallet reports to multiple auditors, and several such kernels are created - we don't want them to contain the same _Excess_ value (this decreases anonymity). To avoid this the _Excess_ should actually be constructed from the transaction commitment and the auditor public key.
-
 Now, to flag the transaction the business wallet signs the kernel in a special way. The _Nonce_, which is a part if the Schnorr's signature, is derived from the visible _Excess_ and the auditor's public key, hence the auditor can identify such a kernel. Yet the auditor can't craft such a kernel using only its public key, because in order to create Schnorr's signature it's essential to know the _Private Nonce_ value (before it's multiplied by G-generator).
 
 ## Flow diagram:
@@ -59,30 +57,31 @@ Now, to flag the transaction the business wallet signs the kernel in a special w
 
 * TxDetails = { my Inputs + public signatures, my Outputs + public signatures, Some other arbitrary data (docs and etc.) }
 * Save TxDetails (locally)
-* TxDetailsHash = Hash(TxDetails)
 * For each auditor key:
-   * TxCommitment = HMac(AuditorPublicKey, TxDetailsHash)
-   * Kernel.Excess = G * TxCommitment
-   * PrivateNonce = Hash(Kernel.Excess) * AuditorPrivateKey
-   * Kernel.Signature.Nonce = G * PrivateNonce
-   * Sign kernel using key = TxCommitment, and the generated Nonce.
+   * Nonce1 = HMac(AuditorKey.Private, TxDetails)
+   * TxCommitment = Hash(G * Nonce1 | TxDetails)
+   * Kernel.Excess = G * (Nonce1 * TxCommitment)
+   * Nonce2 = Hash(Kernel.Excess) * AuditorKey.Private
+   * Kernel.Signature.Nonce = G * Nonce2
+   * Sign kernel using
+      * key = Nonce1 * TxCommitment
+      * Nonce = Nonce2
    * Add the kernel to the transaction
-   * Transaction.Offset -= TxCommitment
+   * Transaction.Offset -= Nonce1 * TxCommitment
 
 ### Auditor
 
 * Download blocks (as usually Nodes do)
 * For every new block, for every kernel, for every known public key
-   * ExpectedNonce = Hash(Kernel.Excess) * AuditorPublicKey
+   * ExpectedNonce = Hash(Kernel.Excess) * AuditorKey.Public
    * If (Kernel.Signature.Nonce == ExpectedNonce)
       * Save the info: Appropriate business wallet, Block ID (Height + Hash), and the Kernel.Excess
-      * Request the transaction info for this kernel
+      * Request the transaction info for this kernel, as well as G * Nonce1
 * After receiving the transaction info for the specified kernel
    * Verify that the TxDetails is sane (correct format, signatures, etc.)
    * Verify that the presented data corresponds to the original commitment:
-      * TxDetailsHash = Hash(TxDetails)
-      * TxCommitment = HMac(AuditorPublicKey, TxDetailsHash)
-      * Kernel.Excess == G * TxCommitment
+      * TxCommitment = Hash(G * Nonce1 | TxDetails)
+      * Kernel.Excess == (G * Nonce1) * TxCommitment
    * Verify that the asserted inputs and outputs indeed present in the original block.
    * **Verify that all the referenced inputs were indeed reported earlier**
    * Mark inputs as consumed, realize the outputs.
