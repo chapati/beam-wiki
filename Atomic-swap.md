@@ -67,3 +67,74 @@ At this point both Beam and BTC UTXOs are locked, both parties get confirmations
 * **A** learns the _Hash Preimage_.
 * **A** creates and broadcasts the BTC transaction to claim her BTC UTXO.
 
+# In-depth flow diagram
+
+## Bob
+
+* Collaborate to lock the BTC UTXO
+   * Get `Pka` from **A** - her generated pubkey for some secret key `ska`.
+   * Generate the `hpi` - the _Hash Preimage_.
+   * `hi = Hash(hpi)` - the _Hash Image_.
+   * Generate and broadcast the transaction that creates a locked BTC UTXO.
+      * The created UTXO can be spent iff both `hpi` and `ska` are known.
+      * `hi` and `Pka` are revealed.
+   * Send **A** this transaction (so she'll be able to identify it in the BTC network).
+* Collaborate to lock the Beam UTXO
+   * Generate `sfb` - the part of the blinding factor of the shared UTXO.
+   * Get `Pfa` - **A**'s part of the public blinding factor (of the shared UTXO).
+   * Collaborate to sign the kernel for the transaction that transfers the shared (non-existing yet) UTXO back to **A**
+      * <u>The kernel must be time-locked</u>
+      * **B**'s part of the signature accounts for the `sfb`.
+   * Collaborate to create the Bulletproof of the shared UTXO.
+      * requires 3 iteration cycles with **A**
+   * Collaborate to sign the kernel for the transaction that creates the shared UTXO
+      * **B**'s part of the signature accounts for the `sfb`.
+* <u>Wait until the mutual UTXO becomes visible</u>
+* Collaborate to build the exchange transaction
+   * Transaction kernel is supposed to (but doesn't yet) contain the `hpi`.
+      * Means - its signature sings the kernel contents, including `Hash(hpi) == hi`, whereas `hi` is known to both parties.
+   * Generate the new UTXO
+   * Pass it to **A** so that she creates such a kernel, and substitutes her part of the signature.
+   * Get the half-signed kernel from **A**, and verify it.
+   * <u>**Important:** Ensure there is enough time left until the timelock of the shared UTXO expires!</u>
+   * Finish the kernel signature.
+      * Substitute the `hpi` as the _Hash Preimage_.
+      * Complete the signature.
+   * Broadcast the transaction to the Beam network.
+* <u>Wait until the exchange transaction becomes visible, or until the BTC UTXO timelock expires.</u>
+   * If the transaction is visible (and enough new blocks are generated above) - Congratulations! It's done.
+   * If the BTC UTXO timelock expired and it's still unspent - take it back (create and broadcast another BTC transaction).
+
+## Alice
+
+* Collaborate to lock the BTC UTXO
+   * Generate `ska` - private key on the BTC network.
+   * Send `Pka = G * ska` to **B**.
+   * Receive the BTC transaction details from **B**, and verify it
+      * Correct amount is locked.
+      * Can be spent using `ska`, and a _Preimage_ of `hi` (the preimage is not known yet).
+* Collaborate to lock the Beam UTXO
+   * Select input(s) to build the transaction that creates the shared UTXO
+   * Generate `sfa` - the part of the blinding factor of the shared UTXO.
+   * Get `Pfb` - **B**'s part of the public blinding factor (of the shared UTXO).
+   * Collaborate with **B** to build:
+      * A time-locked rollback transaction that transfers the shared (non-existing yet) UTXO back to **A**.
+         * <u>It must be created before the shared UTXO is actually created.</u>
+      * Bulletproof for the shared UTXO
+      * Transaction that spends the selected inputs and creates the shared UTXO
+   * Send the transaction to create the shared UTXO to the network
+* <u>Wait until the locked BTC UTXO becomes visible in the BTC network</u>
+* <u>Ensure the BTC timelock is significantly bigger than the Beam timelock</u>
+* Collaborate to build the exchange transaction
+   * Transaction kernel is supposed to (but doesn't yet) contain the `hpi`.
+   * **A** creates such a kernel, puts her part of the signature, which
+      * Corresponds to her part of the shared UTXO (compensates for `ska`).
+      * Would become valid only when the correct _Hash Preimage_ (`hpi`) will be substituted.
+   * Half-signed transaction is passed to **B**
+* <u>Wait until the exchange transaction becomes visible, or until the Beam UTXO timelock expires.</u>
+   * Once the transaction is visible:
+      * **A** learns the `hpi` from the visible transaction kernel
+      * **A** Creates and broadcasts the BTC transaction to claim the BTC UTXO
+   * If the Beam UTXO timelock expired and it's still unspent
+      * Broadcast the rollback transaction to the network
+   * Wait until the transaction (either post-exchange or the rollback) becomes visible.
