@@ -55,33 +55,32 @@ Now, to flag the transaction the business wallet signs the kernel in a special w
 
 ### Business Wallet, transaction building:
 
-* TxDetails = { my Inputs + public signatures, my Outputs + public signatures, Some other arbitrary data (docs and etc.) }
-* Save TxDetails (locally)
+* `TxDetails` = { my Inputs + public signatures, my Outputs + public signatures, Some other arbitrary data (docs and etc.) }
+* Save `TxDetails` (locally)
 * For each auditor key:
-   * Nonce1 = HMac(AuditorKey.Private, TxDetails)
-   * TxCommitment = Hash(G * Nonce1 | TxDetails)
-   * Kernel.Excess = G * (Nonce1 * TxCommitment)
-   * Nonce2 = Hash(Kernel.Excess) * AuditorKey.Private
-   * Kernel.Signature.Nonce = G * Nonce2
+   * `Nonce1 = HMac(AuditorKey.Private, TxDetails)`
+   * `PrivateKey = Nonce1 * Hash(G * Nonce1 | TxDetails)`
+   * `Kernel.Excess = G * PrivateKey`
+   * `Nonce2 = Hash(Kernel.Excess | AuditorKey.Public) * AuditorKey.Private`
+   * `Kernel.Signature.Nonce = G * Nonce2`
    * Sign kernel using
-      * key = Nonce1 * TxCommitment
-      * Nonce = Nonce2
+      * key = `PrivateKey`
+      * Nonce = `Nonce2`
    * Add the kernel to the transaction
-   * Transaction.Offset -= Nonce1 * TxCommitment
+   * `Transaction.Offset -= BlindingFactor`
 
 ### Auditor
 
 * Download blocks (as usually Nodes do)
 * For every new block, for every kernel, for every known public key
-   * ExpectedNonce = Hash(Kernel.Excess) * AuditorKey.Public
-   * If (Kernel.Signature.Nonce == ExpectedNonce)
-      * Save the info: Appropriate business wallet, Block ID (Height + Hash), and the Kernel.Excess
-      * Request the transaction info for this kernel, as well as G * Nonce1
+   * `ExpectedNonce = Hash(Kernel.Excess | AuditorKey.Public) * AuditorKey.Public`
+   * If (`Kernel.Signature.Nonce == ExpectedNonce`)
+      * Save the info: Appropriate business wallet, Block ID (Height + Hash), and the `Kernel.Excess`
+      * Request the transaction info for this kernel, as well as `G * Nonce1`
 * After receiving the transaction info for the specified kernel
-   * Verify that the TxDetails is sane (correct format, signatures, etc.)
+   * Verify that the `TxDetails` is sane (correct format, signatures, etc.)
    * Verify that the presented data corresponds to the original commitment:
-      * TxCommitment = Hash(G * Nonce1 | TxDetails)
-      * Kernel.Excess == (G * Nonce1) * TxCommitment
+      * `Kernel.Excess == (G * Nonce1) * Hash(G * Nonce1 | TxDetails)`
    * Verify that the asserted inputs and outputs indeed present in the original block.
    * **Verify that all the referenced inputs were indeed reported earlier**
    * Mark inputs as consumed, realize the outputs.
@@ -94,6 +93,39 @@ Note: the blockchain may sometimes "rollback", and this should be accounted for 
 1. Simple solution, which may be practically good enough. There is a maximum threshold for the rollback range, so it is sufficient just to wait for this period before requesting/processing the transaction details. And the auditor may assume that larger rollbacks are impossible, as long as the whole system operates normally.
 
 Minor note: in a highly unlikely case (with probability order of 2<sup>-256</sup>) there may be a false positive when chasing for the auditor kernels, i.e. a kernel that looks like it's an auditor kernel, but it's actually not. Though highly unlikely, perhaps there should be a possibility for the business wallet to deny this transaction? On the other hand false negatives are not possible. I.e. no excuses if the transaction was not flagged in advance.
+
+### Soundness of the scheme
+
+First we'll prove the soundness of the commitment to the transaction details, i.e. that the business wallet will have to reveal the original transaction details when requested.
+
+The auditor verifies the following:
+      * `Kernel.Excess == (G * Nonce1) * Hash(G * Nonce1 | TxDetails)`
+
+So, in order to substitute a different `TxDetails` the Wallet will have to find a different EC  point `G * Nonce1` that satisfies the above equation. Given there's no direct relation between the hash function, and the EC point multiplication, it seems to be the problem of finding collisions of a composite one-way function, which should not be feasible.
+
+Next we prove that it's impossible (unless with negligible probability) to create such a kernel without the knowledge of the `AuditorKey.Private`.
+
+The auditor checks the following:
+   * `Kernel.Signature.Nonce == Hash(Kernel.Excess | AuditorKey.Public) * AuditorKey.Public`
+   * Schnorr's signature
+
+In order to create Schnorr's signature it's essential to know both the private key, and the preimage of `Kernel.Signature.Nonce` (we'll skip the argument here), wherease the preimage is given by `Hash(Kernel.Excess) * AuditorKey.Private`. Since the `Kernel.Excess` and `AuditorKey.Public` are known, the auditor private key should be known as well.
+
+### Zero-knowledge of the scheme
+
+First we'll prove that this kernel is indistinguishable unless `AuditorKey.Public` is known. The following is verified:
+   * `Kernel.Signature.Nonce == Hash(Kernel.Excess | AuditorKey.Public) * AuditorKey.Public`
+
+Note that we intentionally substituted the `AuditorKey.Public` into the hash function. If that was not the case, the attacker could calculate its value from the visible `Kernel.Excess`, and then notice the linear dependence of the `Nonce` by this value (for several kernels tagged for the same auditor).
+But since `AuditorKey.Public` is included in the hash, its value is obscured, and the `Nonce` looks like a random EC point.
+
+Let's prove that the auditor private key is not leaked. The auditor verifies the Schnorr's signature. Means:
+* `G * Preimage = Hash(<some known value>) * AuditorKey.Public + <challenge> * <known EC point> * Hash(<known EC point>)`
+
+Which can be rephrased as:
+* `G * AuditorKey.Private = G * Preimage * <some value> - <known EC point> = <some EC point>`
+
+So, it's a pure discrete logarithm problem.
 
 # Review of this scheme
 
