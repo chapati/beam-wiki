@@ -27,6 +27,12 @@ Note that **A** actually claims the BTC UTXO <u>after</u> sending the Beam UTXO.
 
 The _unlock secret_ is the SHA-256 hash preimage (i.e. a 256-bit value which, after hashing, should be equal to a known 256-bit value). Supported on Beam, BTC, and, probably, many other networks.
 
+**Note**: The drawback of this scheme is a considerable privacy compromise. As we'll see, it's possible for the attacker to detect such an atomic swap, by looking for the matching hash preimages in both networks.
+
+There is a better option, where the _unlock secret_ is an EC scalar, i.e. private key. It's based on the so-called aggregate signatures. It's less generic, since it assumes both networks use the same EC equation and the Generator.
+
+So we'll review the scheme with the Hash-lock, but keep in mind that it can easily be modified to the one with the aggregate signature, and the rest of the argument, and the general flow are exactly the same.
+
 There are no scripts in Beam blockchain. However the following is supported in the transaction kernel:
 * Timelock - minimum blockchain height for the kernel to be valid
 * HashPreimage
