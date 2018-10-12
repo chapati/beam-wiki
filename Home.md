@@ -7,3 +7,4 @@
 * [Transaction graph obfuscation](https://github.com/beam-mw/beam/wiki/Transaction-graph-obfuscation)
 * [Auditable wallet](https://github.com/beam-mw/beam/wiki/Wallet-audit)
 * [Atomic swap](https://github.com/beam-mw/beam/wiki/Atomic-swap)
+* [Confidential assets](https://github.com/beam-mw/beam/wiki/Confidential-assets)
