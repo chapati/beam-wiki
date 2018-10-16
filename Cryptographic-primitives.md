@@ -42,7 +42,7 @@ The following objects are derived from hash (built over them)
 
 Oracle is used in non-interactive cryptographic proofs, it's supposed to produce cryptographic challenges in a deterministic way, based on the visible transcript to the moment.
 
-In BEAM Oracle uses the Hash in a straightforward way. All the visible transcript is hashed. Once the challenge is needed - the hash value is finalized, the result is the challenge, and it's immediately re-fed to the Hash. So that the new challenge construction (if needed) starts from the previously-produced challenge.
+In BEAM Oracle uses the Hash in a straightforward way. All the visible transcript is hashed. Once the challenge is needed - the hash value is finalized, the result is the challenge, and it's immediately re-fed to the Hash. So that the new challenge construction (if needed) is generated from the visible transcript, <u>including</u> the previous challenge.
 
 If there are restrictions for the challenge (such as it should be non-overflowing, non-zero scalar, or a valid x-coordinate of a curve point) - the Finalize-Re-feed is called in a loop, until the satisfying challenge is produced (i.e. accept/reject strategy is used).
 
