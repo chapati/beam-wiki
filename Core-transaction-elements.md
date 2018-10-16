@@ -4,7 +4,7 @@
 * `Timestamp` - 64-bit unsigned integer
 * `Amount` - used to denote the value of a single UTXO. 64-bit unsigned integer
 * `AmountBig` - used to denote the value of an arbitrary number of UTXOs. Consists of 2 64-bit unsigned integer (i.e. equivalent to 128-bit integer)
-* `Difficulty` - 32-bit encoding of a floating-point number. 8 bits for mantissa, 24 bits for order.
+* `Difficulty` - 32-bit encoding of a floating-point number. 8 bits for order, 24 bits for mantissa.
 * `Difficulty::Raw` - 256-bit unsigned integer. Represents an "unpacked" `Difficulty` on a linear scale. Used to represent the chainwork (sum of difficulties).
 
 
