@@ -60,24 +60,21 @@ All the private keys are generated via KDF. In BEAM it's implemented via the Non
 
 ## Schnorr's signature
 
-Implemented according to the standard, consists of a pair `[e,k]`, whereas `e` is the challenge, and `k` is the blinded private key. Supports multisignature of course.
-
-**Note**: Current format doesn't permit batch verification. Can be changed in the future (to `[P,k]`)
+Implemented according to the standard, the "long" version, compatible with batch verification. Consists of a pair `[P,k]`, whereas `P` is an arbitrary EC point, and `k` is the blinded private key. Supports multisignature of course.
 
 Specifically the scheme is the following. Given a message hash `M`, private key `sk`, public key `pk = G * sk`:
 
 * Prover
   * Generate a nonce `nk = Nonce(sk, M)`, whereas `Nonce()` is the standard nonce generating function.
-  * Expose to Oracle: `nk*G, M`
-  * Get the challenge `e` from Oracle.
-  * Calculate `k = nk - e*sk`
-  * Signature: `[e, k]`
-* Verifier
-  * Calculate `P = k*G + e*pk`
+  * Calculate: `P = nk*G`
   * Expose to Oracle: `P, M`
-  * Get the challenge `e'` from Oracle.
-  * Verify: `e == e'`
-
+  * Get the challenge `e` from Oracle.
+  * Calculate `k = - nk - e*sk`
+  * Signature: `[P, k]`
+* Verifier
+  * Expose to Oracle: `P, M`
+  * Get the challenge `e` from Oracle.
+  * Verify: `k*G + e*Pk + P == 0`
 
 ## Binary platform-independent representation of the ECC primitives
 
