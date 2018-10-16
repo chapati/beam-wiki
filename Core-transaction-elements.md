@@ -21,7 +21,7 @@ Consists of the following:
 
 Consists of the following:
 * `ECC::Point m_Commitment`
-   * A commitment to the UTXO (which is supposed to exist in the system)
+   * A commitment to the UTXO (which is supposed to be created in a transaction)
 * `Height m_Maturity`
    * Optional field to specify the maturity of the created UTXO.
    * Used only in _Macroblocks_ (compressed history block), more about this later. Illegal to use in transactions.
