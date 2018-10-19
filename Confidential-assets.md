@@ -39,7 +39,7 @@ To create a custom asset type the user generates a public/private key pair. The 
 
 The user controls the emission and collection of the asset. The user can _convert_ some amount of the master asset type (i.e. BEAM) into his/her type by a special instruction, which is signed by the corresponding **private** key. For convenience it can be embedded into the transaction kernel.
 
-**Note:** The conversion is only needed to prevent bloat. The user effectively _buys_ his/her coins, but they are refundable. The user (only!) is be able to trade the unspent assets back to collect the refund. If the bloat is not an issue - it's possible to allow the emission for free.
+**Note:** The conversion is only needed to prevent bloat. The user effectively _buys_ his/her coins, but they are refundable. Only the user is be able to trade the unspent assets back to collect the refund. If the bloat is not an issue - it's possible to allow the emission for free.
 
 # Final design
 
