@@ -35,3 +35,14 @@ For example, consider and MMR containing 10 items:
 
 In our DMMR this is represented by the following data:
 
+[[/images/dmmr1.png]]
+
+There are 10 elements of varying size, denoted by different colors. Rectangles outline the data and the non-leaf hashes of which the elements comprise. Lines denote pointers to the parent elements. We see the following:
+
+* For every extra hash denoted by asterisk (*) there is a pointer to the last element of the appropriate sibling node.
+* Most of the elements in addition have a pointer to the last element of the previous MMR peak, denoted by a curly line. 
+   * The exceptions are elements at position 0, 1, 3, 7, because they are last elements of the only peak.
+   * This is obviously the property of elements at positions 2<sup>n</sup>-1.
+* The only element that contains no data is the 1<sup>st</sup>, at position 0.
+
+It's easy to see that each element has access to all the parent elements and their datas. Hence it can be used as an effective MMR implementation with all the relevant functionality, such as calculating the root, and generating proofs.
