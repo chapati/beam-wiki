@@ -39,6 +39,9 @@ A more sophisticated variant is called `DistributedMmr`. It's assumed that the t
 
 This is very useful for branching, whereas one needs to keep track of different variants of what's added to the MMR. 
 
+[More information about their structure is here.](https://github.com/beam-mw/beam/wiki/DMMR-internal-layout)
+
+
 #### Use case
 
 Every system state should have an MMR of all the inherited states to support
