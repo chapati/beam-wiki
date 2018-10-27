@@ -39,7 +39,8 @@ In our DMMR this is represented by the following data:
 
 There are 10 elements of varying size, denoted by different colors. Rectangles outline the data and the non-leaf hashes of which the elements comprise. Lines denote pointers to the parent elements. We see the following:
 
-* For every extra hash denoted by asterisk (*) there is a pointer to the last element of the appropriate sibling node.
+* Elements with odd index contain extra hashes, denoted by asterisk (*). The number of hashes equals to the height of the formed peak.
+* For every extra hash there is also a pointer to the last element of the appropriate sibling node.
 * Most of the elements in addition have a pointer to the last element of the previous MMR peak, denoted by a curly line. 
    * The exceptions are elements at position 0, 1, 3, 7, because they are last elements of the only peak.
    * This is obviously the property of elements at positions 2<sup>n</sup>-1.
