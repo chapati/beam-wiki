@@ -9,19 +9,19 @@ The HW wallet should support the following functionality
 
 ## Nonces and randomness
 
-Our signing protocols follow a ritual where the signer generates some _nonce(s)_, reveals its _image(s)_, gets a _challenge(s)_, and then should reveal the appropriate _preimage_. To guarantee (5) the signer must **never** answer to different _challenges_ for the same _nonce. This is absolutely vital!
+Our signing protocols follow a ritual where the signer generates some _nonce(s)_, reveals its _image(s)_, gets a _challenge(s)_, and then should reveal the appropriate _preimage_. To guarantee (5) the signer must **never** answer to different _challenges_ for the same _nonce_. This is absolutely vital!
 
 In a regular signature protocol the _nonce_ can always be generated in a deterministic way from the visible transcript and the sercret key, the _challenge_ is derived from the visible transcript, and the whole signing process is <u>atomic</u>.
 
 This approach, however, is not compatible with (4). In the case of the multisignature the signing process is not atomic. And ability to create multisignatures is essential in MW.
 
-Hence, in order to sustain the requirements the HW should use another source of (pseudo)randomness. Moreover, the random _nonce_ generated for the signing process should be kept inside the HW for indefinite time, because signing may take considerable time, during which HW wallet should be able to operate normally. In addition each _nonce_ should be erased once the _preimage_ based on it is revealed.
+Hence, in order to sustain the requirements the HW should use another source of (pseudo)randomness. Moreover, the random _nonce_ generated for the signing process should be kept inside the HW for indefinite time, because signing may take considerable time, during which HW wallet should be able to operate normally. In addition each _nonce_ should be **erased** once the _preimage_ based on it is revealed.
 
 # Proposed design
 
 HW wallet should support the basic EC cryptography primitives for the parameters specified by the `secp256k1` standard (the one that is used in bitcoin). Means - 256-bit wide keys, the same EC equation, finite field parameters, same `G`-generator.
 
-The HW wallet should have non-volatile memory, represented by memory _slots_. There should be the following _slots_.
+The HW wallet should have non-volatile memory, represented by memory _slots_. There should be the following _slots_:
 
 1. Master secret.
    * No direct access to the caller.
@@ -30,35 +30,64 @@ The HW wallet should have non-volatile memory, represented by memory _slots_. Th
    * No direct access to the caller.
    * Should be initialized by <u>true random</u> either during production, or upon initialization of the Master secret.
 1. Generated key.
-   * Contains the generated key. May be a single key or their sum/difference.
+   * Contains the generated key. May be a single key or their sum/difference (more about this later).
 1. Generated nonces.
 
-This low-level design may look weird, but it's needed to support all the MW functionality.
+This low-level design may look weird, but it's needed to support all the MW functionality. The following functionality should be supported:
 
-The following functionality should be supported:
+### Nonce regeneration
+
+Parameters:
+* `i` - the target slot index
+
+Result: the target slot should contain a unique nonce, derived from the Nonce source, and the Nonce source itself should be mutated immediately after that.
+
+* `n[i] = DeriveNonce(NonceSource)`
+* `NonceSource = Mutate(NonceSource)`
+
+<u>Important</u>: all the nonce slots must be regenerated before (or immediately after) the Master secret is initialized. In simple words, there must be no situation where the HW is operational, yet there's a nonce slot which contains predictable (zero?) value.
+
+### Key slot reset (assign to zero)
+
+Result: the target slot should contain zero value: `k = 0`
 
 ### Key generation
 Parameters:
 * `ID` - an opaque 256-bit data that identifies the key
-* `i` - the target slot index (number)
 
-Result: the target slot should contain the generated key: `s[i] = KeyGenerate(MasterSecret, ID)`
+Result: the generated key should be <u>added</u> to the target slot: `k += KeyGenerate(MasterSecret, ID)`
 
-### Nonce generation
-Parameters:
-* `i` - the target slot index
+### Key split
+The key should be split into 2 parts in a deterministic (yet opaque) way.
 
-Result: the target slot should contain a unique nonce. It should be derived from the Nonce source, and the Nonce source itself should be mutated immediately after that.
+Return value: `k2 = Muate(k)`
 
-* `s[i] = DeriveNonce(NonceSource)`
-* `NonceSource = Mutate(NonceSource)`
+Result: `k -= k2`
 
 ### Image (public key) reveal
 Parameters:
-* `i` - the source slot index
+* `i` - the slot index.
 
-Return value: EC point (in whatever representation) equals to the `G`-generator multiplied by the value of this slot: `G * s[i]`
+Return value: EC point (in whatever representation) equals to the `G`-generator multiplied by the value of this slot: `G * n[i]`
 
-### Simple arithmetics
+Applicable for key and nonce slots
 
-There should be possible to 
+### Sig1 (Schnorr)
+
+Parameters:
+* `i` - the slot index
+* `e` - challenge
+
+Return value: blinded _preimage_: `kb = n[i] + e*k`
+
+Result: used nonce is immediately regenerated: `Regenerate(i)`
+
+### Sig2 (Bulletproof)
+
+Parameters:
+* `i1, i2` - 2 slot indexes
+* `e`, `e2` - 2 challenges
+
+Return value: blinded _preimage_: `kb = n[i1] + e2*n[i2] + e*k`
+
+Result: used nonce is immediately regenerated: `Regenerate(i1)`, `Regenerate(i2)`
