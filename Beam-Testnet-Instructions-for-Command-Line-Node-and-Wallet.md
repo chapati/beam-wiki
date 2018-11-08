@@ -1,13 +1,14 @@
 
-**Welcome to Beam Testnet 1**
+**Welcome to Beam Testnet 2**
 
-Node binaries can be downloaded from the Beam website (http://beam-mw.com/downloads) or from Github (https://github.com/beam-mw/beam-builds/tree/master/testnet/release)
+Node binaries can be downloaded from the Beam website (http://beam.mw/downloads) or from Github (https://github.com/beam-mw/beam-builds/tree/master/testnet/release !!!!!!!
+http://builds.beam-mw.com/testnet2/2018.11.06/Release)
 
 You can run the node with command line options, or modify the attached config file. Once you start the node it will create a node.db file in the same folder. This file will store internal state of the node.
 
 **Reporting issues**
 
-In case you encounter any problems, please report them via mail to testnet@beam-mw.com or open a github ticket at https://github.com/beam-mw/beam
+In case you encounter any problems, please report them via mail to testnet@beam-mw.com or open a github ticket at https://github.com/BeamMW/beam/issues
 
 Attach archive with logs, configuration file and command line parameters to allow effective investigation of the issues.
 
@@ -17,11 +18,13 @@ Node parameters can be either passed through command line or written in the beam
 
 Example:
 
-*./beam-node --peer 138.68.130.189:8101 --wallet_seed 111 --mining_threads 1 --file_log_level debug*
+*./beam-node --peer 104.248.159.154:8100 --wallet_phrases memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube; --mining_threads 1 --file_log_level debug*
 
 The --peer parameter specifies a comma separated list of peers node will initially connect to. After the connection is etablished, node will get updated list of peers from the nodes, along with peer ratings and from that moment will manage the connections on its own. 
 
 --wallet_seed - is a secret key for the wallet that will connect to this node to collect mining rewards (if the node is mining) 
+
+--wallet_phrases - phrases to generate secret key according to BIP-39. <wallet_seed> option will be ignored
 
 --mining_treads - specifies the number of CPU cores utilized for mining. If set to 0, node acts as validating node only.
 
@@ -37,6 +40,9 @@ General options:
   -h [ --help ]                         list of all options
   -p [ --port ] arg (=10000)            port to start the server on
   --wallet_seed arg                     secret key generation seed
+  --wallet_phrases arg                  phrases to generate secret key
+                                        according to BIP-39. <wallet_seed>
+                                        option will be ignored
   --log_level arg                       log level [info|debug|verbose]
   --file_log_level arg                  file log level [info|debug|verbose]
   -v [ --version ]                      return project version
@@ -89,7 +95,7 @@ After extracting the wallet binary to a folder, first we need to initialize the 
 
 *./beam-wallet --command init*
 
-You will be prompted to provide wallet password and then seed. If you are using a miner node, the seed should be the same as was set in the --wallet_seed flag of the node
+You will be prompted to provide wallet password and then seed (or wallet_phrases). If you are using a miner node, the seed (phrases) should be the same as was set in the --wallet_seed (or wallet_phrases) flag of the node (if you use wallet_phrases - should be the same)
 
 
 **Printing wallet information**
@@ -111,6 +117,9 @@ After entering the password, wallet will print out the line similar to:
 
 This show the SBBS address the wallet is listening on. This address can be copied and sent to Sender.
 
+If you want to create new BBS address use next command:
+*./beam-wallet --command=new_addr --listen -n 127.0.0.1:10000;*
+
 **Sending Beams**
 
 *./beam-wallet --command=send -n 127.0.0.1:10000 -r 77de6bd3de40bc58ab7e4fb68d5e0596fd1e72f3c4fb3eb3d106082d89264909 -a 11.3 -f 0.2*
@@ -127,6 +136,9 @@ General options:
   -h [ --help ]                         list of all options
   -p [ --port ] arg (=10000)            port to start the server on
   --wallet_seed arg                     secret key generation seed
+  --wallet_phrases arg                  phrases to generate secret key
+                                        according to BIP-39. <wallet_seed>
+                                        option will be ignored
   --log_level arg                       log level [info|debug|verbose]
   --file_log_level arg                  file log level [info|debug|verbose]
   -v [ --version ]                      return project version
@@ -176,48 +188,25 @@ Rules configuration:
 
 **List of testnet nodes**
 
-142.93.89.204:8101
-188.166.148.169:8101
-206.189.141.171:8101
-138.68.130.189:8101
-178.128.225.252:8101
-128.199.142.41:8101
-139.59.191.116:8101
-206.189.3.9:8101
-206.189.15.198:8101
-204.48.26.118:8101
-174.138.58.140:8101
-142.93.241.66:8101
-188.166.122.215:8101
-142.93.17.121:8101
-104.248.77.220:8101
-104.248.27.246:8101
-188.166.60.223:8101
-128.199.144.164:8101
-104.248.182.148:8101
-104.248.182.152:8101
-159.203.72.8:8101
-178.128.233.252:8101
-104.248.43.86:8101
-104.248.43.99:8101
-178.62.19.156:8101
-104.248.75.183:8101
-206.81.11.82:8101
-206.189.138.82:8101
-178.128.225.8:8101
-142.93.246.182:8101
-104.248.31.169:8101
-128.199.144.48:8101
-178.128.229.48:8101
-128.199.144.196:8101
-159.65.40.42:8101
-178.128.229.50:8101
-138.197.193.229:8101
-128.199.144.206:8101
-178.128.229.65:8101
-159.89.234.65:8101
-104.248.43.120:8101
-104.248.186.25:8101
-128.199.145.212:8101
-188.166.15.205:8101
-138.68.163.99:8101
+139.59.174.80:8100
+167.99.221.104:8100
+159.65.201.244:8100
+142.93.217.246:8100
+142.93.221.22:8100
+178.62.59.65:8100
+139.59.169.77:8100
+167.99.166.33:8100
+159.65.119.216:8100
+142.93.221.66:8100
+206.189.10.149:8100
+138.68.134.136:8100
+159.65.119.226:8100
+142.93.221.80:8100
+104.248.159.97:8100
+159.65.101.94:8100
+68.183.103.130:8100
+142.93.213.21:8100
+104.248.159.154:8100
+188.166.165.240:8100
+159.65.104.75:8100
+142.93.213.106:8100
