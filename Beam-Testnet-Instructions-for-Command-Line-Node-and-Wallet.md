@@ -1,7 +1,7 @@
 
 **Welcome to Beam Testnet 2**
 
-Node binaries can be downloaded from the Beam website (http://beam.mw/downloads).
+Node binaries can be downloaded from the Beam website (http://beam.mw/downloads) or our FTP (http://builds.beam-mw.com/testnet2/Release).
 
 You can run the node with command line options, or modify the attached config file. Once you start the node it will create a node.db file in the same folder. This file will store internal state of the node.
 
