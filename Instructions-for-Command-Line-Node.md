@@ -14,12 +14,13 @@
 ```
 
 ## Node command line parameters explained:
-
-* The `--peer` parameter specifies a comma-separated list of peers the node will initially connect to. After the connection is established, the node will get an updated list of peers from other nodes, along with peer ratings and from that moment the node will manage its connections on its own. 
-* `--wallet_seed` - is a secret key for the wallet that will connect to this node to collect mining rewards (if the node is mining) 
-* `--wallet_phrases` - phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored
-* `--mining_treads` - specifies the number of CPU cores utilized for mining. If set to 0, node acts as a validating node only.
-* `--file_log_level` - allows to raise the debug level when a deeper investigation is required
+| Name | Description |
+|------|-------------|
+| `peer` | Specifies a comma-separated list of peers the node will initially connect to. After the connection is established, the node will get an updated list of peers from other nodes, along with peer ratings and from that moment the node will manage its connections on its own. |
+| `wallet_seed` | A secret key for the wallet that will connect to this node to collect mining rewards (if the node is mining |
+| `wallet_phrases` | Phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored. |
+| `mining_treads` | Specifies the number of CPU cores utilized for mining. If set to 0, node acts as a validating node only. |
+| `file_log_level` | Allows to raise the debug level when a deeper investigation is required. |
 
 # Config file example:
 
