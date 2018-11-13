@@ -21,9 +21,10 @@
 
 # Config file example:
 
-`# port to start server on`
-
-`port=10000`
+```
+# port to start server on
+port=10000
+```
 
 `# secret key generation seed.`
 
