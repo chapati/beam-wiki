@@ -1,8 +1,24 @@
+# Welcome to Beam Testnet 2
+
+In case you encounter any problem, please email us at testnet@beam-mw.com or open a GitHub ticket at https://github.com/BeamMW/beam/issues
+
+For effective investigation please attach the following items for every issue:
+* Logs, compressed into a single archive
+* Configuration file
+* Command line parameters of the executed binary
+
+# User Manuals
+
+* [Testnet Instructions for Command Line Node](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
+* [Testnet Instructions for Command Line Wallet](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Wallet)
+
+# Specifications
 
 * [Beam Technical Specifications](https://github.com/beam-mw/beam/wiki/Beam-Technical-Specifications)
+* [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
 
-* [Testnet Instructions for Command Line Node and Wallet](https://github.com/beam-mw/beam/wiki/Beam-Testnet-Instructions-for-Command-Line-Node-and-Wallet)
-## Thoughts
+# Thoughts
+
 * [Eliminating transaction kernels](https://github.com/beam-mw/beam/wiki/Thoughts:-eliminating-transaction-kernels)
 * [Transaction graph obfuscation](https://github.com/beam-mw/beam/wiki/Transaction-graph-obfuscation)
 * [Auditable wallet](https://github.com/beam-mw/beam/wiki/Wallet-audit)
