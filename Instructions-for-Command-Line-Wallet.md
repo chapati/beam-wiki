@@ -1,6 +1,9 @@
 # Running a command line wallet
 
-* After extracting the wallet binary to a folder, we need to initialize the wallet by executing the following command: `./beam-wallet --command init`
+* After extracting the wallet binary to a folder, we need to initialize the wallet by executing the following command: 
+``` sh
+./beam-wallet --command init
+```
 * You will be prompted to provide wallet password and then seed (or `wallet_phrases`). If your node is running in a miner mode (mining threads > 0), the seed (phrases) should be the same as was set in the `--wallet_seed` (or `wallet_phrases`) flag of the node
 
 
