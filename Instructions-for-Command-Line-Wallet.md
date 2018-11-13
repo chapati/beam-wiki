@@ -9,23 +9,37 @@
 
 # Printing wallet information
 
-* To get the information about the current status of the wallet, execute: `./beam-wallet --command info -n 127.0.0.1:10000`
+* To get the information about the current status of the wallet, execute:
+``` sh
+./beam-wallet --command info -n 127.0.0.1:10000
+```
 
 
 # Receiving Beams
 
-* To receive beams start the wallet in a listening mode by running: ```./beam-wallet --command listen -n 127.0.0.1:10000```
+* To receive beams start the wallet in a listening mode by running: 
+``` sh
+./beam-wallet --command listen -n 127.0.0.1:10000
+```
 * After entering the password, the wallet will print out the line similar to: `WalletID 4a0e54b24d5fdf06891a8eaa57b4b3ac16731e932a64da8ec768083495d624f1 subscribes to BBS channel 9`
 * This shows the SBBS address the wallet is listening on. This address can be copied and sent to Sender.
-* If you want to create new SBBS address use the following command: `./beam-wallet --command=new_addr --listen -n 127.0.0.1:10000`
+* If you want to create new SBBS address use the following command: 
+``` sh
+./beam-wallet --command=new_addr --listen -n 127.0.0.1:10000
+```
 
 # Sending Beams
 
-* To sending beams use the following command `./beam-wallet --command=send -n 127.0.0.1:10000 -r 77de6bd3de40bc58ab7e4fb68d5e0596fd1e72f3c4fb3eb3d106082d89264909 -a 11.3 -f 0.2`
+* To sending beams use the following command 
+``` sh 
+./beam-wallet --command=send -n 127.0.0.1:10000 -r 77de6bd3de40bc58ab7e4fb68d5e0596fd1e72f3c4fb3eb3d106082d89264909 -a 11.3 -f 0.2
+```
 * The send-related command line parameters of the wallet:
-    * `-r` <SBBS address of the receiver node> 
-    * `-a` <amount of beams to send>
-    * `-f` <transaction fee>
+| Name | Description |
+|------|-------------|
+| `r` | SBBS address of the receiver node |
+| `a` | amount of beams to send |
+| `f` | transaction fee |
 
 
 # The Full list of wallet command line options
