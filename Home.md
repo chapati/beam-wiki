@@ -1,6 +1,6 @@
 # Welcome to Beam Testnet 2
 
-In case you encounter any problem, please email us at testnet@beam-mw.com or open a GitHub ticket at https://github.com/BeamMW/beam/issues
+In case you encounter any problem, please open a GitHub ticket at https://github.com/BeamMW/beam/issues or email us at testnet@beam-mw.com
 
 For effective investigation please attach the following items for every issue:
 * Logs, compressed into a single archive
