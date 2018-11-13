@@ -35,6 +35,7 @@
 ./beam-wallet --command=send -n 127.0.0.1:10000 -r 77de6bd3de40bc58ab7e4fb68d5e0596fd1e72f3c4fb3eb3d106082d89264909 -a 11.3 -f 0.2
 ```
 * The send-related command line parameters of the wallet:
+
 | Name | Description |
 |------|-------------|
 | `r` | SBBS address of the receiver node |
