@@ -1,6 +1,6 @@
-# Beam mining protocol API
+# Beam mining protocol API (draft)
 
-The protocol is based on JSON RPC and uses *Long Polling* to have a conversation between *Miner* and *Node*.
+The protocol is based on JSON RPC and uses *Long Polling* to have a conversation between *Miner* and *Node*. It describes only mining behavior without payouts at the moment.
 
 ## Miner to Node
 
