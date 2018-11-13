@@ -98,7 +98,7 @@ At this point both Beam and BTC UTXOs are locked, both parties get confirmations
 * <u>Wait until the mutual UTXO becomes visible</u>
 * Collaborate to build the exchange transaction
    * Transaction kernel is supposed to (but doesn't yet) contain the `hpi`.
-      * Means - its signature sings the kernel contents, including `Hash(hpi) == hi`, whereas `hi` is known to both parties.
+      * Means - its signature signs the kernel contents, including `Hash(hpi) == hi`, whereas `hi` is known to both parties.
    * Generate the new UTXO
    * Pass it to **A** so that she creates such a kernel, and substitutes her part of the signature.
    * Get the half-signed kernel from **A**, and verify it.
