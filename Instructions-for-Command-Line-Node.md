@@ -41,34 +41,42 @@ peer=104.248.159.154:8100
 # The full list of options supported by the node
 
 ## General options:
-* `-h [ --help ]`                         list of all options
-* `-p [ --port ] arg (=10000)`            port to start the server on
-* `--wallet_seed arg`                     secret key generation seed
-* `--wallet_phrases arg`                  phrases to generate secret key according to BIP-39, `<wallet_seed>` option will be ignored
-* `--log_level arg`                       log level [info|debug|verbose]
-* `--file_log_level arg`                  file log level [info|debug|verbose]
-* `-v [ --version ]`                      return project version
-* `--git_commit_hash`                     return commit hash
+
+| Name | Description |
+|------|-------------|
+| `h` or `help`| list of all options |
+| `p arg` or `port arg (=10000)` | port to start the server on |
+| `wallet_seed arg` | secret key generation seed |
+| `wallet_phrases arg` | phrases to generate secret key according to BIP-39, `wallet_seed` option will be ignored |
+| `log_level arg` | log level `[info|debug|verbose]` |
+| `file_log_level arg` | file log level `[info|debug|verbose]` |
+| `v` or `version` | return project version |
+| `git_commit_hash` | return commit hash |
 
 ## Node options:
-* `--storage arg (=node.db)`              node storage path
-* `--history_dir arg (=./)`               directory for compressed history
-* `--temp_dir arg (=/tmp/)`               temp directory for compressed history, must be on the same volume
-* `--mining_threads arg (=0)`             number of mining threads(there is no mining if 0)
-* `--verification_threads arg (=-1)`      number of threads for cryptographic verifications (0 = single thread, -1 = auto)
-* `--miner_id arg (=0)`                   seed for miner nonce generation
-* `--peer arg`                            nodes to connect to
-* `--import arg (=0)`                     specify the blockchain height to import, the compressed history is assumed to be downloaded to the specified directory
+| Name | Description |
+|------|-------------|
+| `storage arg (=node.db)` | node storage path |
+| `history_dir arg (=./)` | directory for compressed history |
+| `temp_dir arg (=/tmp/)` | temp directory for compressed history, must be on the same volume |
+| `mining_threads arg (=0)` | number of mining threads(there is no mining if 0) |
+| `verification_threads arg (=-1)` | number of threads for cryptographic verifications (0 = single thread, -1 = auto) |
+| `miner_id arg (=0)` | seed for miner nonce generation |
+| `peer arg` | nodes to connect to |
+| `import arg (=0)` | specify the blockchain height to import, the compressed history is assumed to be downloaded to the specified directory |
 
 ## Rules configuration:
-* `--CoinbaseEmission arg (=80000000)`    coinbase emission in a single block
-* `--MaturityCoinbase arg (=60)`          num of blocks before coinbase UTXO can be spent
-* `--MaturityStd arg (=0)`                num of blocks before non-coinbase UTXO can be spent
-* `--MaxBodySize arg (=1048576)`          Max block body size [bytes]
-* `--DesiredRate_s arg (=60)`             Desired rate of generated blocks [seconds]
-* `--DifficultyReviewCycle arg (=1440)`   num of blocks after which the mining difficulty can be adjusted
-* `--MaxDifficultyChange arg (=2)`        Max difficulty change after each cycle (each step is roughly x2 complexity)
-* `--TimestampAheadThreshold_s arg (=7200)` Block timestamp tolerance [seconds]
-* `--WindowForMedian arg (=25)`           How many blocks are considered in calculating the timestamp median
-* `--AllowPublicUtxos arg (=0)`           set to allow regular (non-coinbase) UTXO to have non-confidential signature
-* `--FakePoW arg (=0)`                    Don't verify PoW. Mining is simulated by the timer. For tests only
+
+| Name | Description |
+|------|-------------|
+| `CoinbaseEmission arg (=80000000)` | coinbase emission in a single block |
+| `MaturityCoinbase arg (=60)` | Number of blocks before coinbase UTXO can be spent |
+| `MaturityStd arg (=0)` | Number of blocks before non-coinbase UTXO can be spent |
+| `MaxBodySize arg (=1048576)` | Max block body size in `[bytes]` |
+| `DesiredRate_s arg (=60)` | Desired rate of generated blocks in `[seconds]` |
+| `DifficultyReviewCycle arg (=1440)` | Number of blocks after which the mining difficulty can be adjusted |
+| `MaxDifficultyChange arg (=2)` |  Max difficulty change after each cycle (each step is roughly x2 complexity) |
+| `TimestampAheadThreshold_s arg (=7200)` | Block timestamp tolerance in `[seconds]` |
+| `WindowForMedian arg (=25)` | How many blocks are considered in calculating the timestamp median |
+| `AllowPublicUtxos arg (=0)` | Set to allow regular (non-coinbase) UTXO to have non-confidential signature |
+| `FakePoW arg (=0)`| Don't verify PoW. Mining is simulated by the timer. For tests only |
