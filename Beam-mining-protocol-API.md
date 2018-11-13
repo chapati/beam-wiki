@@ -5,6 +5,9 @@ The protocol is based on JSON RPC and uses *Long Polling* to have a conversation
 ## Miner to Node
 
 ### Login
+Miner subscribes to the node to receive jobs.
+
+`api-key` - miner registration key.
 
 ``` json
 {
@@ -14,6 +17,11 @@ The protocol is based on JSON RPC and uses *Long Polling* to have a conversation
 ```
 
 ### Solution
+Miner sends a solution to the node.
+
+`nonce` - matched nonce for given solution.
+
+`solution` - *Equhash* solition for current difficulty.
 
 ``` json
 {
@@ -27,6 +35,13 @@ The protocol is based on JSON RPC and uses *Long Polling* to have a conversation
 ## Node to Miner
 
 ### Job
+Miner will send new job automatically to connected miners.
+
+`id` - is a job index, the miner should cancel the current job if get an empty *id*.
+
+`input` - block header binary data without *nonce* as an input parameter for *Equihash*.
+
+`difficulty` - current chain difficulty.
 
 ``` json
 { 
@@ -38,6 +53,8 @@ The protocol is based on JSON RPC and uses *Long Polling* to have a conversation
 ```
 
 ### Result
+
+This is what server will return to `login` or `solution` requests.
 
 ``` json
 {
