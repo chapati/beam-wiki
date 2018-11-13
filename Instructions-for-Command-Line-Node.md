@@ -21,22 +21,19 @@
 
 # Config file example:
 
-```
+``` sh
 # port to start server on
 port=10000
+
+# secret key generation seed.
+wallet_phrases=memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube;
+
+# number of mining threads(there is no mining if 0)
+mining_threads=1
+
+# peers
+peer=104.248.159.154:8100
 ```
-
-`# secret key generation seed.`
-
-`wallet_phrases=memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube;`
-
-`# number of mining threads(there is no mining if 0)`
-
-`mining_threads=1`
-
-`# peers`
-
-`peer=104.248.159.154:8100`
 
 # The full list of options supported by the node
 
