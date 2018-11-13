@@ -9,8 +9,8 @@ For effective investigation please attach the following items for every issue:
 
 # User Manuals
 
-* [Testnet Instructions for Command Line Node](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
-* [Testnet Instructions for Command Line Wallet](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Wallet)
+* [Instructions for Command Line Node](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
+* [Instructions for Command Line Wallet](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Wallet)
 
 # Specifications
 
