@@ -39,7 +39,7 @@ Miner will send new job automatically to connected miners.
 
 `id` - is a job index, the miner should cancel the current job if get an empty *id*.
 
-`input` - block header binary data without *nonce* as an input parameter for *Equihash*.
+`input` - block header data hash (with current *difficulty*) as an input parameter for *Equihash*.
 
 `difficulty` - current chain difficulty.
 
