@@ -48,7 +48,7 @@
 | Name | Description |
 |------|-------------|
 | `h` or `help` | list of all options |
-| `p  pr `port arg (=10000)` | port to start the server on |
+| `p`  or `port arg (=10000)` | port to start the server on |
 | `wallet_seed arg` | secret key generation seed |
 | `wallet_phrases arg | phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored |
 | `log_level arg` | log level `[info|debug|verbose]` |
