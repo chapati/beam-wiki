@@ -50,7 +50,7 @@
 | `h` or `help` | list of all options |
 | `p`  or `port arg (=10000)` | port to start the server on |
 | `wallet_seed arg` | secret key generation seed |
-| `wallet_phrases arg | phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored |
+| `wallet_phrases arg` | phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored |
 | `log_level arg` | log level `[info|debug|verbose]` |
 | `file_log_level arg` | file log level `[info|debug|verbose]` |
 | `v` or `version` | return project version |
@@ -82,7 +82,7 @@
 | `MaturityCoinbase arg (=60)`  | Number of blocks before coinbase UTXO can be spent |
 | `MaturityStd arg (=0)` | Number of blocks before non-coinbase UTXO can be spent |
 | `MaxBodySize arg (=1048576)` | Max block body size in `[bytes]` |
-| `DesiredRate_s arg (=60)`             Desired rate of generated blocks in `[seconds]` |
+| `DesiredRate_s arg (=60)`| Desired rate of generated blocks in `[seconds]` |
 | `DifficultyReviewCycle arg (=1440)` | Number of blocks after which the mining difficulty can be adjusted |
 | `MaxDifficultyChange arg (=2)` | Max difficulty change after each cycle (each step is roughly x2 complexity) |
 | `TimestampAheadThreshold_s arg (=7200)` | Block timestamp tolerance in `[seconds]` |
