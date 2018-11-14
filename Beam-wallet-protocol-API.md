@@ -8,6 +8,7 @@
 1. [Info](#info)
 1. [New address](#new-address)
 1. [Send](#send)
+1. [Cancel TX](#cancel-tx)
 
 ## Init
 Sends from client to wallet to create new wallet.
@@ -233,6 +234,30 @@ or with error
 {
 	"jsonrpc": "2.0", 
 	"error" : {"code": 10, "message": "Unable to send negative amount of coins."},
+	"id" : 1234
+}
+```
+
+## Cancel TX
+Sends from client to wallet to cancel a running transaction.
+``` json
+{
+	"jsonrpc": "2.0", 
+	"method" : "cancel_tx",
+	"params" : 
+	{
+		"tx_id" : "12345"	
+	},
+	"id" : 1234
+}
+```
+
+**Result**
+
+``` json
+{
+	"jsonrpc": "2.0", 
+	"result" : "done",
 	"id" : 1234
 }
 ```
