@@ -6,6 +6,7 @@
 1. [Open](#open)
 1. [Treasury](#treasury)
 1. [Info](#info)
+1. [New address](#new-address)
 
 ## Init
 Sends from client to wallet if you want to create new wallet.
@@ -173,6 +174,38 @@ Sends from client to wallet if you want to get current wallet state.
 			...
 		]
 	},
+	"id" : 1234
+}
+```
+
+## New address
+Sends from client to wallet if you want to generate new address.
+``` json
+{
+	"jsonrpc": "2.0", 
+	"method" : "new_addr",
+	"params" : 
+	{
+		"label" : "..."
+	},
+	"id" : 1234
+}
+```
+
+**Result**
+
+``` json
+{
+	"jsonrpc": "2.0", 
+	"result" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+	"id" : 1234
+}
+```
+or with error
+``` json
+{
+	"jsonrpc": "2.0", 
+	"error" : {"code": 1, "message": "Wallet already exists."},
 	"id" : 1234
 }
 ```
