@@ -2,6 +2,10 @@
 
 `beam-wallet` process could start with `api-port` parameter where we start *JSON-RPC 2.0* server with the following API.
 
+1. [Init](#init)
+1. [Init](#init)
+1. [Init](#init)
+1. [Init](#init)
 ## Init
 Sends from client to wallet if you want to create new wallet.
 ``` json
