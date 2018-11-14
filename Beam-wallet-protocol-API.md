@@ -214,7 +214,8 @@ Sends from client to wallet to send *Beams* to receiver address.
 	{
 		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
 		"amount" : 15.001,
-		"fee" : 10		
+		"fee" : 10,
+		"metadata" : "<meta>any corresponding info for the transaction</meta>"
 	},
 	"id" : 1234
 }
@@ -225,7 +226,11 @@ Sends from client to wallet to send *Beams* to receiver address.
 ``` json
 {
 	"jsonrpc": "2.0", 
-	"result" : "done",
+	"result" : 
+	{
+		"status" : "done",
+		"metadata" : "<meta>any corresponding info for the transaction</meta>"
+	},
 	"id" : 1234
 }
 ```
@@ -233,7 +238,12 @@ or with error
 ``` json
 {
 	"jsonrpc": "2.0", 
-	"error" : {"code": 10, "message": "Unable to send negative amount of coins."},
+	"error" : 
+	{
+		"code": 10, 
+		"message": "Unable to send negative amount of coins.",
+		"metadata" : "<meta>any corresponding info for the transaction</meta>"
+	},
 	"id" : 1234
 }
 ```
@@ -261,3 +271,8 @@ Sends from client to wallet to cancel a running transaction.
 	"id" : 1234
 }
 ```
+
+
+## Error codes
+
+TODO: Here will be list with error codes and description...
