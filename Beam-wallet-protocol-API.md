@@ -7,9 +7,10 @@
 1. [Treasury](#treasury)
 1. [Info](#info)
 1. [New address](#new-address)
+1. [Send](#send)
 
 ## Init
-Sends from client to wallet if you want to create new wallet.
+Sends from client to wallet to create new wallet.
 ``` json
 {
 	"jsonrpc": "2.0", 
@@ -42,7 +43,7 @@ or with error
 ```
 
 ## Open
-Sends from client to wallet if you want to open existing wallet.
+Sends from client to wallet to open existing wallet.
 ``` json
 {
 	"jsonrpc": "2.0", 
@@ -74,7 +75,7 @@ or with error
 ```
 
 ## Treasury
-Sends from client to wallet if you want to generate treasury.
+Sends from client to wallet to generate treasury.
 
 where
 
@@ -82,7 +83,7 @@ where
 
 `height` - treasury UTXO height lock step
 
-`value` - treasury value of each UTXO (in Beams)
+`value` - treasury value of each UTXO (in *Beams*)
 
 
 ``` json
@@ -118,7 +119,7 @@ or with error
 ```
 
 ## Info
-Sends from client to wallet if you want to get current wallet state.
+Sends from client to wallet to get current wallet state.
 ``` json
 {
 	"jsonrpc": "2.0", 
@@ -179,7 +180,7 @@ Sends from client to wallet if you want to get current wallet state.
 ```
 
 ## New address
-Sends from client to wallet if you want to generate new address.
+Sends from client to wallet to generate new address.
 ``` json
 {
 	"jsonrpc": "2.0", 
@@ -201,11 +202,37 @@ Sends from client to wallet if you want to generate new address.
 	"id" : 1234
 }
 ```
+
+## Send
+Sends from client to wallet to send *Beams* to receiver address.
+``` json
+{
+	"jsonrpc": "2.0", 
+	"method" : "send",
+	"params" : 
+	{
+		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+		"amount" : 15.001,
+		"fee" : 10		
+	},
+	"id" : 1234
+}
+```
+
+**Result**
+
+``` json
+{
+	"jsonrpc": "2.0", 
+	"result" : "done",
+	"id" : 1234
+}
+```
 or with error
 ``` json
 {
 	"jsonrpc": "2.0", 
-	"error" : {"code": 1, "message": "Wallet already exists."},
+	"error" : {"code": 10, "message": "Unable to send negative amount of coins."},
 	"id" : 1234
 }
 ```
