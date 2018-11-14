@@ -11,6 +11,7 @@ For effective investigation please attach the following items for every issue:
 
 * [Instructions for Command Line Node](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
 * [Instructions for Command Line Wallet](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Wallet)
+* [Instructions for Wallet Desktop App](https://www.beam.mw/wallet-instructions)
 * [How to build](https://github.com/BeamMW/beam/wiki/How-to-build)
 
 # Specifications
