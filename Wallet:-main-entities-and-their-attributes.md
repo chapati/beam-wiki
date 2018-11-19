@@ -25,9 +25,9 @@
     * As output UTXO for incoming transaction, "earned" time is specified
     * As input UTXO for outgoing transaction, "spent" time is specified
 * Coin type
-    * Regular - just a regular coin
-    * Coinbase - the coin was mined when miner closed the block
-    * Commission - transaction fee, paid by the user
+    * Regular: just a regular coin, can receive most of the statuses (see below)
+    * Coinbase: the coin was mined when miner closed the block, is always created with "Maturing" status
+    * Commission: transaction fee, paid by the user, is always created with "Maturing" status
 * Status
     * "Available": not in the transaction, can be spent
         * "In progress", can have the following sub-cases:
