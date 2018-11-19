@@ -24,6 +24,10 @@
 * Transactions it had participated in
     * As output UTXO for incoming transaction, "earned" time is specified
     * As input UTXO for outgoing transaction, "spent" time is specified
+* Coin type
+    * Regular - just a regular coin
+    * Coinbase - the coin was mined when miner closed the block
+    * Commission - transaction fee, paid by the user
 * Status
     * "Available": not in the transaction, can be spent
         * "In progress", can have the following sub-cases:
