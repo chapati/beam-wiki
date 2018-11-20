@@ -1,278 +1,208 @@
+
+
 # Beam wallet protocol API (draft)
+Wallet API will have the same structure as Node API.
 
-`beam-wallet` process could start with `api-port` parameter where we start *JSON-RPC 2.0* server with the following API.
+Wallet will have online connection to the node. 
 
-1. [Init](#init)
-1. [Open](#open)
-1. [Treasury](#treasury)
-1. [Info](#info)
-1. [New address](#new-address)
-1. [Send](#send)
-1. [Cancel TX](#cancel-tx)
+API will include the following methods.
 
-## Init
-Sends from client to wallet to create new wallet.
-``` json
+## API
+
+### create_address
+Creates new receiver address.
+
+`-->`
+```json
 {
-	"jsonrpc": "2.0", 
-	"method" : "init",
-	"params" : 
+	"jsonrpc":"2.0", 
+	"id": 1,
+	"method":"create_address", 
+	"params":
 	{
-		"phrases" : "meadow;mystery;hedgehog;shoulder;robust;ice;people;snap;unique;lava;adjust;fame;",
-		"pass" : "wallet_pass",		
-	},
-	"id" : 1234
+		"metadata": "string encoded JSON metadata"
+	}
 }
 ```
 
-**Result**
-
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"result" : "done",
-	"id" : 1234
-}
-```
-or with error
-``` json
-{
-	"jsonrpc": "2.0", 
-	"error" : {"code": 1, "message": "Wallet already exists."},
-	"id" : 1234
+	"jsonrpc":"2.0", 
+	"id": 1,
+	"result":"472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
 }
 ```
 
-## Open
-Sends from client to wallet to open existing wallet.
-``` json
+### send
+Sends transactions with specific value to a given address.
+
+`-->`
+```json
 {
-	"jsonrpc": "2.0", 
-	"method" : "open",
-	"params" : 
+	"jsonrpc":"2.0", 
+	"id": 2,
+	"method":"send", 
+	"params":
 	{
-		"pass" : "wallet_pass",		
-	},
-	"id" : 1234
+		"value" : "1.2342342",
+		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67" 
+	}
 }
 ```
 
-**Result**
-
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"result" : "done",
-	"id" : 1234
-}
-```
-or with error
-``` json
-{
-	"jsonrpc": "2.0", 
-	"error" : {"code": 2, "message": "Wallet data unreadable, restore wallet.db from latest backup or delete it and reinitialize the wallet."},
-	"id" : 1234
-}
-```
-
-## Treasury
-Sends from client to wallet to generate treasury.
-
-where
-
-`count` - treasury UTXO count
-
-`height` - treasury UTXO height lock step
-
-`value` - treasury value of each UTXO (in *Beams*)
-
-
-``` json
-{
-	"jsonrpc": "2.0", 
-	"method" : "treasury",
-	"params" : 
+	"jsonrpc":"2.0", 
+	"id": 2,
+	"result":
 	{
-		"count" : 30,
-		"height" : 1440,
-		"value" : 10
-	},
-	"id" : 1234
+		"txid" : "12345"
+	}
 }
 ```
+Returns transaction id or error code (TBD)
 
-**Result**
+### replace
+Replaces all pending transactions for existing address with new transactions with the same value and new address.
 
-``` json
+`-->`
+```json
 {
-	"jsonrpc": "2.0", 
-	"result" : "done",
-	"id" : 1234
-}
-```
-or with error
-``` json
-{
-	"jsonrpc": "2.0", 
-	"error" : {"code": 3, "message": "Treasury not generated..."},
-	"id" : 1234
-}
-```
-
-## Info
-Sends from client to wallet to get current wallet state.
-``` json
-{
-	"jsonrpc": "2.0", 
-	"method" : "info",
-	"params" : {},
-	"id" : 1234
-}
-```
-
-**Result**
-
-``` json
-{
-	"jsonrpc": "2.0", 
-	"result" : 
+	"jsonrpc":"2.0", 
+	"id": 3,
+	"method":"replace", 
+	"params":
 	{
-		"summary" : 
-		{
-			"current_height" : 12345,
-			"current_state_id" : 12345,
-			"available" : 12345,
-			"unconfirmed" : 12345,
-			"locked" : 12345,
-			"draft" : 12345,
-			"available_coinbase " : 12345,
-			"total_coinbase" : 12345,
-			"avaliable_fee" : 12345,
-			"total_fee" : 12345,
-			"total_unspent" : 12345,
-		},
-
-		"tx_history" :
-		[
-			{
-				"datetime" : 462817648736,
-				"amount" : 100000,
-				"status" : 2,
-				"id" : 123,
-			},
-			...
-		],
-
-		"utxo" :
-		[
-			{
-				"id" : 123,
-				"amount" : 80,
-				"height" : 1235,
-				"maturity" : 3000,
-				"status" : 3,
-				"key_type" : 1,
-			},
-			...
-		]
-	},
-	"id" : 1234
+		"existing_addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+		"new_addr" : "ae671579b0ac0dcd6f1a23b11a75ab148cc67472e17b0419055ffee3b3813b98" 
+	}
 }
 ```
 
-## New address
-Sends from client to wallet to generate new address.
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"method" : "new_addr",
-	"params" : 
+	"jsonrpc":"2.0", 
+	"id": 3,
+	"result":"ok"
+}
+```
+
+### status
+Checks status of existing transaction. Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 4,
+	"method":"status", 
+	"params":
 	{
-		"label" : "..."
-	},
-	"id" : 1234
+		"txid" : "123" 
+	}
 }
 ```
 
-**Result**
-
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"result" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-	"id" : 1234
+	"jsonrpc":"2.0", 
+	"id": 4,
+	"result":2
 }
 ```
 
-## Send
-Sends from client to wallet to send *Beams* to receiver address.
-``` json
+### split
+Creates a specific set of outputs with given set of values.
+
+`-->`
+```json
 {
-	"jsonrpc": "2.0", 
-	"method" : "send",
-	"params" : 
+	"jsonrpc":"2.0", 
+	"id": 5,
+	"method":"split", 
+	"params":
 	{
-		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-		"amount" : 15.001,
-		"fee" : 10,
-		"metadata" : "<meta>any corresponding info for the transaction</meta>"
-	},
-	"id" : 1234
+		"outputs" : ["1.13", "2.54", "3.55"]
+	}
 }
 ```
 
-**Result**
-
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"result" : 
+	"jsonrpc":"2.0", 
+	"id": 5,
+	"result":""
+}
+```
+
+### balance
+Get current balance for specific utxo type (`coinbase(0)`, `regular(1)`) and address.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"method":"balance", 
+	"params":
 	{
-		"status" : "done",
-		"metadata" : "<meta>any corresponding info for the transaction</meta>"
-	},
-	"id" : 1234
+		"type" : 0,
+		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
+	}
 }
 ```
-or with error
-``` json
+
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"error" : 
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"result":"145.00003"
+}
+```
+
+### create_utxo
+Called by the node to get new coinbase UTXO.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 7,
+	"method":"create_utxo", 
+	"params":
 	{
-		"code": 10, 
-		"message": "Unable to send negative amount of coins.",
-		"metadata" : "<meta>any corresponding info for the transaction</meta>"
-	},
-	"id" : 1234
+		"value" : "80", 
+		"type" : "coinbase"
+	}
 }
 ```
 
-## Cancel TX
-Sends from client to wallet to cancel a running transaction.
-``` json
+`<--`
+```json
 {
-	"jsonrpc": "2.0", 
-	"method" : "cancel_tx",
-	"params" : 
-	{
-		"tx_id" : "12345"	
-	},
-	"id" : 1234
+	"jsonrpc":"2.0", 
+	"id": 7,
+	"result":"ok"
 }
 ```
 
-**Result**
+## Callbacks
+The following callbacks will be triggered by the wallet in case of various transaction events.
 
-``` json
-{
-	"jsonrpc": "2.0", 
-	"result" : "done",
-	"id" : 1234
-}
-```
+### Transaction received
+Triggered each time transaction request is received. Reports transaction id, address, value and metadata.
 
+### Transaction failed
+Triggered when transaction fails. Reports transaction id, address, value and metadata.
 
-## Error codes
+### Transaction completed
+Triggered when transaction was completed successfully. Reports transaction id, address, value and metadata.
 
-TODO: Here will be list with error codes and description...
+### Transaction confirmed
+Triggered when transaction is confirmed by the blockchain. Reports transaction id, address, value and metadata.
