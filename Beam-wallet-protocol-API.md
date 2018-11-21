@@ -1,5 +1,6 @@
 
 
+
 # Beam wallet protocol API (draft)
 Wallet API will have the same structure as Node API.
 
@@ -191,18 +192,34 @@ Called by the node to get new coinbase UTXO.
 	"result":"ok"
 }
 ```
+### poll
+Wallet transactions polling.
 
-## Callbacks
-The following callbacks will be triggered by the wallet in case of various transaction events.
-
-### Transaction received
-Triggered each time transaction request is received. Reports transaction id, address, value and metadata.
-
-### Transaction failed
-Triggered when transaction fails. Reports transaction id, address, value and metadata.
-
-### Transaction completed
-Triggered when transaction was completed successfully. Reports transaction id, address, value and metadata.
-
-### Transaction confirmed
-Triggered when transaction is confirmed by the blockchain. Reports transaction id, address, value and metadata.
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 8,
+	"method":"poll"
+}
+```
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 8,
+	"result":
+	{
+		"txid" : "1234",
+		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+		"value" : "56.3",
+		"metadata" : "<meta>custom data defined before</meta>",
+		"state" : 1
+	}
+}
+```
+`state` can be:
+- `received(0)` - transaction request is received.
+- `failed(1)` - transaction request is failed.
+- `completed(2)` - transaction request is completed.
+- `confirmed(3)` - transaction request is confirmed.
