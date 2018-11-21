@@ -19,6 +19,11 @@ For effective investigation please attach the following items for every issue:
 * [Beam Technical Specifications](https://github.com/beam-mw/beam/wiki/Beam-Technical-Specifications)
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
 
+# APIs
+
+* [Beam Mining API](https://github.com/BeamMW/beam/wiki/Beam-mining-protocol-API)
+* [Beam Wallet API](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API)
+
 # Research
 
 * [Eliminating transaction kernels](https://github.com/beam-mw/beam/wiki/Thoughts:-eliminating-transaction-kernels)
