@@ -48,8 +48,8 @@ peer=104.248.159.154:8100
 | `p arg` or `port arg (=10000)` | port to start the server on |
 | `wallet_seed arg` | secret key generation seed |
 | `wallet_phrases arg` | phrases to generate secret key according to BIP-39, `wallet_seed` option will be ignored |
-| `log_level arg` | log level `[info|debug|verbose]` |
-| `file_log_level arg` | file log level `[info|debug|verbose]` |
+| `log_level arg` | log level `[info/debug/verbose]` |
+| `file_log_level arg` | file log level `[info/debug/verbose]` |
 | `v` or `version` | return project version |
 | `git_commit_hash` | return commit hash |
 
