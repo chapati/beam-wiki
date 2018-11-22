@@ -59,7 +59,7 @@ peer=104.248.159.154:8100
 | `storage arg (=node.db)` | node storage path |
 | `history_dir arg (=./)` | directory for compressed history |
 | `temp_dir arg (=/tmp/)` | temp directory for compressed history, must be on the same volume |
-| `miner_type arg (=cpu)` | miner type "[cpu|gpu]" |
+| `miner_type arg (=cpu)` | miner type [cpu/gpu] |
 | `mining_threads arg (=0)` | number of mining threads(there is no mining if 0) |
 | `verification_threads arg (=-1)` | number of threads for cryptographic verifications (0 = single thread, -1 = auto) |
 | `miner_id arg (=0)` | seed for miner nonce generation |
