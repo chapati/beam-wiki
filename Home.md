@@ -7,6 +7,8 @@ For effective investigation please attach the following items for every issue:
 * Configuration file
 * Command line parameters of the executed binary
 
+* [How to Build](https://github.com/BeamMW/beam/wiki/How-to-build)
+
 # Manuals
 
 * [Instructions for Command Line Node](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
