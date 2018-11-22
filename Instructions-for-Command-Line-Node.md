@@ -36,6 +36,9 @@ mining_threads=1
 
 # peers
 peer=104.248.159.154:8100
+
+# miner type
+miner_type=cpu
 ```
 
 # The full list of options supported by the node
