@@ -7,3 +7,4 @@ For now we separate our builds in two categories:
 If you are not sure is the AVX support at your PC please check description of your processor. 
 Example:
 ![](https://prntscr.com/llj6jf)
+![intel example](https://prntscr.com/llj6jf)
