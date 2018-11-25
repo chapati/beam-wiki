@@ -34,7 +34,7 @@
 
 # Node or CLI wallet
 
-# Windows
+## Windows
 | File | Location |
 |-----|-----|
 | Main Executable folder | `\Program Files\Beam\` |
@@ -43,7 +43,7 @@
 | Database | `\Users\{your User name}\AppData\Local\Beam Wallet\` | 
 | Dumps | `\Users\{your User name}\AppData\Local\Beam Wallet\` |
 
-# Mac
+## Mac
 | File | Location |
 |-----|-----|
 | Main Executable folder | ? |
@@ -51,7 +51,7 @@
 | Logs | Mac | `/Users/{your User name}/Library/Application Support/Beam Wallet/logs` |
 | Database | Mac | `/Users/{your User name}/Library/Application Support/Beam Wallet/` |
 
-# Linux
+## Linux
 | File | Location |
 |-----|-----|
 | Main Executable folder | `/usr/bin/` |
