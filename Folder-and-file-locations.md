@@ -1,3 +1,5 @@
+# All files
+
 | File | Windows | Mac | Linux |
 |-----|-----|-----|-----|
 | Main Executable | `\Program Files\Beam\Beam Wallet.exe` (default location, can be changed during the installation process) | `/Applications/Beam Wallet.app` | `/usr/bin/BeamWallet` |
@@ -6,7 +8,7 @@
 | Logs | see below | see below | see below |
 | Dumps | see below | N/A | N/A |
 
-Log locations:
+# Logs
 
 | Executable | Platform | Log location |
 |-----|-----|-----|
@@ -15,11 +17,13 @@ Log locations:
 | Desktop Wallet app | Mac | `/Users/{your User name}/Library/Application Support/Beam Wallet/logs` |
 | Desktop Wallet app | Linux | `/home/{your User name}/.local/share/Beam Wallet/logs` |
 
-Dump locations (are created for Windows executables only):
+# Dumps:
+
+Dumps are created on Windows only:
 
 | Executable | Dump location |
 |-----|-----|
-| Wallet Desktop app | \Users\{your User name}\AppData\Local\Beam Wallet\ |
+| Wallet Desktop app | `\Users\{your User name}\AppData\Local\Beam Wallet\` |
 | Node, CLI wallet | Same folder with the executable |
 
 
