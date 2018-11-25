@@ -2,11 +2,15 @@
 
 | File | Windows | Mac | Linux |
 |-----|-----|-----|-----|
-| Main Executable | `\Program Files\Beam\Beam Wallet.exe` (default location, can be changed during the installation process) | `/Applications/Beam Wallet.app` | `/usr/bin/BeamWallet` |
+| Main Executable | `\Program Files\Beam\Beam Wallet.exe`| `/Applications/Beam Wallet.app` | `/usr/bin/BeamWallet` |
 | Configuration file | `\Program Files\Beam\beam-<node_or_wallet>.cfg` (located at the same folder as the executable) | N/A | `/usr/bin/beam-<node_or_wallet>.cfg` |
-| Database the default location can be changed adding the `appdata` parameter to `beam-wallet.cfg` for Desktop Wallet app | `\Users\{your User name}\AppData\Local\Beam Wallet\` | `/Users/{your User name}/Library/Application Support/Beam Wallet/` | `/home/{your User name}/.local/share/Beam Wallet/` |
+| Database | `\Users\{your User name}\AppData\Local\Beam Wallet\` | `/Users/{your User name}/Library/Application Support/Beam Wallet/` | `/home/{your User name}/.local/share/Beam Wallet/` |
 | Logs | see below | see below | see below |
 | Dumps | see below | N/A | N/A |
+
+Points to mention:
+* Default location of the Desktop Wallet app can be modified during the installation process (Windows only).
+* The default Database location for the Desktop Wallet app can be changed setting the `appdata` parameter to `beam-wallet.cfg` (all platforms).
 
 # Logs
 
