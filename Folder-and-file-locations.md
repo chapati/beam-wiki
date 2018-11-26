@@ -9,8 +9,8 @@
 | File | Location |
 |-----|-----|
 | Main Executable | `\Program Files\Beam\Beam Wallet.exe`| 
-| Configuration file | ? |
-| Logs | `C:\Users\\{your User name}\AppData\Local\Beam Wallet\logs` | 
+| Configuration file | `\Program Files\Beam\` |
+| Logs | `\Users\\{your User name}\AppData\Local\Beam Wallet\logs` | 
 | Database | `\Users\{your User name}\AppData\Local\Beam Wallet\` | 
 | Dumps | `\Users\{your User name}\AppData\Local\Beam Wallet\` |
 
