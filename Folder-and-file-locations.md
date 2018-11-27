@@ -47,15 +47,15 @@
 | File | Location |
 |-----|-----|
 | Main Executable folder | `{where user wants}` |
-| Configuration file | {node or cli wallet executable folder} |
-| Logs | Mac | `/Users/{your User name}/Library/Application Support/Beam Wallet/logs` |
-| Database | Mac | `/Users/{your User name}/Library/Application Support/Beam Wallet/` |
+| Configuration file | `{node or cli wallet executable folder}` |
+| Logs | `{node or cli wallet executable folder}` |
+| Database | `{node or cli wallet executable folder}` |
 
 ## Linux
 | File | Location |
 |-----|-----|
-| Main Executable folder | `/usr/bin/` |
-| Configuration file | ? |
-| Logs | Linux | `/home/{your User name}/.local/share/Beam Wallet/logs` |
-| Database | Linux | `/home/{your User name}/.local/share/Beam Wallet/` |
+| Main Executable folder | `{where user wants}` |
+| Configuration file | `{node or cli wallet executable folder}` |
+| Logs | `{node or cli wallet executable folder}` |
+| Database | `{node or cli wallet executable folder}` |
 
