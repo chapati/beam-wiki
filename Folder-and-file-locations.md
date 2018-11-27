@@ -39,7 +39,7 @@
 |-----|-----|
 | Main Executable folder | User can unpack the archive in any folder to his convenience, *all the files/folders mentioned below are located within this folder* |
 | Main Executable file | `beam-node` or `beam-wallet` |
-| Configuration file | `/beam-node.cfg` or `beam-wallet.cfg` |
+| Configuration file | `beam-node.cfg` or `beam-wallet.cfg` |
 | Logs folder | `logs` | 
 | Database | `node.db` or `wallet.db` | 
 | Dumps (on Windows only) | `beam-node.exe0.dmp` |
