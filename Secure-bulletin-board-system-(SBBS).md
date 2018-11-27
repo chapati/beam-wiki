@@ -8,7 +8,7 @@ This logic implemented in class Node::Peer. It represents node’s peer and hand
 BBS messages are a part of node p2p protocol. 
 
 #### BbsSubscribe 
-Message to subscribe/unsubscribe to notification from node about new messages.
+Message tp allow clent to subscribe/unsubscribe to notification from node about new messages.
 
 * `BbsChannel m_Channel` – channel to listen.
 * `Timestamp m_TimeFrom` – timestamp used to avoid sending of out of date messages.
@@ -35,7 +35,7 @@ In order to handle this message node checks if it already has this message, if i
 Peer server request for bbs message, occurs as a response to `BbsHaveMsg`.
 
 * `BbsMsgID m_Key`
-If node has requested bbs message it sends it back as `BbsMsg`.
+If node has bbs message with given key it sends it back as `BbsMsg`.
 
 #### BbsPickChannel
 Client asks server for recommended channel, this message is used together with.
@@ -57,7 +57,7 @@ This class contains references to
 When wallet wants to create new address (from cli, ui ) or load already created addresses from database `AddOwnAddress()` is called. This method calls `IWalletDB::calcKey()` with key type Bbs to generate private key for BBS, the public key is created using proto::Sk2Pk(). Index, used for generation private key is stored in _wallet.db_. Then wallet choose channel. If client has not subscribed to chosen channel, the 
 `BbsSubscribe` message is posted to node via `m_NodeNetwork`.
 If wallet wants to send a message via Bbs it calls overridden method Send(). In this method given message is encrypted using `proto::BbsEncrypt()` and send it to `m_NodeNetwork`.
-Every 1 minute the timestamps are saved to database.
+If wallet received bbs message it updates timestamp for the channel and store them to database.
 
 #### Usage of BBS to exchange message
 
