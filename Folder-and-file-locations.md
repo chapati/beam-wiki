@@ -9,7 +9,7 @@
 | File | Location |
 |-----|-----|
 | Main Executable | `\Program Files\Beam\Beam Wallet.exe`| 
-| Configuration file | `\Program Files\Beam\beam-wallet.cfg` |
+| Configuration | `\Program Files\Beam\beam-wallet.cfg` |
 | Logs | `\Users\\{your User name}\AppData\Local\Beam Wallet\logs` | 
 | Database | `\Users\{your User name}\AppData\Local\Beam Wallet\wallet.db (node.db)` | 
 | Dumps | `\Users\{your User name}\AppData\Local\Beam Wallet\Beam Wallet.exe0.dmp` |
@@ -19,7 +19,7 @@
 | File | Location |
 |-----|-----|
 | Main Executable | `/Applications/Beam Wallet.app` |
-| Configuration file | - |
+| Configuration | N/A |
 | Logs | `/Users/{your User name}/Library/Application Support/Beam Wallet/logs` |
 | Database | `/Users/{your User name}/Library/Application Support/Beam Wallet/wallet.db (node.db)` |
 
@@ -28,34 +28,20 @@
 | File | Location |
 |-----|-----|
 | Main Executable | `/usr/bin/BeamWallet` |
-| Configuration file | `/usr/bin/beam-wallet.cfg` |
+| Configuration | `/usr/bin/beam-wallet.cfg` |
 | Logs | `/home/{your User name}/.local/share/Beam Wallet/logs` |
 | Database |`/home/{your User name}/.local/share/Beam Wallet/wallet.db (node.db)` |
 
 # Node or CLI wallet
 
-## Windows
+## All Platforms (small differences apply, see below)
 | File | Location |
 |-----|-----|
-| Main Executable folder | `{where user wants}/beam-node (beam-wallet)` |
-| Configuration file | `{node or cli wallet executable folder}/beam-node.cfg (beam-wallet.cfg)` |
-| Logs | `{node or cli wallet executable folder}/logs` | 
-| Database | `{node or cli wallet executable folder}/node.db (wallet.db)` | 
-| Dumps | `{node or cli wallet executable folder}/beam-node.exe0.dmp` |
+| Main Executable folder | User can unpack the archive in any folder to his convenience, *all the files/folders mentioned below are located within this folder* |
+| Main Executable file | `beam-node` or `beam-wallet` |
+| Configuration file | `/beam-node.cfg` or `beam-wallet.cfg` |
+| Logs folder | `logs` | 
+| Database | `node.db` or `wallet.db` | 
+| Dumps (on Windows only) | `beam-node.exe0.dmp` |
 
-## Mac
-| File | Location |
-|-----|-----|
-| Main Executable folder | `{where user wants}/beam-node (beam-wallet)` |
-| Configuration file | `{node or cli wallet executable folder}/beam-node.cfg (beam-wallet.cfg)` |
-| Logs | `{node or cli wallet executable folder}/logs` |
-| Database | `{node or cli wallet executable folder}/node.db (wallet.db)` |
-
-## Linux
-| File | Location |
-|-----|-----|
-| Main Executable folder | `{where user wants}/beam-node (beam-wallet)` |
-| Configuration file | `{node or cli wallet executable folder}/beam-node.cfg (beam-wallet.cfg)` |
-| Logs | `{node or cli wallet executable folder}/logs` |
-| Database | `{node or cli wallet executable folder}/node.db (wallet.db)` |
 
