@@ -1,3 +1,4 @@
+# Secure bulletin board system (SBBS)
 ## Overview
 The main goal of BBS is to allow wallets to communicate with each other in a secure asynchronous way. Using BBS wallets can exchange messages even if one of them is offline.
 In general, BBS is a virtual board, where users can place messages. Each message is encrypted. For encryption the public key of the recipient is used. This implies that recipient’s public key is his address in terms of this system. Every participant, who is interested in messages from this board, observes it and tries to decrypt new messages with his private key and he succeeded only if message was addressed to him. It consists of server and client sides. Server is implemented as a part of the node. Client is a wallet.
