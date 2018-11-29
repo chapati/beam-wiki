@@ -3,6 +3,41 @@
 The process of creating transactions in Beam (and other MimbleWimble currencies) is interactive. 
 In order to create new Beam transaction, wallets have to communicate with each other. During this negotiation they may exchange with a wide range of parameters which should allow to create a transaction they need. As a result, the protocol between wallets should be extendable.
 
+
+## What is a transaction in Beam?
+Any transaction should contain:
+* List of input UTXOs (Inputs), they have to present in blockchain
+* List of newly created UTXOs (Outputs) and rangeproofs for each output
+* Explicit excess (offset)
+* Kernel
+
+### Kernel consist (at least):
+* Blinded excess 
+* Transaction fee
+* Minimal and Maximal height values. These values allow to control the time while transaction is valid. Node will not accept transaction if its height is lower than minimal height and greater than maximum height
+* Signature. This is a Schorr’s multi signature which signs all kernel’s values listed above
+
+### Simple transaction flow.
+Let’s we S wants to make a payment to R.
+* S and R have to agree about amount and fee.
+* S selects UTXOs which allow to pay amount + fee, if sum of UTXOs is greater, S creates output for the change. S creates overall blinding excess value xs and offset
+* R creates output for given amount and calculates blinding excess and offset
+* Both sides should generate nonces ks and kr respectively.
+* Both should pass each other public forms of excesses:
+  * ks*G and kr*G – public nonces
+  *  xs*G and xr*G – public blinding excessed
+* Both have to calculate 
+  * total blinding excess: X = xr*G + xs*G
+  * total public nonce: K = kr*G + ks*G
+* Both have to calculate Schorr’s signature challenge:
+   * e = H(K|M), where M is a signed message, it calculates from kernel and it includes X, fee, min height and max height
+* Both calculate and pass to each other partial signatures:
+  * S: ss = ks + e*xs
+  * R: sr= kr + e*xr
+* Final signature is calculated: s = ss + sr
+
+
+## Wallet-To-Wallet protocol
 The protocol itself consists of only one message. It should allow to implement all needed scenarios and transaction types. Also, this message can be encapsulated and passed to other part by using different means: as a direct message send over p2p connection or indirect with secure bulletin board system (SBBS) and others.
 
 ## SetTxParameter
