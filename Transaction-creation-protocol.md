@@ -11,7 +11,7 @@ Any transaction should contain:
 * Explicit excess (offset)
 * Kernel
 
-### Kernel consist (at least):
+### Kernel consists (at least):
 * Blinded excess 
 * Transaction fee
 * Minimal and Maximal height values. These values allow to control the time while transaction is valid. Node will not accept transaction if its height is lower than minimal height and greater than maximum height
