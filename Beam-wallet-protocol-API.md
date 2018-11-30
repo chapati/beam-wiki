@@ -22,10 +22,13 @@ Creates new receiver address.
 	"method":"create_address", 
 	"params":
 	{
+		"lifetime": 24,
 		"metadata": "string encoded JSON metadata"
 	}
 }
 ```
+
+where `lifetime` is expiration time in hours (`lifetime(-1)` will never expired)
 
 `<--`
 ```json
