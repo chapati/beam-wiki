@@ -18,24 +18,25 @@ Any transaction should contain:
 * Signature. This is a Schorr’s multi signature which signs all kernel’s values listed above
 
 ### Simple transaction flow.
-Let’s we **S** wants to make a payment to **R**.
-* **S** and **R** have to agree about `amount` and `fee`.
-* **S** selects UTXOs which allow to pay `amount + fee`, if sum of UTXOs is greater, **S** creates output for the change. **S** creates overall _blinding excess_ value `xs` and `offset`
-* **R** creates output for given `amount` and calculates _blinding excess_ `xr` and `offset`
-* Both sides should generate _nonces_ `ks` and `kr` respectively.
+Let’s we **Sender** wants to make a payment to **Receiver**.
+* **Sender** and **Rreceiver** have to agree about `amount` and `fee`.
+* **Sender** selects `inputs` which allow to pay `amount + fee`, if sum of 'inputs' is greater, **Sender** creates output for the change. **Sender** creates overall _blinding excess_ value `blindingExcess_S` and `offset_S`
+* **Receiver** creates output for given `amount` and calculates _blinding excess_ `blindingExcess_R` and `offset_R`
+* Both sides should generate _nonces_ `nonce_S` and `nonce_R` respectively.
 * Both should pass each other public forms of excesses:
-  * `ks*G` and `kr*G` – public nonces
-  *  `xs*G` and `xr*G` – public blinding excessed
+  * `publicNonce_S = nonce_S*G` and `publicNonce_R = nonce_R*G` – public nonces
+  *  `publicExcess_S = blindingExcess_S*G` and `publicExcess_R = blindingExcess_R*G` – public blinding excessed
 * Both have to calculate 
-  * total blinding excess: `X = xr*G + xs*G`
-  * total public nonce: `K = kr*G + ks*G`
+  * total blinding excess: `X = publicExcess_S + publicExcess_R`
+  * total public nonce: `K = publicNonce_S + publicNonce_R`
 * Both have to calculate Schorr’s signature challenge:
    * `e = H(K|M)`, where M is a signed message, it calculates from kernel and it includes X, fee, min height and max height
 * Both calculate and pass to each other partial signatures:
-  * S: ss = ks + e*xs
-  * R: sr= kr + e*xr
-* Final signature is calculated: s = ss + sr
+  * S: `partialSignature_S = publicNonce_S + e*publicExcess_S`
+  * R: `partialSignature_R = publicNonce_R + e*publicExcess_R`
+* Final signature is calculated: `signature = partialSignature_S + partialSignature_R`
 
+[[/images/SimpleTransactionFlow.png]]
 
 ## Wallet-To-Wallet protocol
 The protocol itself consists of only one message. It should allow to implement all needed scenarios and transaction types. Also, this message can be encapsulated and passed to other part by using different means: as a direct message send over p2p connection or indirect with secure bulletin board system (SBBS) and others.
