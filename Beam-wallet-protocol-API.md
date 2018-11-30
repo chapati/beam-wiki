@@ -1,6 +1,7 @@
 
 
 
+
 # Beam wallet protocol API (draft)
 Wallet API will have the same structure as Node API.
 
@@ -36,7 +37,7 @@ Creates new receiver address.
 ```
 
 ### send
-Sends transactions with specific value to a given address.
+Sends transactions with specific valueand session to a given address.
 
 `-->`
 ```json
@@ -46,6 +47,7 @@ Sends transactions with specific value to a given address.
 	"method":"send", 
 	"params":
 	{
+		"session" : 123,
 		"value" : "1.2342342",
 		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67" 
 	}
@@ -117,7 +119,7 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 ```
 
 ### split
-Creates a specific set of outputs with given set of values.
+Creates a specific set of outputs with given set of values and session.
 
 `-->`
 ```json
@@ -127,6 +129,7 @@ Creates a specific set of outputs with given set of values.
 	"method":"split", 
 	"params":
 	{
+		"session" : 123,
 		"outputs" : ["1.13", "2.54", "3.55"]
 	}
 }
@@ -142,18 +145,75 @@ Creates a specific set of outputs with given set of values.
 ```
 
 ### balance
-Get current balance for specific utxo type (`coinbase(0)`, `regular(1)`) and address.
+Get current balance.
 
 `-->`
 ```json
 {
 	"jsonrpc":"2.0", 
 	"id": 6,
-	"method":"balance", 
+	"method":"balance"
+}
+```
+
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"result":
+	{
+		"available" : "123.0004",
+		"in_progress" : "123.0004",
+		"locked" : "123.0004"
+	}
+}
+```
+
+### get_utxo
+Get list of all unlocked UTXOs.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"method":"get_utxo"
+}
+```
+
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"result":
+	[
+		{
+			"id" : 123,
+			"amount" : "45.003",
+			"height" : 5007,
+			"maturity" : 60,
+			"type" : 0
+		}
+	]
+}
+```
+`type` can be `Coinbase(0), Regular(1), Comission(3)`
+
+### lock
+Create session and lock UTXOs with specified IDs.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"method":"lock",
 	"params":
 	{
-		"type" : 0,
-		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
+		"session" : 345,
+		"ids" : [5,6,7,8]
 	}
 }
 ```
@@ -163,7 +223,40 @@ Get current balance for specific utxo type (`coinbase(0)`, `regular(1)`) and add
 {
 	"jsonrpc":"2.0", 
 	"id": 6,
-	"result":"145.00003"
+	"result":
+	{
+		"session" : 345,
+		"status" : "locked"
+	}
+}
+```
+
+### unlock
+Unlock all UTXOs for specified session.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"method":"lock",
+	"params":
+	{
+		"session" : 345
+	}
+}
+```
+
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 6,
+	"result":
+	{
+		"session" : 345,
+		"status" : "unlocked"
+	}
 }
 ```
 
