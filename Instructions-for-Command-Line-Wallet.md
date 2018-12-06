@@ -123,4 +123,4 @@ The Тestnet nodes can be used in the following scenarios:
 ```
 
 # Known limitations
-* CPU without SSE3 instruction set are not supported
+* CPUs without SSE3 instruction set are not supported
