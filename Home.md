@@ -1,13 +1,14 @@
 # Welcome to Beam Testnet 3
 
-See [Upgrade instructions from Testnet 2.2 to Testnet 3](https://github.com/BeamMW/beam/wiki/Upgrade-instructions-from-testnet-2.2-to-testnet-3)
-
 In case you encounter any problem, please open a GitHub ticket at https://github.com/BeamMW/beam/issues or email us at testnet@beam.mw
 
 For effective investigation please attach the following items for every issue:
 * Logs, compressed into a single archive
 * Configuration file
 * Command line parameters of the executed binary
+
+For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/BeamMW/beam/wiki/Upgrade-instructions-from-testnet-2.2-to-testnet-3).
+
 
 # Manuals
 
