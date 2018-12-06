@@ -14,6 +14,6 @@
 At this time only single GPU per miner client is supported
 
 # See also:
-https://github.com/BeamMW/beam/wiki/Instructions-for-Command-Line-Node and scroll down to "Running Beam Node with Stratum Server"
+[Instructions for Command Line Node](https://github.com/BeamMW/beam/wiki/Instructions-for-Command-Line-Node) and scroll down to "Running Beam Node with Stratum Server"
 
 
