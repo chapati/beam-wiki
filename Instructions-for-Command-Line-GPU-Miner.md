@@ -11,7 +11,9 @@
 ```
 
 # Known limitation:
-At this time only single GPU per miner client is supported
+* At this time only single GPU per miner client is supported
+* CPUs without SSE3 instruction set are not supported
+
 
 # See also:
 [Instructions for Command Line Node](https://github.com/BeamMW/beam/wiki/Instructions-for-Command-Line-Node): scroll down to "Running Beam Node with Stratum Server"
