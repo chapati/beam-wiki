@@ -4,7 +4,7 @@
 ``` sh
 ./beam-wallet --command init
 ```
-* You will be prompted to provide wallet password and then seed (or `wallet_phrases`). If your node is running in a miner mode (mining threads > 0), the seed (phrases) should be the same as was set in the `--wallet_seed` (or `wallet_phrases`) flag of the node
+* You will be prompted to provide wallet password and then seed (or `wallet_phrase`). If your node is running in a miner mode (mining threads > 0), the seed (phrase) should be the same as was set in the `--wallet_seed` (or `wallet_phrase`) flag of the node
 
 
 # Printing wallet information
@@ -51,7 +51,7 @@
 | `h` or `help` | list of all options |
 | `p`  or `port arg (=10000)` | port to start the server on |
 | `wallet_seed arg` | secret key generation seed |
-| `wallet_phrases arg` | phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored |
+| `wallet_phrase arg` | phrase to generate secret key according to BIP-39. `wallet_seed` option will be ignored |
 | `log_level arg` | log level `[info|debug|verbose]` |
 | `file_log_level arg` | file log level `[info|debug|verbose]` |
 | `v` or `version` | return project version |

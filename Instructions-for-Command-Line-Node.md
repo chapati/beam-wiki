@@ -11,7 +11,7 @@
 # Command line execution example:
 
 ``` sh
-./beam-node --peer 104.248.159.154:8100 --wallet_phrases memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube; --mining_threads 1 --file_log_level debug
+./beam-node --peer 104.248.159.154:8100 --wallet_phrase memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube; --mining_threads 1 --file_log_level debug
 ```
 
 ## Node command line parameters explained:
@@ -19,7 +19,7 @@
 |------|-------------|
 | `peer` | Specifies a comma-separated list of peers the node will initially connect to. After the connection is established, the node will get an updated list of peers from other nodes, along with peer ratings and from that moment the node will manage its connections on its own. |
 | `wallet_seed` | A secret key for the wallet that will connect to this node to collect mining rewards (if the node is mining |
-| `wallet_phrases` | Phrases to generate secret key according to BIP-39. `wallet_seed` option will be ignored. |
+| `wallet_phrase` | Phrase to generate secret key according to BIP-39. `wallet_seed` option will be ignored. |
 | `mining_treads` | Specifies the number of CPU cores utilized for mining. If set to 0, node acts as a validating node only. |
 | `file_log_level` | Allows to raise the debug level when a deeper investigation is required. |
 
@@ -30,7 +30,7 @@
 port=10000
 
 # secret key generation seed.
-wallet_phrases=memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube;
+wallet_phrase=memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube;
 
 # number of mining threads(there is no mining if 0)
 mining_threads=1
@@ -51,7 +51,7 @@ miner_type=cpu
 | `h` or `help`| list of all options |
 | `p arg` or `port arg (=10000)` | port to start the server on |
 | `wallet_seed arg` | secret key generation seed |
-| `wallet_phrases arg` | phrases to generate secret key according to BIP-39, `wallet_seed` option will be ignored |
+| `wallet_phrase arg` | phrase to generate secret key according to BIP-39, `wallet_seed` option will be ignored |
 | `log_level arg` | log level `[info/debug/verbose]` |
 | `file_log_level arg` | file log level `[info/debug/verbose]` |
 | `v` or `version` | return project version |
@@ -93,7 +93,7 @@ miner_type=cpu
 # Command line execution example
 
 ``` sh
-./beam-node --port {NODE_PORT} --peer {PEER_IP} --stratum_port {STRATUM_PORT} --stratum_secrets_path {DIRECTORY} --wallet_phrases "torch;blind;cement;sort;upper;luxury;feel;scissors;neglect;advance;tray;repair;"
+./beam-node --port {NODE_PORT} --peer {PEER_IP} --stratum_port {STRATUM_PORT} --stratum_secrets_path {DIRECTORY} --wallet_phrase "torch;blind;cement;sort;upper;luxury;feel;scissors;neglect;advance;tray;repair;"
 ```
 
 ## Command line parameters
@@ -103,7 +103,7 @@ miner_type=cpu
 | `port` | port to start the node server on |
 | `peer` | nodes to connect to (in example remote node from masternet) |
 | `stratum_port` | stratum server port (should be >0) |
-| `wallet_phrases` | phrases to generate secret key according to BIP-39 |
+| `wallet_phrase` | phrase to generate secret key according to BIP-39 |
 | `stratum_secrets_path` | folder where configuration files are located |
 
 ## Configuration files
