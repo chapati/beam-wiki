@@ -130,3 +130,6 @@ sfdskjhfdksk
 If there is no `stratum.api.keys`, ACL will be switched off.
 
 Please note that `stratum.api.key` file is reloaded by the server every 5 seconds, if you want to add/delete/edit  key you shouldn't restart `beam-node`, just edit file `stratum.api.keys` file.
+
+# Known limitations
+* CPU without SSE3 instruction set are not supported
