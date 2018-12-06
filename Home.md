@@ -23,7 +23,7 @@ For effective investigation please attach the following items for every issue:
 
 # APIs
 
-* [Beam Mining API](https://github.com/BeamMW/beam/wiki/Beam-mining-protocol-API)
+* [Beam Mining API (Stratum)](https://github.com/BeamMW/beam/wiki/Beam-mining-protocol-API-(Stratum))
 * [Beam Wallet API](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API)
 
 # Research
