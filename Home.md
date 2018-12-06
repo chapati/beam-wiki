@@ -1,4 +1,4 @@
-# Welcome to Beam Testnet 2
+# Welcome to Beam Testnet 3
 
 In case you encounter any problem, please open a GitHub ticket at https://github.com/BeamMW/beam/issues or email us at testnet@beam.mw
 
