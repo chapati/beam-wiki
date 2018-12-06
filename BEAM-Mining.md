@@ -54,9 +54,6 @@ Instructions for running the node are available [here](https://github.com/beam-m
 For more complex configurations, one or more external miners can be connected to a Beam Node instance.
 The external miner software is available for download [here](https://www.beam.mw/downloads), and the detailed instructions for running it are (here)[https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-GPU-Miner].
 
-Useful Links:
-(Beam wiki home page)[https://github.com/BeamMW/beam/wiki]
-
 # How can you help?
 * Want to help developing Beam mining infrastructure? Have GPU development skills or experience with mining pools? Write to us at mining@beam.mw. Fair compensation will be offered to qualified developers.
 * Own a mining farm and want to mine Beam at launch? Join Beam Mining community on Telegram or contact us at mining@beam.mw.
