@@ -1,7 +1,7 @@
-# Running a miner
+# Running a GPU miner
 
-* Miner Client connects to Beam Node with Stratum server and performs mining jobs. It can be run on any amount of machines with GPU.
 * [Miner source code](https://github.com/BeamMW/beam/tree/master/pow)
+* Miner connects to Beam Node with Stratum server and performs mining jobs. It can be run on any amount of machines with GPU.
 
 
 # Command line execution example:
