@@ -7,12 +7,29 @@
 1. Open project folder in Visual Studio, select your target (`Release-x64` for example, if you downloaded 64bit Boost and OpenSSL) and select `CMake -> Build All`.
 1. Go to `CMake -> Cache -> Open Cache Folder -> beam` (you'll find `beam.exe` in the `beam` subfolder, `beam-wallet.exe` in `ui` subfolder).
 
-# Linux
-1. Make sure you have installed `g++-7 libboost-all-dev libssl-dev` packages.
-1. Install latest CMake `wget "https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.sh"` and `sudo sh cmake-3.12.0-Linux-x86_64.sh --skip-license --prefix=/usr`.
-1. Add proper QT 5.11 repository depending on your system https://launchpad.net/~beineri (for example, choose `Qt 5.10.1 for /opt Trusty` if you have Ubuntu 14.04), install `sudo apt-get install qt510declarative qt510svg` packages and add `export PATH=/opt/qt511/bin:$PATH`.  For Ubuntu 16.04 install `sudo apt install qtdeclarative5-dev libqt5svg5-dev`
-1. Go to Beam project folder and call `cmake -DCMAKE_BUILD_TYPE=Release . && make -j4`.
-1. You'll find _Beam_ binary in `bin` folder, `beam-wallet` in `ui` subfolder.
+# Linux (Ubuntu 14.04)
+1. Install `gcc7` `boost` `ssl` packages.
+```
+  sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+  sudo apt update
+  sudo apt install g++-7 libboost-all-dev libssl-dev -y
+```
+2. Set it up so the symbolic links `gcc`, `g++` point to the newer version:
+```
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                           --slave /usr/bin/g++ g++ /usr/bin/g++-7 
+  sudo update-alternatives --config gcc
+  gcc --version
+  g++ --version
+```
+3. Install latest CMake 
+```
+  wget "https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.sh"
+  sudo sh cmake-3.12.0-Linux-x86_64.sh --skip-license --prefix=/usr
+```
+4. Add proper QT 5.11 repository depending on your system https://launchpad.net/~beineri (for example, choose `Qt 5.10.1 for /opt Trusty` if you have Ubuntu 14.04), install `sudo apt-get install qt510declarative qt510svg` packages and add `export PATH=/opt/qt511/bin:$PATH`.
+5. Go to Beam project folder and call `cmake -DCMAKE_BUILD_TYPE=Release . && make -j4`.
+6. You'll find _Beam_ binary in `bin` folder, `beam-wallet` in `ui` subfolder.
 
 # Mac
 1. Install Brew Package Manager.
