@@ -121,3 +121,6 @@ The Тestnet nodes can be used in the following scenarios:
 159.65.104.75:8100
 142.93.213.106:8100
 ```
+
+# Known limitations
+* CPU without SSE3 instruction set are not supported
