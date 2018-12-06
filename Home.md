@@ -22,6 +22,7 @@ For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/Bea
 # Specifications
 
 * [Beam Technical Specifications](https://github.com/beam-mw/beam/wiki/Beam-Technical-Specifications)
+* [Beam Mining](https://github.com/BeamMW/beam/wiki/BEAM-Mining)
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
 
 # APIs
