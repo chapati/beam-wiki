@@ -1,6 +1,6 @@
 # Running a node
 
-* Node source code: [Node source code](https://github.com/BeamMW/beam/tree/master/beam)
+* [Node source code](https://github.com/BeamMW/beam/tree/master/beam)
 * Node binaries for Windows, Mac and Linux can be downloaded from the Beam website (http://beam.mw/downloads) or GitHub (https://github.com/BeamMW/beam/releases).
 * Node parameters can be either passed through command line or specified in the configuration file called `beam-node.cfg` and located in the same folder the node resides in.
 * For every parameter, the value in the command line prevails over configuration file.
