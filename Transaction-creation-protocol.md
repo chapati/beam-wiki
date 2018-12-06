@@ -1,37 +1,37 @@
 # Transaction creation protocol
 
-The process of creating transactions in Beam (and other MimbleWimble currencies) is interactive. 
-In order to create new Beam transaction, wallets have to communicate with each other. During this negotiation they may exchange with a wide range of parameters which should allow to create a transaction they need. As a result, the protocol between wallets should be extendable.
+The process of creating transactions in Beam (and other MimbleWimble currencies) is interactive.
+In order to create a new Beam transaction, the sending and receiving wallets have to communicate with each other. During this negotiation they may exchange a wide range of parameters which should allow to create the transaction they need. As a result, the protocol between wallets should be extendable.
 
 
 ## What is a transaction in Beam?
-Any transaction should contain:
+Any Beam transaction should contain the following:
 * List of input UTXOs (Inputs), they have to present in blockchain
 * List of newly created UTXOs (Outputs) and rangeproofs for each output
 * Explicit excess (offset)
 * Kernel
 
-### Kernel consists (at least):
+### Transaction Kernel consists of (at least) the following:
 * Blinded excess 
 * Transaction fee
-* Minimal and Maximal height values. These values allow to control the time while transaction is valid. Node will not accept transaction if its height is lower than minimal height and greater than maximum height
-* Signature. This is a Schorr’s multi signature which signs all kernel’s values listed above
+* Minimal and Maximal height values. These values allow to control the time in which the transaction is valid. Node will not accept a transaction if its height is lower than minimal height and greater than maximum height
+* Signature. This is a Schorr’s multi signature which signs all the values listed above
 
-### Simple transaction flow.
-Let’s we **Sender** wants to make a payment to **Receiver**.
-* **Sender** and **Rreceiver** have to agree about `amount` and `fee`.
-* **Sender** selects `inputs` which allow to pay `amount + fee`, if sum of 'inputs' is greater, **Sender** creates output for the change. **Sender** creates overall _blinding excess_ value `blindingExcess_S` and `offset_S`
+### A Simple transaction flow.
+Let’s say a **Sender** wants to make a payment to a **Receiver**.
+* **Sender** and **Receiver** have to agree about `amount` and `fee`.
+* **Sender** selects `inputs` which allow to pay `amount + fee`. If the sum of 'inputs' is greater than `amount + fee`, **Sender** also creates output for the change. **Sender** creates overall _blinding excess_ value `blindingExcess_S` and `offset_S`
 * **Receiver** creates output for given `amount` and calculates _blinding excess_ `blindingExcess_R` and `offset_R`
 * Both sides should generate _nonces_ `nonce_S` and `nonce_R` respectively.
-* Both should pass each other public forms of excesses:
+* Both sides should pass each other public forms of excesses:
   * `publicNonce_S = nonce_S*G` and `publicNonce_R = nonce_R*G` – public nonces
   *  `publicExcess_S = blindingExcess_S*G` and `publicExcess_R = blindingExcess_R*G` – public blinding excessed
-* Both have to calculate 
+* Both sides have to calculate 
   * total blinding excess: `X = publicExcess_S + publicExcess_R`
   * total public nonce: `K = publicNonce_S + publicNonce_R`
-* Both have to calculate Schorr’s signature challenge:
+* Both sides have to calculate Schorr’s signature challenge:
    * `e = H(K|M)`, where M is a signed message, it calculates from kernel and it includes X, fee, min height and max height
-* Both calculate and pass to each other partial signatures:
+* Both sides calculate and pass to each other partial signatures:
   * S: `partialSignature_S = publicNonce_S + e*publicExcess_S`
   * R: `partialSignature_R = publicNonce_R + e*publicExcess_R`
 * Final signature is calculated: `signature = partialSignature_S + partialSignature_R`
@@ -39,34 +39,34 @@ Let’s we **Sender** wants to make a payment to **Receiver**.
 [[/images/SimpleTransactionFlow.png]]
 
 ## Wallet-To-Wallet protocol
-The protocol itself consists of only one message. It should allow to implement all needed scenarios and transaction types. Also, this message can be encapsulated and passed to other part by using different means: as a direct message send over p2p connection or indirect with secure bulletin board system (SBBS) and others.
+The protocol itself consists of only one message. It should allow to implement all the required scenarios and transaction types. Also, this message can be encapsulated and passed to other part by using different means: as a direct message sent over a p2p connection or an indirect message sent using secure bulletin board system (SBBS) and others.
 
 ## SetTxParameter
 Transfers a pack of transaction’s parameters from one wallet to another. This message may initiate a new transaction. 
 
 -	`WalletID m_From` – the address which wallet wants to use for responses, used when sending messages over **SBBS**. `WalletID` is packed 8 bytes of BBS channel and 32 bytes of wallet’s public key.
--	`TxID m_TxID` – unique 16 byte transaction’s identifier. Generates by transaction initiator.
+-	`TxID m_TxID` – unique 16-byte transaction identifier. Generated by transaction initiator.
 -	`TxType m_Type` – transaction’s type like `Simple, AtomicSwap` etc. This field is used to create new transaction object, when this message is the first in a line, or for verification purposes.
 -	`std::vector<std::pair<TxParameterID, ByteBuffer>> m_Parameters` – vector of pairs of transaction’s parameters. Each parameter is a pair of ID from range [0...255], and value represented as a raw bytes buffer. ID values are separated in two parts: private and public (ids below `PrivateFirstParam == 128` are private). Public parameters come from outside and they are not allowed to be overridden. Private parameters do not have limitations.
 
 ## Example: Simple transaction
 
-Simple transaction is a payment with change and fee from wallet A to wallet B. 
+Simple transaction is a payment from Wallet A to Wallet B, with a change UTXO and fee. 
 
-### Wallet A sends invitation.
+### Wallet A sends an invitation.
 
 ```javascript
 SetTxParameter
 {
-    m_From: XXXXXX // chosen wallet’s ID to receive response.
-    m_TxID: 651798 //fills with newly generated random identifier.
+    m_From: XXXXXX // ID of the wallet to receive the response.
+    m_TxID: 651798 // newly generated random identifier.
     m_Type: TxType::Simple,
     [
         {TxParameterID::Amount, amount},
         {TxParameterID::Fee, fee},
         {TxParameterID::MinHeight, minHeight}, 
         {TxParameterID::MaxHeight, maxHeight}, 
-        {TxParameterID::IsSender, false}, // flag to say recipient that it is not a sender of coins.
+        {TxParameterID::IsSender, false}, // flag to distinguish the sender from the receiver.
         {TxParameterID::PeerInputs, inputs}, 
         {TxParameterID::PeerOutputs, outputs},
         {TxParameterID::PeerPublicExcess, publicExcess}, 
@@ -75,8 +75,8 @@ SetTxParameter
     ]
 }
 ```
-* `minHeight `- if height of chain is less than this value, then created transaction will not be taken into account.
-* `maxHeight` - if height of block chain is greater than this value then node will reject created transaction.
+* `minHeight `- if height of the blockchain is less than the specified value, the transaction will not be taken into account.
+* `maxHeight` - if height of the blockchain is greater than the specified then node will reject created transaction.
 * `inputs` - vector of inputs (commitments) chosen by sender.
 * `outputs` - vector of change outputs, created by sender.
 * `publicExcess` - public form of sender’s excess calculated from blinding factors of inputs and change output.
@@ -86,11 +86,11 @@ SetTxParameter
 
 
 ### Wallet B confirms invitation.
-It creates output for received amount, generates nonce to sign transaction.
+Wallet B creates an output for the received amount and generates a nonce to sign transaction.
 ```javascript
 SetTxParameter
 {
-    m_From: YYYYYY  // chosen wallet’s ID to receive response.
+    m_From: YYYYYY  // the ID of the wallet to receive response.
     m_TxID: 651798, // the same ID as sender.
     m_Type: TxType::Simple,
 
@@ -101,13 +101,13 @@ SetTxParameter
     ]
 }
 ```
-* `peerPublicExcess` - receiver’s public excess, calculated from output’s blinding factors.
+* `peerPublicExcess` - receiver’s public excess, calculated from the output’s blinding factors.
 * `receiversPartialSignature` - receiver’s part of Schnorr multi signature.
 * `publicNonce` - public form of nonce for signature.
 
 
-### Wallet A confirms transaction. 
-If receiver’s signature is valid, it calculates its part of signature
+### Wallet A confirms the transaction. 
+If the receiver’s signature is valid, it calculates its part of signature
 ```javascript
 SetTxParameter 
 {
@@ -119,13 +119,13 @@ SetTxParameter
     ]
 }
 ```
-`sendersPartialSignature` - sender's signature calculated
+`sendersPartialSignature` - the calculated signature of the sender
 
-Now wallet B has all data to create transaction and send it to node.
+Now wallet B has all data required to create transaction and send it to a node.
 
 ### Cancellation or error
 
-If any of participants wishes to interrupt this process for any reason then it sends
+If any of the participants wishes to interrupt the process for any reason, it sends the following message:
 ```javascript
 SetTxParameter 
 {
