@@ -1,6 +1,7 @@
 # Running a node
 
-* Node binaries for Windows, Mac and Linux can be downloaded from the Beam website (http://beam.mw/downloads) or GitHub (https://github.com/BeamMW/beam/releases/tag/testnet-2.2).
+* Node source code: [Node source code](https://github.com/BeamMW/beam/tree/master/beam)
+* Node binaries for Windows, Mac and Linux can be downloaded from the Beam website (http://beam.mw/downloads) or GitHub (https://github.com/BeamMW/beam/releases).
 * Node parameters can be either passed through command line or specified in the configuration file called `beam-node.cfg` and located in the same folder the node resides in.
 * For every parameter, the value in the command line prevails over configuration file.
 * The log files are located in the `logs` folder, which in turn resides in the node folder.
@@ -84,3 +85,48 @@ miner_type=cpu
 | `WindowForMedian arg (=25)` | How many blocks are considered in calculating the timestamp median |
 | `AllowPublicUtxos arg (=0)` | Set to allow regular (non-coinbase) UTXO to have non-confidential signature |
 | `FakePoW arg (=0)`| Don't verify PoW. Mining is simulated by the timer. For tests only |
+
+# Running Beam Node with Stratum Server
+
+* Beam node implements Stratum protocol for connecting external miner clients. Clients open a TCP connection to the node though which they receive jobs to mine blocks using Equihash mining protocol.
+
+# Command line execution example
+
+``` sh
+./beam-node --port {NODE_PORT} --peer {PEER_IP} --stratum_port {STRATUM_PORT} --stratum_secrets_path {DIRECTORY} --wallet_phrases "torch;blind;cement;sort;upper;luxury;feel;scissors;neglect;advance;tray;repair;"
+```
+
+## Command line parameters
+
+| Name | Description |
+|------|-------------|
+| `port` | port to start the node server on |
+| `peer` | nodes to connect to (in example remote node from masternet) |
+| `stratum_port` | stratum server port (should be >0) |
+| `wallet_phrases` | phrases to generate secret key according to BIP-39 |
+| `stratum_secrets_path` | folder where configuration files are located |
+
+## Configuration files
+
+| Name | Description |
+|------|-------------|
+| `stratum.crt` | TLS certificate |
+| `stratum.key` | private key for TLS |
+| `stratum.api.keys` | file with allowed api keys |
+
+For testing purposes ONLY `stratum.crt` and `stratum.key` can be downloaded from:
+
+* https://github.com/BeamMW/beam/blob/master/utility/unittest/test.crt
+* https://github.com/BeamMW/beam/blob/master/utility/unittest/test.key
+
+The stratum.api.keys file should contain any number of strings at least 7 symbols long without spaces each:
+
+```
+12345678
+sfdskjhfdksk
+984398349834
+```
+
+If there is no `stratum.api.keys`, ACL will be switched off.
+
+Please note that `stratum.api.key` file is reloaded by the server every 5 seconds, if you want to add/delete/edit  key you shouldn't restart `beam-node`, just edit file `stratum.api.keys` file.
