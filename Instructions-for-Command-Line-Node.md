@@ -119,7 +119,7 @@ For testing purposes ONLY `stratum.crt` and `stratum.key` can be downloaded from
 * https://github.com/BeamMW/beam/blob/master/utility/unittest/test.crt
 * https://github.com/BeamMW/beam/blob/master/utility/unittest/test.key
 
-The stratum.api.keys file should contain any number of strings at least 7 symbols long without spaces each:
+The stratum.api.keys file (which you create by yourself) should contain any number of strings at least 7 symbols long without spaces each:
 
 ```
 12345678
