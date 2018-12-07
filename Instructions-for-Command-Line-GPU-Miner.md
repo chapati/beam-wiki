@@ -16,7 +16,7 @@
 
 
 # See also:
-* [Instructions for Command Line Node](https://github.com/BeamMW/beam/wiki/Instructions-for-Command-Line-Node): scroll down to "Running Beam Node with Stratum Server"
+* [Running Beam Node with Stratum Server](https://github.com/BeamMW/beam/wiki/Instructions-for-Command-Line-Node#running-beam-node-with-stratum-server)
 * [Beam mining protocol API (Stratum)](https://github.com/BeamMW/beam/wiki/Beam-mining-protocol-API-(Stratum))
 
 
