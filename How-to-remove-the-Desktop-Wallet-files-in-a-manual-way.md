@@ -5,19 +5,19 @@ Points to mention:
 * On Mac and Windows the wallet files reside (by default) in a home directory of the user. In the examples below the user name is `sergei-beam` and `serge` on `Mac` and `Windows` respectively.
 * The suggested commands will unconditionally remove the files, an action which cannot be undone.
 
-# On Windows
+### On Windows
 Run the following command:
 ``` sh
 RD /s /q "C:\Users\serge\AppData\Local\Beam Wallet"
 ```
 
-# On Mac
+### On Mac
 Run the following command:
 ``` sh
 rm -R "/Users/sergei-beam/Library/Application Support/Beam Wallet"
 ```
 
-# On Linux
+### On Linux
 Run the following command:
 ``` sh
 rm -R ".local/share/Beam Wallet"
