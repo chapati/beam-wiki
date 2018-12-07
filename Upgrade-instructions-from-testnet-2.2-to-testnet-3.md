@@ -1,6 +1,6 @@
 ## Desktop wallet:
 
-* manually remove wallet files from the previous version
+* (manually remove)[https://github.com/BeamMW/beam/wiki/How-to-remove-the-Desktop-Wallet-files-in-a-manual-way] wallet files from the previous version
 * install the app over the existing version
 
 ## Mining node and CLI wallet:
