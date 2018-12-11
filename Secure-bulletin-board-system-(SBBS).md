@@ -1,22 +1,21 @@
 # Secure bulletin board system (SBBS)
 ## Overview
-The main goal of BBS is to allow wallets to communicate with each other in a secure and asynchronous manner. Using BBS wallets allows individuals to exchange messages, even if one of individuals is offline. In general, BBS is a virtual board, where users can place messages, and each message is encrypted. For encryption the public key of the recipient is used. This implies that recipient’s public key is his address in terms of this system. Every participant who is interested in messages from this board, observes and tries to decrypt new messages with his private key, and he manages to do so only if the message has been addressed to him. It consists of server and client sides. The server is implemented as a part of the node. The client is a wallet.
+The main goal of BBS is to allow wallets to communicate with each other in a secure and asynchronous manner. Using BBS wallets allows individuals to exchange messages, even if one of the individuals is offline. In general, BBS is a virtual board, where users can place messages, and each message is encrypted. For encryption, the public key of the recipient is used. This implies that the recipient’s public key is his address in terms of this system. Every participant who is interested in messages from this board, observes and tries to decrypt new messages with his private key, and he manages to do so only if the message has been addressed to him. It consists of server and client sides. The server is implemented as a part of the node. The client is a wallet.
 
 ## Server side
-BBS is a part of our node, this is not very good in general, but a working example is good enough to start. This implementation implies that messages are sent to n=32 (could be changed) channels. The channel is calculated from the public key (first 5 bits). Client has to subscribe to specific channel, and server will retranslate all new messages to subscribers. Also, server receives and stores in data base all new messages and exchange these messages with other servers using p2p protocol. This logic  implemented in class Node::Peer. It represents node’s peer and handles node’s P2P message. BBS messages are a part of node p2p protocol.
+BBS is a part of our node, This implementation implies that messages are sent to n=32 channels, which can ultimately change. The channel is calculated from the public key (first 5 bits). A client has to subscribe to a specific channel, and the server will retranslate all of the new messages to subscribers. Also, the server receives and stores within the database all new messages and exchanges these messages with other servers using a P2P protocol. This logic is implemented in class Node::Peer. It represents the node’s peer and handles the node’s P2P message. BBS messages are a part of node P2P protocol.
 
 #### BbsSubscribe
-Message tp allow clent to subscribe/unsubscribe to notification from node about new messages.
+Message `tp` allows clients to subscribe/unsubscribe to notifications from the node about new messages.
 
 * `BbsChannel m_Channel` – channel to listen.
-* `Timestamp m_TimeFrom` – timestamp used to avoid sending of out of date messages.
+* `Timestamp m_TimeFrom` – timestamp used to avoid sending of out-of-date messages.
 * `bool m_On` – subscribe/unsubscribe flag.
 
-When server receives this message from peer with `m_On == true` and `Node::Peer::m_Subscriptions` list doesn’t have it (the look up is made by channel), then node adds new instance of `Node::Bbs::Subscription` to this list and to Node:: `m_Bbs::m_Subscribed`. If node has messages for this channel sent after given timestamp, then it sends them as new `BbsMsg `to this subscriber. If `m_On == false` and given subscriber exists in `m_Subscriptions` list, node simply removes it.
-
+When the server receives this message from the peer with `m_On == true` and `Node::Peer::m_Subscriptions` list doesn’t have it (the look up is made by channel), then the node adds a new instance of `Node::Bbs::Subscription` to this list and to `Node::m_Bbs::m_Subscribed`. If the node has messages for this channel that are sent after given timestamp, then it sends them as a new `BbsMsg` to this subscriber. If `m_On == false` and a given subscriber exists in `m_Subscriptions` list, the node simply removes it.
 
 #### BbsMsg
-Message which is used to put encrypted message on to the board or to exchange between nodes.
+A message which is used to put an encrypted message onto the board or to exchange between nodes:
 
 * `BbsChannel m_Channel` – target channel.
 * `Timestamp m_TimePosted` – timestamp, when wallet has posted message to bbs.
@@ -24,36 +23,29 @@ Message which is used to put encrypted message on to the board or to exchange be
 
 When this message is received, server gets current timestamp. If `m_TimePosted` <= currentTime-24 hours, i.e. to old, or `m_TimePosted` > currentTime + 2 hour (someone generates messages from future), then node rejects this message. If it doesn’t have this message it stores it in database, sends `BbsHaveMsg`, to inform other peers about new bbs message, and sends `BbsMsg `to subscriberd interested in messages from `m_Channel`.
 
+When this message is received, the server gets a current timestamp. If `m_TimePosted <= currentTime-24` hours, i.e. too old, or `m_TimePosted > currentTime + 2` hours (someone generates messages from the future), then the node rejects this message. If it doesn’t have this message, it is stored in the database, and sent `BbsHaveMsg`, in order to inform other peers about new bbs message. It sends `BbsMsg` to subscribed interested in messages from `m_Channel`.
+
 #### BbsHaveMsg
-Message which is used by BBS server (node) to exchange information about message it has.
-* `BbsMsgID m_Key` – the key of the message, it defines as a hash of the `m_Message` and the `m_Channel` in `BbsMsg`
-In order to handle this message node checks if it already has this message, if it doesn’t it stores it into wait list `Node::m_Bbs::m_W` and sends `BbsGetMsg`.
+A Message which is used by BBS server (node) to exchange information about message that it has.
+* `BbsMsgID m_Key` – the message’s key. It is defined as a hash of the `m_Message` and the `m_Channel` in `BbsMsg`. In order to handle this message, the node checks if it already has this message. If it doesn’t, it stores it into waitlist `Node::m_Bbs::m_W` and sends `BbsGetMsg`.
 
 #### BbsGetMsg
-Peer server request for bbs message, occurs as a response to `BbsHaveMsg`.
-
-* `BbsMsgID m_Key`
-If node has bbs message with given key it sends it back as `BbsMsg`.
+A peer server request for bbs message, which occurs as a response to `BbsHaveMsg`.
+* `BbsMsgID m_Key` If the node has a bbs message with a given key, it sends it back as `BbsMsg`.
 
 #### BbsPickChannel
-Client asks server for recommended channel, this message is used together with.
+The Client asks the server for recommended channels.
 
 #### BbsPickChannelRes
 Server channel recommendation
-
-* `BbsChannel m_Channel` - recommended channel. Once in an hour (`Node::m_Cfg::m_Timeout::m_BbsCleanupPeriod_ms`) node tries to find channel which is populated less than 100 listeners (`Node::m_Cfg::m_BbsIdealChannelPopulation`). Found value is stored into `m_RecommendedChannel` and it is used as a response to `BbsPickChannel`.
-
+* `BbsChannel m_Channel` - recommended channel. Once in an hour `(Node::m_Cfg::m_Timeout::m_BbsCleanupPeriod_ms)` the node tries to find a channel which is populated with less than 100 listeners `(Node::m_Cfg::m_BbsIdealChannelPopulation)`. Found value is stored into `m_RecommendedChannel` and it is used as a response to `BbsPickChannel`.
 
 ## Client side
-In wallet BBS communication is placed in `WalletNetworkViaBbs` class. It allows to send message to BBS and it manages BBS keys and timestamps.
-This class contains references to 
+In the wallet, the BBS communication is placed in WalletNetworkViaBbs class. It allows to send a message to BBS and it manages BBS keys and timestamps. This class contains references to:
+* `IWallet& m_Wallet` - which is used for callbacks to wallet object.
+* `proto::FlyClient::INetwork& m_NodeNetwork` - which is used to communicate with the node.
 
-`IWallet& m_Wallet` - used for callbacks to wallet object.
-
-`proto::FlyClient::INetwork& m_NodeNetwork` - used to communicate with node.
-
-When wallet wants to create new address (from cli, ui ) or load already created addresses from database `AddOwnAddress()` is called. This method calls `IWalletDB::calcKey()` with key type Bbs to generate private key for BBS, the public key is created using proto::Sk2Pk(). Index, used for generation private key is stored in _wallet.db_. Then wallet choose channel. If client has not subscribed to chosen channel, the `BbsSubscribe` message is posted to node via `m_NodeNetwork`.
-If wallet wants to send a message via Bbs it calls overridden method Send(). In this method given message is encrypted using `proto::BbsEncrypt()` and send it to `m_NodeNetwork`. If wallet received bbs message it updates timestamp for the channel and store them to database.
+When the wallet wants to create a new address (from cli, ui) or load already-created addresses from the database, `AddOwnAddress()` is called. This method calls `IWalletDB::calcKey()` with the key type `Bbs` to generate a private key for BBS. The public key is created using `proto::Sk2Pk()`. Index, which is used for generating a private key that is stored in `wallet.db`. The wallet will then choose a channel. If the client has not subscribed to the chosen channel, the `BbsSubscribe` message is posted to the node via `m_NodeNetwork`. If the wallet wants to send a message via Bbs it calls the overridden method `Send()`. In this method, the given message is encrypted using `proto::BbsEncrypt()` and sent to `m_NodeNetwork`. If the wallet received the bbs message it updates the timestamp for the channel and stores them to the database.
 
 #### Usage of BBS to exchange message
 
@@ -61,7 +53,7 @@ There are two sides wallet **A** and wallet **B**.
 
 ##### **A** and **B**:
 
-* picks/or generates a pair of keys public and private
+* picks or generates a pair of keys public and private
 * choose channel//asks BBS server (node) for suitable
 * sends `BbsSubscribe` to chosen channel, if needed
 
@@ -75,6 +67,6 @@ There are two sides wallet **A** and wallet **B**.
 ##### Wallet **B**:
 
 * receives `BbsMsg`
-* updates timestamps for message channel
-* tries to decrypt bbs message using known key for message channel
-* if succeeded notifies wallet
+* updates timestamps for the message channel
+* tries to decrypt bbs message using the known key for message channel
+* if succeeded, it notifies wallet
