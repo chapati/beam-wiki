@@ -65,14 +65,10 @@
 | `f` or `fee arg (=0)` | fee (in Beams, 1 Beam = 1000000 chattle) |
 | `r` or `receiver_addr arg` | address of receiver |
 | `n` or `node_addr arg` | address of node |
-| `treasury_path arg (=treasury.mw)` | Block to create/append treasury to |
 | `wallet_path arg (=wallet.db)` | path to wallet file |
 | `bbs_keystore_path arg (=bbs_keys.db)` | path to file with bbs keys |
 | `tx_history` | print transactions' history in info command |
-| `tr_Count arg (=30)` | treasury UTXO count |
-| `tr_HeightStep arg (=1440)` | treasury UTXO height lock step |
-| `tr_BeamsPerUtxo arg (=10)` | treasury value of each UTXO (in Beams) |
-| `command arg` | command to execute `[send|receive|listen|init|info|treasury]`
+| `command arg` | command to execute `[send|receive|listen|init|info]`
 
 ## Rules configuration:
 
