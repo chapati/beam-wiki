@@ -11,15 +11,16 @@
 # Command line execution example:
 
 ``` sh
-./beam-node --peer 104.248.159.154:8100 --wallet_phrase memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube; --mining_threads 1 --file_log_level debug
+./beam-node --peer 104.248.159.154:8100 --mining_threads 1 --file_log_level debug --key_mine=Ipte/cVRHvS72U4h66KIDDILwtIhpsRugTWycwnDUqwOqFq+qmcVEuWhjPJ2OwBn6ZkxKKpLX0W9PvHhGIUVPz8d6CL5CSB8fjt4kA== --key_view=xj7uVZh7kWaY2U4h66KIDDILwtIhpsRugTWycwnDUqwOqFq+qmcVEuVqiydGxomYaF2lQcc92Rzm3HBqsvk9LrFZlrksacvpDgteNLqxQJ4DUD+iKiDYvXy+VLCui125Rw69lO+8gxnxMM5j1rk= --pass=123
 ```
 
 ## Node command line parameters explained:
 | Name | Description |
 |------|-------------|
 | `peer` | Specifies a comma-separated list of peers the node will initially connect to. After the connection is established, the node will get an updated list of peers from other nodes, along with peer ratings and from that moment the node will manage its connections on its own. |
-| `wallet_seed` | A secret key for the wallet that will connect to this node to collect mining rewards (if the node is mining |
-| `wallet_phrase` | Phrase to generate secret key according to BIP-39. `wallet_seed` option will be ignored. |
+| `key_mine` | A password-protected secret key, exported by the wallet, that should be used for standalone mining (when the owner wallet is offline). If not specified - mining would be possible only when the owner wallet is online |
+| `key_view` | A semicolon-separated list of password-protected viewer keys, exported by the wallet, that should be monitored by the node. The wallet master viewer key is also needed for node-wallet authentication. The `key_mine`, if set, is also included implicitly |
+| `pass` | A password that should be used to access they encoded keys. |
 | `mining_treads` | Specifies the number of CPU cores utilized for mining. If set to 0, node acts as a validating node only. |
 | `file_log_level` | Allows to raise the debug level when a deeper investigation is required. |
 
@@ -29,8 +30,14 @@
 # port to start server on
 port=10000
 
-# secret key generation seed.
-wallet_phrase=memory;cancel;brave;play;power;tomorrow;drama;paddle;city;prize;edit;cube;
+# secret key for mining.
+key_mine=Ipte/cVRHvS72U4h66KIDDILwtIhpsRugTWycwnDUqwOqFq+qmcVEuWhjPJ2OwBn6ZkxKKpLX0W9PvHhGIUVPz8d6CL5CSB8fjt4kA==
+
+# All the viewer keys.
+--key_view=xj7uVZh7kWaY2U4h66KIDDILwtIhpsRugTWycwnDUqwOqFq+qmcVEuVqiydGxomYaF2lQcc92Rzm3HBqsvk9LrFZlrksacvpDgteNLqxQJ4DUD+iKiDYvXy+VLCui125Rw69lO+8gxnxMM5j1rk=
+
+# Password. If required (at least 1 key specified) and not set - will be asked after launch.
+--pass=123
 
 # number of mining threads(there is no mining if 0)
 mining_threads=1
@@ -50,8 +57,6 @@ miner_type=cpu
 |------|-------------|
 | `h` or `help`| list of all options |
 | `p arg` or `port arg (=10000)` | port to start the server on |
-| `wallet_seed arg` | secret key generation seed |
-| `wallet_phrase arg` | phrase to generate secret key according to BIP-39, `wallet_seed` option will be ignored |
 | `log_level arg` | log level `[info/debug/verbose]` |
 | `file_log_level arg` | file log level `[info/debug/verbose]` |
 | `v` or `version` | return project version |
@@ -93,7 +98,7 @@ miner_type=cpu
 # Command line execution example
 
 ``` sh
-./beam-node --port {NODE_PORT} --peer {PEER_IP} --stratum_port {STRATUM_PORT} --stratum_secrets_path {DIRECTORY} --wallet_phrase "torch;blind;cement;sort;upper;luxury;feel;scissors;neglect;advance;tray;repair;"
+./beam-node --port {NODE_PORT} --peer {PEER_IP} --stratum_port {STRATUM_PORT} --stratum_secrets_path {DIRECTORY} ----key_view=xj7uVZh7kWaY2U4h66KIDDILwtIhpsRugTWycwnDUqwOqFq+qmcVEuVqiydGxomYaF2lQcc92Rzm3HBqsvk9LrFZlrksacvpDgteNLqxQJ4DUD+"
 ```
 
 ## Command line parameters
@@ -103,7 +108,6 @@ miner_type=cpu
 | `port` | port to start the node server on |
 | `peer` | nodes to connect to (in example remote node from masternet) |
 | `stratum_port` | stratum server port (should be >0) |
-| `wallet_phrase` | phrase to generate secret key according to BIP-39 |
 | `stratum_secrets_path` | folder where configuration files are located |
 
 ## Configuration files
