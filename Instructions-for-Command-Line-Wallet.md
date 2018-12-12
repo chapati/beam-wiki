@@ -28,6 +28,27 @@
 ./beam-wallet --command=new_addr --listen -n 127.0.0.1:10000
 ```
 
+# Exporting keys for standalone Node(s)
+
+The Node(s) that belongs to the wallet should be given appropriate keys for the following purpose:
+* Node-Wallet authentication
+* Standalone mining (when the wallet is offline)
+* Monitoring wallet activity, supporting recovery and etc.
+
+It's possible to export the master wallet key, as well as a _child_ key, which is derived from the master key (but not vice versa!).
+In addition every key can be exported as a full key, or as a _viewer_ key, which is suitable for Node authentication and monitoring activity, but not for generating and spending the UTXOs.
+
+Keeping in mind that the wallet may own several nodes, we recommend providing each node a different child key for mining, so that in case it gets hacked - the attacker won't be able to steal what's been mined by other nodes. Anyway when the owner wallet connects the Node prefers to involve the wallet in mining, so that key won't be used either.
+Obviously it's not recommended to export the master secret key ever.
+
+In addition to mining, one or more viewer keys should be exported and provided to the nodes. To be able to communicate with the wallet, each Node must have its master viewer key. In addition to this, every node should have all the viewer child keys that are used for mining, to be able to detect/restore all the mined UTXOs.
+
+* To export a child key
+``` sh 
+./beam-wallet --command=key_export --subkey=N
+```
+whereas `N` is the child index. Specifying `0` means the master key.
+
 # Sending Beams
 
 * To sending beams use the following command 
