@@ -23,6 +23,7 @@ For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/Bea
 
 * [Beam Technical Specifications](https://github.com/beam-mw/beam/wiki/Beam-Technical-Specifications)
 * [Beam Mining](https://github.com/BeamMW/beam/wiki/BEAM-Mining)
+* [Secure Bulletin Board System (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
 * [Supported GPU cards for mining (NVIDIA)](https://github.com/BeamMW/beam/wiki/Supported-GPU-cards-for-mining-(NVIDIA))
 
