@@ -1,40 +1,45 @@
 # Transaction creation protocol
 
-The process of creating transactions in Beam (and other MimbleWimble currencies) is interactive.
-In order to create a new Beam transaction, the sending and receiving wallets have to communicate with each other. During this negotiation they may exchange a wide range of parameters which should allow to create the transaction they need. As a result, the protocol between wallets should be extendable.
-
+Creating transactions in Beam (as with other MimbleWimble implementations) is interactive. In order to create a new Beam transaction, the sending and receiving wallets communicate with each other. The wallets exchange parameters which produce the transaction. As a result, the protocol between the wallets is extendable.
 
 ## What is a transaction in Beam?
-Any Beam transaction should contain the following:
-* List of input UTXOs (Inputs), they have to present in blockchain
-* List of newly created UTXOs (Outputs) and rangeproofs for each output
-* Explicit excess (offset)
-* Kernel
+Any Beam transaction contains the following parameters:
 
-### Transaction Kernel consists of (at least) the following:
-* Blinded excess 
+* A Set of input UTXOs (Inputs), which have to already be present in the blockchain.
+* A Set of newly created UTXOs (Outputs) and rangeproofs for each output
+* The Explicit excess (offset)
+* The transaction kernel
+
+The transaction kernel requires the following parameters:
+* Blinded excess
 * Transaction fee
-* Minimal and Maximal height values. These values allow to control the time in which the transaction is valid. Node will not accept a transaction if its height is lower than minimal height and greater than maximum height
-* Signature. This is a Schorr’s multi signature which signs all the values listed above
+* Minimum height
+* Maximum height
+* Signature. This is a Schnorr’s multi-signature which signs all the values listed above
 
-### A Simple transaction flow.
-Let’s say a **Sender** wants to make a payment to a **Receiver**.
-* **Sender** and **Receiver** have to agree about `amount` and `fee`.
-* **Sender** selects `inputs` which allow to pay `amount + fee`. If the sum of 'inputs' is greater than `amount + fee`, **Sender** also creates output for the change. **Sender** creates overall _blinding excess_ value `blindingExcess_S` and `offset_S`
-* **Receiver** creates output for given `amount` and calculates _blinding excess_ `blindingExcess_R` and `offset_R`
-* Both sides should generate _nonces_ `nonce_S` and `nonce_R` respectively.
-* Both sides should pass each other public forms of excesses:
+The minimum and maximum height values set the time in which the transaction is valid. Nodes will reject a transaction if its height is below the minimum height and greater than the maximum height
+
+### A simple transaction flow.
+In the following example, a _Sender_ makes a payment to a _Receiver_.
+
+* _Sender_ and _Receiver_ agree on the _amount_ and _fee_.
+* The _Sender_ selects input UTXO which allow paying _amount + fee_.
+  * If the sum of inputs is greater than _amount + fee_, _Sender_ also creates output UTXO for the change. 
+  * The _Sender_ creates overall blinding excess value `blindingExcess_S` and `offset_S`
+* The _Receiver_ creates output for a given amount and calculates blinding excess `blindingExcess_R` and `offset_R`
+* Both parties generate nonces `nonce_S` and `nonce_R` respectively.
+* Both parties send each other public forms of excesses:
   * `publicNonce_S = nonce_S*G` and `publicNonce_R = nonce_R*G` – public nonces
-  *  `publicExcess_S = blindingExcess_S*G` and `publicExcess_R = blindingExcess_R*G` – public blinding excessed
-* Both sides have to calculate 
+  * `publicExcess_S = blindingExcess_S*G` and `publicExcess_R = blindingExcess_R*G` – public blinding excessed
+* Both parties compute total blinding excess and total public nonce:
   * total blinding excess: `X = publicExcess_S + publicExcess_R`
   * total public nonce: `K = publicNonce_S + publicNonce_R`
-* Both sides have to calculate Schorr’s signature challenge:
-   * `e = H(K|M)`, where M is a signed message, it calculates from kernel and it includes X, fee, min height and max height
-* Both sides calculate and pass to each other partial signatures:
-  * S: `partialSignature_S = publicNonce_S + e*publicExcess_S`
-  * R: `partialSignature_R = publicNonce_R + e*publicExcess_R`
-* Final signature is calculated: `signature = partialSignature_S + partialSignature_R`
+* Both parties compute a Schnorr’s signature challenge:
+  * `e = H(K|M)`, where `M` is a signed message, it calculates from kernel and it includes `X`, `fee`, `min height`, and `max height`
+* Both parties compute and send  to each other partial signatures:
+  * `S`: `partialSignature_S = publicNonce_S + e*publicExcess_S`
+  * `R`: `partialSignature_R = publicNonce_R + e*publicExcess_R`
+* Final signature is computed: `signature = partialSignature_S + partialSignature_R`
 
 [[/images/SimpleTransactionFlow.png]]
 
