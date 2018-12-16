@@ -9,3 +9,4 @@ BEAM implements the MW protocol (with some extensions), which is based on ellipt
 * Node
   * [Initial synchronization](https://github.com/beam-mw/beam/wiki/Node-initial-synchronization)
 * [Secure bulletin board system (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
+* [Beam Equihash specification](https://github.com/BeamMW/beam/wiki/Beam-Equihash-specification)
