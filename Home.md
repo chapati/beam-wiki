@@ -22,6 +22,14 @@ For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/Bea
 # Specifications
 
 * [Beam Technical Specifications](https://github.com/beam-mw/beam/wiki/Beam-Technical-Specifications)
+  * [Cryptographic primitives](https://github.com/BeamMW/beam/wiki/Cryptographic-primitives)
+  * [Merkle trees](https://github.com/BeamMW/beam/wiki/Merkle-trees)
+    * [DMMR internal layout](https://github.com/BeamMW/beam/wiki/DMMR-internal-layout)
+  * [Core transaction elements](https://github.com/BeamMW/beam/wiki/Core-transaction-elements)
+  * [Blocks, headers, system states: concept, relevant structures and values](https://github.com/BeamMW/beam/wiki/Blocks,-headers,-system-states:-concept,-relevant-structures-and-values)
+  * [System state in-depth](https://github.com/BeamMW/beam/wiki/System-state-in-depth)
+  * Node
+    * [Initial synchronization](https://github.com/BeamMW/beam/wiki/Node-initial-synchronization)
 * [Beam Mining](https://github.com/BeamMW/beam/wiki/BEAM-Mining)
 * [Secure Bulletin Board System (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
 * [Transaction creation protocol](https://github.com/BeamMW/beam/wiki/Transaction-creation-protocol)
