@@ -10,6 +10,23 @@ The goal of the **Sync** mode is to allow the fast-Sync via _Macroblock_ wheneve
 1. _Download phase_. Node downloads the _Macroblock_ (by portions), from one or several peers.
 1. _Import phase_. Once fully downloaded - the Node uses it to import, and then switches to the **Standard** mode.
 
+### Synchronization via Macroblock
+
+The _Macroblock_ is a "compressed" blockchain history, which includes the following:
+1. All the block headers, with PoW.
+2. All the transaction kernels.
+3. The unspent UTXO set.
+
+In contrast to the original blocks the macroblock doesn't contain any info about spent UTXOs. Once downloaded, the Node verifies the following:
+1. All the headers are valid (sane, have valid PoW, form a valid blockchain)
+2. All the original kernels are included in the macroblock
+   * This is done by verifying groups of kernels corresponding to a specific block w.r.t. kernel commitment in the appropriate header.
+   * This proves that all the original transactions are included.
+3. The resulting state of the system is valid:
+   * Unspent UTXOs with all the kernels form a valid transformation from the genesis to the asserted height.
+   * The overall value equals what it should be according to the emission schedule.
+   * Recent coinbase UTXOs are time-locked, according to the system rules.
+
 ## Detection phase
 
 For each peer with non-empty tip the Node requests the following:
