@@ -31,6 +31,7 @@ For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/Bea
   * Node
     * [Initial synchronization](https://github.com/BeamMW/beam/wiki/Node-initial-synchronization)
 * [Beam Mining](https://github.com/BeamMW/beam/wiki/BEAM-Mining)
+  * [Mining Difficulty](https://github.com/BeamMW/beam/wiki/Mining-Difficulty)
 * [Secure Bulletin Board System (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
 * [Transaction creation protocol](https://github.com/BeamMW/beam/wiki/Transaction-creation-protocol)
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
