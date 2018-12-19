@@ -22,7 +22,7 @@ The detailed algorithm is outlined below:
 1. Look at blocks from 1464 to 1440 before the current block (25 blocks altogether). Identify the block that has the median block time out of those. This will be the Window Start block.
 1. Sum all the difficulties of the blocks from Window Start to Window End. This is Delta Work.
 1. Calculate the time difference between Window Start and Window End blocks. This is Delta Time.
-1. Calculate the difficulty for next block as: NewDifficulty = (Delta Work / Delta Time) * 60 seconds.
+1. Calculate the difficulty for next block as: `NewDifficulty = (Delta Work / Delta Time) * 60` seconds.
 1. The Delta Time is bounded by 12 hours and 48 hours. I.e. if the difference is less than 12 hours, 12 hours is still used as Delta Time, same for differences larger than 48 hours. This is done to mitigate extreme changes in difficulty.
 
 The algorithm above ensures that as the total solution power of the network fluctuates, the difficulty is gradually adjusted and thus the target block time is ensured.
