@@ -38,4 +38,4 @@
 1. Go to Beam project folder and call `cmake -DCMAKE_BUILD_TYPE=Release . && make -j4`.
 1. You'll find _Beam_ binary in `bin` folder, `beam-wallet` in `ui` subfolder.
 
-If you don't want to build UI don't install QT5 and comment `CMakeLists.txt:130 # add_subdirectory(ui)` line.
+If you don't want to build UI don't install QT5 and add `-DBEAM_NO_QT_UI_WALLET=On` command line parameter when you are calling `cmake`.
