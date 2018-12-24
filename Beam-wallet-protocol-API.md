@@ -1,15 +1,79 @@
-
-
-
-
 # Beam wallet protocol API (draft)
+
 Wallet API will have the same structure as Node API.
 
-Wallet will have online connection to the node. 
+Wallet will have online connection to the node.
 
-API will include the following methods.
+## How to use
+
+Find `wallet-api` binary in the `wallet` subdirectory, place it near your `wallet.db` file and run with the following arguments:
+
+```
+Wallet API options:
+  -h [ --help ]                  list of all options
+  -p [ --port ] arg (=10000)     port to start server on
+  -n [ --node_addr ] arg         address of node
+  --wallet_path arg (=wallet.db) path to wallet file
+  --pass arg                     password for the wallet
+```
+
+`./wallet-api --node_addr=172.104.249.212:8101 --pass=123` for example.
+
+### Demo code
+Here is a code on NodeJS to get all the UTXOs, for example:
+
+```js
+var net = require('net');
+
+var client = new net.Socket();
+client.connect(10000, '127.0.0.1', function() {
+	console.log('Connected');
+	client.write(JSON.stringify(
+		{
+			jsonrpc: '2.0',
+			id: 123,
+			method: 'get_utxo',
+			params: {}
+		}) + '\n');
+});
+
+var acc = '';
+
+client.on('data', function(data) {
+	acc += data;
+
+	// searching for \n symbol to find end of response
+	if(data.indexOf('\n') != -1)
+	{
+		var res = JSON.parse(acc);
+
+		console.log('Received:', res);
+
+		client.destroy(); // kill client after server's response
+	}
+});
+
+client.on('close', function() {
+	console.log('Connection closed');
+});
+```
+
 
 ## API
+
+API will include the following methods:
+
+- [create_address](#create_address) `done`
+- [send](#send)
+- [replace](#replace)
+- [status](#status)
+- [split](#split)
+- [balance](#balance) `done`
+- [get_utxo](#get_utxo) `done`
+- [lock](#lock)
+- [unlock](#unlock)
+- [create_utxo](#create_utxo)
+- [poll](#poll)
 
 ### create_address
 Creates new receiver address.
@@ -28,7 +92,7 @@ Creates new receiver address.
 }
 ```
 
-where `lifetime` is expiration time in hours (`lifetime(-1)` will never expired)
+where `lifetime` is expiration time in hours (`lifetime(0)` will never expired)
 
 `<--`
 ```json
@@ -197,12 +261,12 @@ Get list of all unlocked UTXOs.
 			"amount" : "45.003",
 			"height" : 5007,
 			"maturity" : 60,
-			"type" : 0
+			"type" : "mine"
 		}
 	]
 }
 ```
-`type` can be `Coinbase(0), Regular(1), Comission(3)`
+`type` can be `fees`, `mine`, `norm`, `chng`, `...`
 
 ### lock
 Create session and lock UTXOs with specified IDs.
