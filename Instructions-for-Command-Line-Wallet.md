@@ -80,7 +80,7 @@ whereas `N` is the child index. Specifying `0` means the master key.
 
 | Name | Description |
 |------|-------------|
-| `wallet_phrase arg` | phrase to initialize master secret, according to BIP-39 |
+| `seed_phrase arg` | phrase to initialize master secret, according to BIP-39 |
 | `pass arg` | password for the wallet |
 | `a` or `amount arg` | amount to send (in Beams, 1 Beam = 1000000 chattle) |
 | `f` or `fee arg (=0)` | fee (in Beams, 1 Beam = 1000000 chattle) |
