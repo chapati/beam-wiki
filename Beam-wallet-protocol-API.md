@@ -115,11 +115,15 @@ Sends transactions with specific valueand session to a given address.
 	"params":
 	{
 		"session" : 123,
-		"value" : "1.2342342",
-		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67" 
+		"value" : 12342342,
+		"fee" : 2,
+		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+		"comment" : "thank you!"
 	}
 }
 ```
+
+`session`, `fee` and `comment` can be omitted.
 
 `<--`
 ```json
@@ -128,7 +132,7 @@ Sends transactions with specific valueand session to a given address.
 	"id": 2,
 	"result":
 	{
-		"txid" : "12345"
+		"txid" : "10c4b760c842433cb58339a0fafef3db"
 	}
 }
 ```
@@ -171,7 +175,7 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 	"method":"status", 
 	"params":
 	{
-		"txid" : "123" 
+		"txid" : "10c4b760c842433cb58339a0fafef3db" 
 	}
 }
 ```
