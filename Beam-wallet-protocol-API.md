@@ -64,9 +64,9 @@ client.on('close', function() {
 API will include the following methods:
 
 - [create_address](#create_address) `done`
-- [send](#send)
+- [send](#send) `done`
 - [replace](#replace)
-- [status](#status)
+- [status](#status) `done`
 - [split](#split)
 - [balance](#balance) `done`
 - [get_utxo](#get_utxo) `done`
@@ -132,7 +132,7 @@ Sends transactions with specific valueand session to a given address.
 	"id": 2,
 	"result":
 	{
-		"txid" : "10c4b760c842433cb58339a0fafef3db"
+		"txId" : "10c4b760c842433cb58339a0fafef3db"
 	}
 }
 ```
@@ -175,7 +175,7 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 	"method":"status", 
 	"params":
 	{
-		"txid" : "10c4b760c842433cb58339a0fafef3db" 
+		"txId" : "10c4b760c842433cb58339a0fafef3db" 
 	}
 }
 ```
@@ -374,7 +374,7 @@ Wallet transactions polling.
 	"id": 8,
 	"result":
 	{
-		"txid" : "1234",
+		"txId" : "1234",
 		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
 		"value" : "56.3",
 		"metadata" : "<meta>custom data defined before</meta>",
