@@ -29,8 +29,8 @@
         * Regular (received): received upon a successful completion of an incoming transaction
         * Regular (change): received by the sender when his UTXO is split during a successfully accomplished outgoing transaction
     * Transaction fee: paid by the user, is always created with "Maturing" status
-    * Coinbase: the coin was mined when miner closed the block, is always created with "Maturing" status
-    * Treasury: 
+    * Coinbase: mined when miner closed the block, is always created with "Maturing" status
+    * Treasury: generated for maintenance and development of the project
 * Status
     * Available: not in the transaction, can be spent
     * In progress, can have the following sub-cases:
