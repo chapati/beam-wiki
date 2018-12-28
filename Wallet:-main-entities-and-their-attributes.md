@@ -34,22 +34,22 @@
 * Status
     * Available: not in the transaction, can be spent
     * In progress, can have the following sub-cases:
-    * Incoming (draft) or Incoming: the amount is locked because of the ongoing incoming transaction
-        * Example:
-            * Alice has single UTXO of 100 BEAM and wants to send it fully to Bob (zero transaction fee for clarity)
-            * Bob sees 100 BEAM as "Incoming (draft)" before that UTXO was registered in the node/blockchain 
-            * Bob sees 100 BEAM as "Incoming" when that UTXO was recognized registered in the node/blockchain
-    * Outgoing: the amount is locked because of the ongoing outgoing transaction, new UTXO will be generated as a change once the transaction will be competed
-        * Example:
-            * Alice has single UTXO of 100 BEAM and wants to send 20 BEAM to Bob (zero transaction fee for clarity)
-            * Alice sees 100 BEAM are "outgoing (locked)" at first
-            * Alice sees 80 BEAM as "incoming (change)" and Bob sees 20 BEAM "incoming"
-            * Alice sees 80 BEAM as "Available" and Bob sees 20 BEAM "Available"
-    * Maturing
-        * Reserved till <time>: the amount will become available after the "locked" timeout will expire
-        * Mined till block height <height> (similar to "Reserved", but measured in block height): the mined amount becomes available to miners only after the block height will be reached
-        * Spent: gone with the completed outgoing transaction
-        * Unavailable: for UTXO that cannot be spent anymore (due to transaction rollback or mining result rollback, the reason should be supplied just like for the "Locked" status)
+        * Incoming (draft) or Incoming: the amount is locked because of the ongoing incoming transaction
+            * Example:
+                * Alice has single UTXO of 100 BEAM and wants to send it fully to Bob (zero transaction fee for clarity)
+                * Bob sees 100 BEAM as "Incoming (draft)" before that UTXO was registered in the node/blockchain 
+                * Bob sees 100 BEAM as "Incoming" when that UTXO was recognized registered in the node/blockchain
+        * Outgoing: the amount is locked because of the ongoing outgoing transaction, new UTXO will be generated as a change once the transaction will be competed
+            * Example:
+                * Alice has single UTXO of 100 BEAM and wants to send 20 BEAM to Bob (zero transaction fee for clarity)
+                * Alice sees 100 BEAM are "outgoing (locked)" at first
+                * Alice sees 80 BEAM as "incoming (change)" and Bob sees 20 BEAM "incoming"
+                * Alice sees 80 BEAM as "Available" and Bob sees 20 BEAM "Available"
+        * Maturing
+            * Reserved till <time>: the amount will become available after the "locked" timeout will expire
+            * Mined till block height <height> (similar to "Reserved", but measured in block height): the mined amount becomes available to miners only after the block height will be reached
+    * Spent: gone with the completed outgoing transaction
+    * Unavailable: for UTXO that cannot be spent anymore (due to transaction rollback or mining result rollback, the reason should be supplied just like for the "Locked" status)
 * Incoming Transaction details (if available, for example is not mined locally)
     * Transaction ID - when clicked, should be taken to transaction list with the designated transaction details opened
     * Transaction completion time (ie time when UTXO was received)
