@@ -1,3 +1,9 @@
+## IMPORTANT
+
+The information in this Wiki is outdated and is kept for historical reference only.
+
+Updated documentation is located here: https://beam-docs.readthedocs.io/en/latest/
+
 # Welcome to Beam Testnet 3
 
 In case you encounter any problem, please open a GitHub ticket at https://github.com/BeamMW/beam/issues or email us at testnet@beam.mw
