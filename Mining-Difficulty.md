@@ -18,8 +18,6 @@ The algorithm looks at the average time and the average difficulty the last 1440
 
 The detailed algorithm is outlined below:
 
-The detailed algorithm is outlined below:
-
 1. Look at the last 7 blocks. Identify the block that has the median block time. This is the Window End block.
 1. Look at blocks from 127 to 120 before the current block (7 blocks altogether). Identify the block that has the median block time out of those. This will be the Window Start block.
 1. Sum all the difficulties of the blocks from Window Start to Window End. This is Delta Work.
