@@ -1,3 +1,7 @@
+# This documentation is obsolete
+
+Please refer to [Beam Node User Guide](https://beam-docs.readthedocs.io/en/latest/rtd_pages/user_beam_node_guide.html)
+
 # Running a node
 
 * [Node source code](https://github.com/BeamMW/beam/tree/master/beam)
