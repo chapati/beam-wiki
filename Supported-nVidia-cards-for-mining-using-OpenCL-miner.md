@@ -1,3 +1,5 @@
+The following list of card should be supported by Beam OpenCL miner:
+
 ```
 Tesla K40/K80
 GeForce 700
