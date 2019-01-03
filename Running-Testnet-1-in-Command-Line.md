@@ -1,3 +1,6 @@
+This documentation is obsolete
+
+Please refer to [Local Setup Guide](https://beam-docs.readthedocs.io/en/latest/rtd_pages/dev_local_setup.html)
 
 **Welcome to Beam Testnet 1**
 
@@ -151,73 +154,3 @@ Wallet options:
   --tr_BeamsPerUtxo arg (=10)           treasury value of each UTXO (in Beams)
   --command arg                         command to execute [send|receive|listen
                                         |init|info|treasury]
-
-Rules configuration:
-  --CoinbaseEmission arg (=80000000)    coinbase emission in a single block
-  --MaturityCoinbase arg (=60)          num of blocks before coinbase UTXO can
-                                        be spent
-  --MaturityStd arg (=0)                num of blocks before non-coinbase UTXO
-                                        can be spent
-  --MaxBodySize arg (=1048576)          Max block body size [bytes]
-  --DesiredRate_s arg (=60)             Desired rate of generated blocks
-                                        [seconds]
-  --DifficultyReviewCycle arg (=1440)   num of blocks after which the mining
-                                        difficulty can be adjusted
-  --MaxDifficultyChange arg (=2)        Max difficulty change after each cycle
-                                        (each step is roughly x2 complexity)
-  --TimestampAheadThreshold_s arg (=7200)
-                                        Block timestamp tolerance [seconds]
-  --WindowForMedian arg (=25)           How many blocks are considered in
-                                        calculating the timestamp median
-  --AllowPublicUtxos arg (=0)           set to allow regular (non-coinbase)
-                                        UTXO to have non-confidential signature
-  --FakePoW arg (=0)                    Don't verify PoW. Mining is simulated
-                                        by the timer. For tests only
-
-**List of testnet nodes**
-
-142.93.89.204:8101
-188.166.148.169:8101
-206.189.141.171:8101
-138.68.130.189:8101
-178.128.225.252:8101
-128.199.142.41:8101
-139.59.191.116:8101
-206.189.3.9:8101
-206.189.15.198:8101
-204.48.26.118:8101
-174.138.58.140:8101
-142.93.241.66:8101
-188.166.122.215:8101
-142.93.17.121:8101
-104.248.77.220:8101
-104.248.27.246:8101
-188.166.60.223:8101
-128.199.144.164:8101
-104.248.182.148:8101
-104.248.182.152:8101
-159.203.72.8:8101
-178.128.233.252:8101
-104.248.43.86:8101
-104.248.43.99:8101
-178.62.19.156:8101
-104.248.75.183:8101
-206.81.11.82:8101
-206.189.138.82:8101
-178.128.225.8:8101
-142.93.246.182:8101
-104.248.31.169:8101
-128.199.144.48:8101
-178.128.229.48:8101
-128.199.144.196:8101
-159.65.40.42:8101
-178.128.229.50:8101
-138.197.193.229:8101
-128.199.144.206:8101
-178.128.229.65:8101
-159.89.234.65:8101
-104.248.43.120:8101
-104.248.186.25:8101
-128.199.145.212:8101
-188.166.15.205:8101
-138.68.163.99:8101
