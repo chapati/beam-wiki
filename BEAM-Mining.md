@@ -1,3 +1,8 @@
+This page contains general information. For Step By Step guides on how to start Mining Beam please refer to:
+
+https://beam-docs.readthedocs.io/en/latest/rtd_pages/user_mining_beam.html
+
+
 Alike most cryptocurrencies, Beam relies on miners to add transactions to the blockchain. While all nodes in the Beam network confirm the validity of transactions, Beam counts on miners to take on the massive heavy lifting to guard the network.
 
 Beam is a Mimblewimble implementation. We use classic Proof-of-Work (PoW) consensus.
