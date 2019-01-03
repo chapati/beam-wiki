@@ -1,4 +1,4 @@
-## This documentation is obsolete
+# This documentation is obsolete
 Please refer to [Command Line User Guide](https://beam-docs.readthedocs.io/en/latest/rtd_pages/user_cli_wallet_guide.html)
 
 
