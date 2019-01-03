@@ -4,7 +4,7 @@ The information in this Wiki is outdated and is kept for historical reference on
 
 Updated documentation is located here: https://beam-docs.readthedocs.io/en/latest/
 
-# Welcome to Beam Testnet 3
+# Beam is currently in Testnet 4
 
 In case you encounter any problem, please open a GitHub ticket at https://github.com/BeamMW/beam/issues or email us at testnet@beam.mw
 
@@ -13,17 +13,9 @@ For effective investigation please attach the following items for every issue:
 * Configuration file
 * Command line parameters of the executed binary
 
-For upgrade instructions from Testnet 2.2 to 3 see [here](https://github.com/BeamMW/beam/wiki/Upgrade-instructions-from-testnet-2.2-to-testnet-3).
+# User Guides 
 
-
-# Manuals
-
-* [Instructions for Command Line Node (includes Stratum server)](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Node)
-* [Instructions for Command Line GPU Miner](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-GPU-Miner)
-* [Instructions for Command Line Wallet](https://github.com/beam-mw/beam/wiki/Instructions-for-Command-Line-Wallet)
-* [Instructions for Wallet Desktop App](https://www.beam.mw/wallet-instructions)
-* [How to build](https://github.com/BeamMW/beam/wiki/How-to-build)
-* [Folder and file locations](https://github.com/BeamMW/beam/wiki/Folder-and-file-locations)
+https://beam-docs.readthedocs.io/en/latest/
 
 # Specifications
 
