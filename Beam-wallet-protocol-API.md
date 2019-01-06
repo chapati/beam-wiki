@@ -192,6 +192,10 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 ### split
 Creates a specific set of outputs with given set of values and session.
 
+The session parameter is important in the following case:
+
+Let's say you need to do a payout to a 1000 people, each with different amount. First you split the UTXOs you have using the 'split' method but then if you want to make another transaction you want to make sure these UTXOs are not used for any other payout. To do that you 'lock' them with the session id during split, and they will only be spent of the specific session id is provided in the 'send' method.
+
 `-->`
 ```json
 {
