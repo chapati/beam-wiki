@@ -18,6 +18,21 @@ Miner subscribes to the node to receive jobs.
 }
 ```
 
+Reply with nonce prefix
+
+```
+{
+    "code":0,
+    "description":"Login successful",
+    "id":"login",
+    "jsonrpc":"2.0",
+    "nonceprefix":"ab4e3a",
+    "method":"result"
+}
+```
+Note: "nonceprefix" is an optional component. 
+If "nonceprefix" is given the first bytes of the used nonce must match the given pattern. Allowed is a prefix from 0 to 6 bytes. If "nonceprefix" is not given the miner may use the full nonce range.
+
 ### Solution
 Miner sends a solution to the node.
 
