@@ -64,10 +64,10 @@ client.on('close', function() {
 API will include the following methods:
 
 - [create_address](#create_address) `done`
-- [send](#send) `done`
+- [send](#send) `done without session`
 - [replace](#replace)
 - [status](#status) `done`
-- [split](#split)
+- [split](#split) `done without session`
 - [balance](#balance) `done`
 - [get_utxo](#get_utxo) `done`
 - [lock](#lock)
@@ -205,7 +205,8 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 	"params":
 	{
 		"session" : 123,
-		"outputs" : ["1.13", "2.54", "3.55"]
+		"coins" : [11, 12, 13, 50000000],
+		"fee" : 3
 	}
 }
 ```
@@ -215,7 +216,10 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 {
 	"jsonrpc":"2.0", 
 	"id": 5,
-	"result":""
+	"result":
+	{
+		"txId" : "10c4b760c842433cb58339a0fafef3db"
+	}
 }
 ```
 
