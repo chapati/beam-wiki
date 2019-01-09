@@ -1,3 +1,47 @@
+CRITICAL VULNERABILITY IN BEAM WALLET 
+
+9.1.2019 20:20 GMT 
+
+Critical Vulnerability was found in Beam Wallet today.
+
+Vulnerability was discovered by Beam Dev Team and not reported anywhere else.
+
+Vulnerability affects all previously released Beam Wallets both Dekstop and CLI.
+
+DO NOT DELETE THE DATABASE or any other wallet data.
+
+DO NOT USE WALLETS YOU HAVE BUILT FROM SOURCE ON MAINNET UNTIL FURTHER NOTICE
+
+The vulnerability DOES NOT affect wallet data, secret keys or passwords
+
+All Beam users are REQUIRED to follow the procedure below IMMEDIATELY!!!
+
+
+1. Stop your currently running Beam Wallets immediately
+
+2. Uinstall or delete your Beam Wallet application and executables from all machines. 
+
+DO NOT DELETE THE DATABASE or any other wallet data
+
+3. Make sure the application was deleted. Check the documentation for the location of Wallet application files (https://beam-docs.readthedocs.io/en/latest/rtd_pages/user_files_and_locations.html)
+
+4. Download the Beam Wallet again from the website only (beam.mw/downloads) 
+ 
+It will have THE SAME version numbers as previously published archives
+Make sure the SHA256 of the archive matches with the one published on the website.
+
+5. Install the new application
+
+
+
+Details for the vulnerability and the CVE will be published within a week to avoid exploits.
+
+
+
+
+
+
+
 # Windows
 1. Install Visual Studio >= 2017 with CMake support.
 1. Download and install Boost prebuilt binaries https://sourceforge.net/projects/boost/files/boost-binaries/1.68.0/boost_1_68_0-msvc-14.1-64.exe, also add `BOOST_ROOT` to the _Environment Variables_.
