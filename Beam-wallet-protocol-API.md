@@ -66,14 +66,13 @@ API will include the following methods:
 - [create_address](#create_address) `done`
 - [send](#send) `done without session`
 - [replace](#replace)
-- [status](#status) `done`
+- [tx_status](#tx_status) `done`
 - [split](#split) `done without session`
 - [balance](#balance) `done`
 - [get_utxo](#get_utxo) `done`
 - [lock](#lock)
 - [unlock](#unlock)
-- [create_utxo](#create_utxo)
-- [poll](#poll)
+- [tx_list](#tx_list)
 
 ### create_address
 Creates new receiver address.
@@ -164,7 +163,7 @@ Replaces all pending transactions for existing address with new transactions wit
 }
 ```
 
-### status
+### tx_status
 Checks status of existing transaction. Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
 
 `-->`
@@ -172,7 +171,7 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 {
 	"jsonrpc":"2.0", 
 	"id": 4,
-	"method":"status", 
+	"method":"tx_status", 
 	"params":
 	{
 		"txId" : "10c4b760c842433cb58339a0fafef3db" 
@@ -185,7 +184,16 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 {
 	"jsonrpc":"2.0", 
 	"id": 4,
-	"result":2
+	"result":
+	{ 
+		"comment": "",
+		"fee": 0,
+		"kernel": "0000000000000000000000000000000000000000000000000000000000000000",
+		"receiver": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+		"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
+		"status": 4,
+		"value": 12342342 
+	} 
 }
 ```
 
@@ -364,15 +372,19 @@ Called by the node to get new coinbase UTXO.
 	"result":"ok"
 }
 ```
-### poll
-Wallet transactions polling.
+### tx_list
+Get all the transactions with specified `id/status/...`.
 
 `-->`
 ```json
 {
 	"jsonrpc":"2.0", 
 	"id": 8,
-	"method":"poll"
+	"method":"tx_list",
+	"params":
+	{
+		"filter" : {"status":4}
+	}
 }
 ```
 `<--`
@@ -381,13 +393,22 @@ Wallet transactions polling.
 	"jsonrpc":"2.0", 
 	"id": 8,
 	"result":
-	{
-		"txId" : "1234",
-		"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-		"value" : "56.3",
-		"metadata" : "<meta>custom data defined before</meta>",
-		"state" : 1
-	}
+	[
+		{
+			"txId" : "1234",
+			"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+			"value" : "56.3",
+			"metadata" : "<meta>custom data defined before</meta>",
+			"state" : 1		
+		},
+		{
+			"txId" : "1234",
+			"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+			"value" : "56.3",
+			"metadata" : "<meta>custom data defined before</meta>",
+			"state" : 1		
+		},
+	]
 }
 ```
 `state` can be:
