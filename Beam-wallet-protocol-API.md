@@ -1,5 +1,6 @@
 
 
+
 # Beam wallet protocol API (draft)
 
 Wallet API will have the same structure as Node API.
@@ -104,6 +105,7 @@ where `lifetime` is expiration time in hours (`lifetime(0)` will never expired) 
 	"result":"472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
 }
 ```
+***
 
 ### validate_address
 Just base check, validates if the address isn't garbage and belongs our elliptic curve.
@@ -129,6 +131,7 @@ Just base check, validates if the address isn't garbage and belongs our elliptic
 	"result" : true
 }
 ```
+***
 
 ### tx_send
 Sends transactions with specific valueand session to a given address.
@@ -164,6 +167,7 @@ Sends transactions with specific valueand session to a given address.
 }
 ```
 Returns transaction id or error code.
+***
 
 ### tx_status
 Checks status of existing transaction. Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
@@ -196,10 +200,13 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 		"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
 		"status": 4,
 		"value": 12342342,
-		"height" : 1055
+		"height" : 1055,
+		"confirmations" : 3
 	} 
 }
 ```
+`height` and `confirmations` will be absent if transaction isn't in chain.
+***
 
 ### tx_split
 Creates a specific set of outputs with given set of values and session.
@@ -234,6 +241,7 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 	}
 }
 ```
+***
 
 ### wallet_status
 Get current wallet status, height/hash/available/...
@@ -265,6 +273,7 @@ Get current wallet status, height/hash/available/...
 }
 ```
 `type` can be `fees`, `mine`, `norm`, `chng`, `...`
+***
 
 ### get_utxo
 Get list of all unlocked UTXOs.
@@ -298,6 +307,7 @@ Get list of all unlocked UTXOs.
 }
 ```
 `type` can be `fees`, `mine`, `norm`, `chng`, `...`
+***
 
 ### lock
 `[not implemented]`
@@ -330,6 +340,7 @@ Create session and lock UTXOs with specified IDs.
 	}
 }
 ```
+***
 
 ### unlock
 `[not implemented]`
@@ -361,6 +372,7 @@ Unlock all UTXOs for specified session.
 	}
 }
 ```
+***
 
 ### tx_list
 Get all the transactions with specified `status/height...`.
@@ -397,7 +409,8 @@ Get all the transactions with specified `status/height...`.
 			"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
 			"status": 4,
 			"value": 12342342,
-			"height" : 1055
+			"height" : 1055,
+			"confirmations" : 0
 		},
 		{ 
 			"txId" : "10c4b760c842433cb58339a0fafef3db",
@@ -408,12 +421,16 @@ Get all the transactions with specified `status/height...`.
 			"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
 			"status": 4,
 			"value": 12342342,
-			"height" : 1055
+			"height" : 1055,
+			"confirmations" : 2
 		}
 	]
 }
 ```
-Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
+Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`.
+
+`height` and `confirmations` will be absent if transaction isn't in chain.
+***
 
 ### tx_cancel
 Cancels running transaction, return `true` if successfully canceled or error with the reason.
@@ -439,3 +456,4 @@ Cancels running transaction, return `true` if successfully canceled or error wit
 	"result": true
 }
 ```
+***
