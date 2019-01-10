@@ -1,4 +1,5 @@
 
+
 # Beam wallet protocol API (draft)
 
 Wallet API will have the same structure as Node API.
@@ -70,6 +71,7 @@ API will include the following methods:
 - [tx_status](#tx_status) `done`
 - [tx_split](#tx_split) `done without session`
 - [tx_list](#tx_list) `done`
+- [tx_cancel](#tx_cancel) `done`
 - [wallet_status](#wallet_status) `done`
 - [get_utxo](#get_utxo) `done`
 - [lock](#lock)
@@ -297,7 +299,9 @@ Get list of all unlocked UTXOs.
 ```
 `type` can be `fees`, `mine`, `norm`, `chng`, `...`
 
-### lock `[not implemented]`
+### lock
+`[not implemented]`
+
 Create session and lock UTXOs with specified IDs.
 
 `-->`
@@ -327,7 +331,9 @@ Create session and lock UTXOs with specified IDs.
 }
 ```
 
-### unlock `[not implemented]`
+### unlock
+`[not implemented]`
+
 Unlock all UTXOs for specified session.
 
 `-->`
@@ -408,3 +414,28 @@ Get all the transactions with specified `status/height...`.
 }
 ```
 Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
+
+### tx_cancel
+Cancels running transaction, return `true` if successfully canceled or error with the reason.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 4,
+	"method":"tx_cancel", 
+	"params":
+	{
+		"txId" : "a13525181c0d45b0a4c5c1a697c8a7b8"
+	}
+}
+```
+
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 4,
+	"result": true
+}
+```
