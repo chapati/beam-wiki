@@ -1,3 +1,4 @@
+
 # Beam wallet protocol API (draft)
 
 Wallet API will have the same structure as Node API.
@@ -64,15 +65,15 @@ client.on('close', function() {
 API will include the following methods:
 
 - [create_address](#create_address) `done`
-- [send](#send) `done without session`
-- [replace](#replace)
+- [validate_address](#validate_address) `done`
+- [tx_send](#tx_send) `done without session`
 - [tx_status](#tx_status) `done`
-- [split](#split) `done without session`
-- [balance](#balance) `done`
+- [tx_split](#tx_split) `done without session`
+- [tx_list](#tx_list) `done`
+- [wallet_status](#wallet_status) `done`
 - [get_utxo](#get_utxo) `done`
 - [lock](#lock)
 - [unlock](#unlock)
-- [tx_list](#tx_list)
 
 ### create_address
 Creates new receiver address.
@@ -91,7 +92,7 @@ Creates new receiver address.
 }
 ```
 
-where `lifetime` is expiration time in hours (`lifetime(0)` will never expired)
+where `lifetime` is expiration time in hours (`lifetime(0)` will never expired) and can be ommited
 
 `<--`
 ```json
@@ -102,7 +103,32 @@ where `lifetime` is expiration time in hours (`lifetime(0)` will never expired)
 }
 ```
 
-### send
+### validate_address
+Just base check, validates if the address isn't garbage and belongs our elliptic curve.
+
+`-->`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 1,
+	"method":"validate_address", 
+	"params":
+	{
+		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
+	}
+}
+```
+
+`<--`
+```json
+{
+	"jsonrpc":"2.0", 
+	"id": 1,
+	"result" : true
+}
+```
+
+### tx_send
 Sends transactions with specific valueand session to a given address.
 
 `-->`
@@ -122,7 +148,7 @@ Sends transactions with specific valueand session to a given address.
 }
 ```
 
-`session`, `fee` and `comment` can be omitted.
+`fee` and `comment` can be omitted.
 
 `<--`
 ```json
@@ -135,33 +161,7 @@ Sends transactions with specific valueand session to a given address.
 	}
 }
 ```
-Returns transaction id or error code (TBD)
-
-### replace
-Replaces all pending transactions for existing address with new transactions with the same value and new address.
-
-`-->`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 3,
-	"method":"replace", 
-	"params":
-	{
-		"existing_addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-		"new_addr" : "ae671579b0ac0dcd6f1a23b11a75ab148cc67472e17b0419055ffee3b3813b98" 
-	}
-}
-```
-
-`<--`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 3,
-	"result":"ok"
-}
-```
+Returns transaction id or error code.
 
 ### tx_status
 Checks status of existing transaction. Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
@@ -186,18 +186,20 @@ Checks status of existing transaction. Status can be `Pending(0), InProgress(1),
 	"id": 4,
 	"result":
 	{ 
+		"txId" : "10c4b760c842433cb58339a0fafef3db",
 		"comment": "",
 		"fee": 0,
 		"kernel": "0000000000000000000000000000000000000000000000000000000000000000",
 		"receiver": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
 		"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
 		"status": 4,
-		"value": 12342342 
+		"value": 12342342,
+		"height" : 1055
 	} 
 }
 ```
 
-### split
+### tx_split
 Creates a specific set of outputs with given set of values and session.
 
 The session parameter is important in the following case:
@@ -231,15 +233,15 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 }
 ```
 
-### balance
-Get current balance.
+### wallet_status
+Get current wallet status, height/hash/available/...
 
 `-->`
 ```json
 {
 	"jsonrpc":"2.0", 
 	"id": 6,
-	"method":"balance"
+	"method":"wallet_status"
 }
 ```
 
@@ -250,12 +252,17 @@ Get current balance.
 	"id": 6,
 	"result":
 	{
-		"available" : "123.0004",
-		"in_progress" : "123.0004",
-		"locked" : "123.0004"
+	    "current_height" : 1055,
+	    "current_state_hash" : "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
+	    "available": 100500,
+	    "receiving": 123,
+	    "sending": 0,
+	    "maturing": 50,
+	    "locked": 30,
 	}
 }
 ```
+`type` can be `fees`, `mine`, `norm`, `chng`, `...`
 
 ### get_utxo
 Get list of all unlocked UTXOs.
@@ -278,17 +285,19 @@ Get list of all unlocked UTXOs.
 	[
 		{
 			"id" : 123,
-			"amount" : "45.003",
+			"amount" : 12345,
 			"height" : 5007,
 			"maturity" : 60,
-			"type" : "mine"
+			"type" : "mine",
+			"createTxId" : "10c4b760c842433cb58339a0fafef3db",
+			"spentTxId" : "",
 		}
 	]
 }
 ```
 `type` can be `fees`, `mine`, `norm`, `chng`, `...`
 
-### lock
+### lock `[not implemented]`
 Create session and lock UTXOs with specified IDs.
 
 `-->`
@@ -318,7 +327,7 @@ Create session and lock UTXOs with specified IDs.
 }
 ```
 
-### unlock
+### unlock `[not implemented]`
 Unlock all UTXOs for specified session.
 
 `-->`
@@ -347,33 +356,8 @@ Unlock all UTXOs for specified session.
 }
 ```
 
-### create_utxo
-Called by the node to get new coinbase UTXO.
-
-`-->`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 7,
-	"method":"create_utxo", 
-	"params":
-	{
-		"value" : "80", 
-		"type" : "coinbase"
-	}
-}
-```
-
-`<--`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 7,
-	"result":"ok"
-}
-```
 ### tx_list
-Get all the transactions with specified `id/status/...`.
+Get all the transactions with specified `status/height...`.
 
 `-->`
 ```json
@@ -383,7 +367,11 @@ Get all the transactions with specified `id/status/...`.
 	"method":"tx_list",
 	"params":
 	{
-		"filter" : {"status":4}
+		"filter" : 
+		{
+			"status":4,
+			"height":1055,
+		}
 	}
 }
 ```
@@ -394,25 +382,29 @@ Get all the transactions with specified `id/status/...`.
 	"id": 8,
 	"result":
 	[
-		{
-			"txId" : "1234",
-			"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-			"value" : "56.3",
-			"metadata" : "<meta>custom data defined before</meta>",
-			"state" : 1		
+		{ 
+			"txId" : "10c4b760c842433cb58339a0fafef3db",
+			"comment": "",
+			"fee": 0,
+			"kernel": "0000000000000000000000000000000000000000000000000000000000000000",
+			"receiver": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+			"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
+			"status": 4,
+			"value": 12342342,
+			"height" : 1055
 		},
-		{
-			"txId" : "1234",
-			"addr" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
-			"value" : "56.3",
-			"metadata" : "<meta>custom data defined before</meta>",
-			"state" : 1		
-		},
+		{ 
+			"txId" : "10c4b760c842433cb58339a0fafef3db",
+			"comment": "",
+			"fee": 0,
+			"kernel": "0000000000000000000000000000000000000000000000000000000000000000",
+			"receiver": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
+			"sender": "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
+			"status": 4,
+			"value": 12342342,
+			"height" : 1055
+		}
 	]
 }
 ```
-`state` can be:
-- `received(0)` - transaction request is received.
-- `failed(1)` - transaction request is failed.
-- `completed(2)` - transaction request is completed.
-- `confirmed(3)` - transaction request is confirmed.
+Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
