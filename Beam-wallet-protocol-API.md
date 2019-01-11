@@ -277,7 +277,6 @@ Get current wallet status, height/hash/available/...
 	}
 }
 ```
-`type` can be `fees`, `mine`, `norm`, `chng`, `...`
 ***
 
 ### get_utxo
