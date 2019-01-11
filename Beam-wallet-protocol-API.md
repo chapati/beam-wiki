@@ -1,6 +1,7 @@
 
 
 
+
 # Beam wallet protocol API (draft)
 
 Wallet API will have the same structure as Node API.
@@ -108,7 +109,7 @@ where `lifetime` is expiration time in hours (`lifetime(0)` will never expired) 
 ***
 
 ### validate_address
-Just base check, validates if the address isn't garbage and belongs our elliptic curve.
+Just base check, validates if the address isn't garbage and belongs our elliptic curve. Also returns `is_mine == true` if address is found in the wallet DB.
 
 `-->`
 ```json
@@ -128,7 +129,11 @@ Just base check, validates if the address isn't garbage and belongs our elliptic
 {
 	"jsonrpc":"2.0", 
 	"id": 1,
-	"result" : true
+	"result" : 
+	{
+		"is_valid" : true,
+		"is_mine" : false,
+	}
 }
 ```
 ***
