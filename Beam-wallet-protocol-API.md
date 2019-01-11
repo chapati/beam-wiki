@@ -2,6 +2,7 @@
 
 
 
+
 # Beam wallet protocol API (draft)
 
 Wallet API will have the same structure as Node API.
@@ -149,7 +150,6 @@ Sends transactions with specific valueand session to a given address.
 	"method":"send", 
 	"params":
 	{
-		"session" : 123,
 		"value" : 12342342,
 		"fee" : 2,
 		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
@@ -228,7 +228,6 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 	"method":"split", 
 	"params":
 	{
-		"session" : 123,
 		"coins" : [11, 12, 13, 50000000],
 		"fee" : 3
 	}
@@ -269,6 +268,7 @@ Get current wallet status, height/hash/available/...
 	{
 	    "current_height" : 1055,
 	    "current_state_hash" : "f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2",
+	    "prev_state_hash" : "bd39333a66a8b7cb3804b5978d42312c841dbfa03a1c31fc2f0627eeed6e43f2",
 	    "available": 100500,
 	    "receiving": 123,
 	    "sending": 0,
