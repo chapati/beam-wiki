@@ -147,7 +147,7 @@ Sends transactions with specific valueand session to a given address.
 {
 	"jsonrpc":"2.0", 
 	"id": 2,
-	"method":"send", 
+	"method":"tx_send", 
 	"params":
 	{
 		"value" : 12342342,
