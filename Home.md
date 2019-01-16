@@ -2,7 +2,7 @@
 
 The information in this Wiki is outdated and is kept for historical reference only.
 
-Updated documentation is located here: https://beam-docs.readthedocs.io/en/latest/
+Updated documentation is located here: https://documentation.beam.mw
 
 # Beam is currently in Mainnet
 
@@ -15,7 +15,7 @@ For effective investigation please attach the following items for every issue:
 
 # User Guides 
 
-https://beam-docs.readthedocs.io/en/latest/
+https://documentation.beam.mw
 
 # Specifications
 
