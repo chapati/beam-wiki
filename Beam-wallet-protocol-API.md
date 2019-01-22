@@ -1,9 +1,4 @@
-
-
-
-
-
-# Beam wallet protocol API (draft)
+# Beam wallet protocol API (BETA)
 
 Wallet API will have the same structure as Node API.
 
