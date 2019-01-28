@@ -135,7 +135,7 @@ Just base check, validates if the address isn't garbage and belongs our elliptic
 ***
 
 ### tx_send
-Sends transactions with specific valueand session to a given address.
+Sends transactions with specific value to a given address.
 
 `-->`
 ```json
@@ -147,11 +147,13 @@ Sends transactions with specific valueand session to a given address.
 	{
 		"value" : 12342342,
 		"fee" : 2,
+		"from" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
 		"address" : "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67",
 		"comment" : "thank you!"
 	}
 }
 ```
+`from` address can be ommited, new own address will be generated and registered in this case.
 
 `fee` and `comment` can be omitted.
 
