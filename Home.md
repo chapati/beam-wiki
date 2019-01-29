@@ -33,6 +33,7 @@ https://documentation.beam.mw
 * [Secure Bulletin Board System (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
 * [Transaction creation protocol](https://github.com/BeamMW/beam/wiki/Transaction-creation-protocol)
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
+   * [Payment Confirmation](https://github.com/BeamMW/beam/wiki/Payment-confirmation-(proof))
 * [Supported GPU cards for mining (NVIDIA)](https://github.com/BeamMW/beam/wiki/Supported-GPU-cards-for-mining-(NVIDIA))
 
 # APIs
