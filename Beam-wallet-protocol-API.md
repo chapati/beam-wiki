@@ -222,7 +222,7 @@ Let's say you need to do a payout to a 1000 people, each with different amount. 
 {
 	"jsonrpc":"2.0", 
 	"id": 5,
-	"method":"split", 
+	"method":"tx_split", 
 	"params":
 	{
 		"coins" : [11, 12, 13, 50000000],
