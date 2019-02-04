@@ -271,6 +271,7 @@ Get current wallet status, height/hash/available/...
 	    "sending": 0,
 	    "maturing": 50,
 	    "locked": 30,
+            "difficulty": 2.93914,
 	}
 }
 ```
