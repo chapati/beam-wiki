@@ -83,6 +83,7 @@ API will include the following methods:
 
 ### create_address
 Creates new receiver address.
+
 `-->`
 ```json
 {
