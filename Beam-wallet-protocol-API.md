@@ -1,8 +1,7 @@
+
 # Beam wallet protocol API (BETA)
 
-Wallet API will have the same structure as Node API.
-
-Wallet will have online connection to the node.
+Wallet API has the same structure as Node Stratum API protocol (JSON RPC 2.0 over TCP connection) and should have an online connection to the node. However, it can work over HTTP if you will use `--api_use_http=1` option, send POST requests to `http://x.x.x.x:port/api/wallet` in this case.
 
 ## How to use
 
@@ -15,6 +14,7 @@ Wallet API options:
   -n [ --node_addr ] arg         address of node
   --wallet_path arg (=wallet.db) path to wallet file
   --pass arg                     password for the wallet
+  --api_use_http arg (=0)        use JSON RPC over HTTP
 ```
 
 `./wallet-api --node_addr=172.104.249.212:8101 --pass=123` for example.
@@ -58,6 +58,12 @@ client.on('close', function() {
 });
 ```
 
+### Curl POST example
+If you use JSONRPC over HTTP you can do POST requests using CURL.
+
+Here is an example to get current *wallet status*.
+
+`curl -d '{"jsonrpc":"2.0","id":1,"method":"wallet_status"}' -H "Content-Type: application/json" -X POST http://x.x.x.x:port/api/wallet`
 
 ## API
 
@@ -77,7 +83,7 @@ API will include the following methods:
 
 ### create_address
 Creates new receiver address.
-
+`GET http://x.x.x.x:port/api/wallet`
 `-->`
 ```json
 {
