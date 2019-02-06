@@ -83,7 +83,6 @@ API will include the following methods:
 
 ### create_address
 Creates new receiver address.
-`GET http://x.x.x.x:port/api/wallet`
 `-->`
 ```json
 {
