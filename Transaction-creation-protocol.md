@@ -26,7 +26,7 @@ In the following example, a _Sender_ makes a payment to a _Receiver_.
 * The _Sender_ selects input UTXO which allow paying _amount + fee_.
   * If the sum of inputs is greater than _amount + fee_, _Sender_ also creates output UTXO for the change. 
   * The _Sender_ creates overall blinding excess value `blindingExcess_S` and `offset_S`
-* The _Receiver_ creates output for a given amount and calculates blinding excess `blindingExcess_R` and `offset_R`
+* The _Receiver_ creates outputs for a given amount and calculates blinding excess `blindingExcess_R` and `offset_R`
 * Both parties generate nonces `nonce_S` and `nonce_R` respectively.
 * Both parties send each other public forms of excesses:
   * `publicNonce_S = nonce_S*G` and `publicNonce_R = nonce_R*G` – public nonces
@@ -71,22 +71,18 @@ SetTxParameter
         {TxParameterID::MinHeight, minHeight}, 
         {TxParameterID::MaxHeight, maxHeight}, 
         {TxParameterID::IsSender, false}, // flag to distinguish the sender from the receiver 
-        {TxParameterID::PeerInputs, inputs}, 
-        {TxParameterID::PeerOutputs, outputs},
+        {TxParameterID::PeerProtoVersion, protocolVersion}, // current version is 1
         {TxParameterID::PeerPublicExcess, publicExcess}, 
-        {TxParameterID::PeerPublicNonce, publicNonce},
-        {TxParameterID::PeerOffset, offset}
+        {TxParameterID::PeerPublicNonce, publicNonce}
     ]
 }
 ```
 
 * `minHeight` - if the height of the blockchain is less than the specified value, the transaction will not be taken into account
 * `maxHeight` - if the height of the blockchain is greater than the specified then the node will reject the created transaction.
-* `inputs` - vector of inputs (commitments) chosen by the sender.
-* `outputs` - vector of change outputs, created by the sender.
+* `protocolVersion` - version of wallet-to-wallet protocol
 * `publicExcess` - the public form of the sender’s excess calculated from blinding factors of inputs and change output.
 * `publicNonce` - sender generates a secret nonce, this is its public value.
-* `offset` - offset value, randomly taken part of change output blinding factor.
 
 ### Wallet B confirms invitation.
 Wallet B creates an output for the received amount and generates a nonce to sign the transaction.
@@ -98,33 +94,25 @@ SetTxParameter
     m_TxID: 651798, // the ID set by the  sender.
     m_Type: TxType::Simple,
     [
+        {TxParameterID::PeerProtoVersion, protocolVersion}
         {TxParameterID::PeerPublicExcess, peerPublicExcess},
         {TxParameterID::PeerSignature, receiversPartialSignature},
-        {TxParameterID::PeerPublicNonce, publicNonce}
+        {TxParameterID::PeerPublicNonce, publicNonce},
+        {TxParameterID::PeerOutputs, outputs},
+        {TxParameterID::PeerOffset, offset}
     ]
 }
 ```
+* `protocolVersion` - version of wallet-to-wallet protocol
 * `peerPublicExcess` - receiver’s public excess, calculated from the output’s blinding factors.
 * `receiversPartialSignature` - receiver’s part of Schnorr multi-signature.
 * `publicNonce` - the public form of a nonce for signature.
+* `outputs` - vector of outputs, created by the receiver.
+* `offset` - offset value, randomly taken part of outputs blinding factor.
 
 ### Wallet A confirms the transaction. 
-If the receiver’s signature is valid, it calculates its part of the signature
-
-```javascript
-SetTxParameter 
-{
-    m_From: XXXXXX // response address set by wallet A.     m_TxID: 651798, // the ID set by the sender.
-
-    m_Type: TxType::Simple,
-    [
-        {TxParameterID::PeerSignature, sendersPartialSignature}
-    ]
-}
-```
-* `sendersPartialSignature` - the computed signature of the sender 
-
-Now Wallet B has all required data to create the transaction and broadcast it to a node.
+If the receiver’s signature is valid, sender calculates its part of the signature.
+Now Wallet A has all required data to create the transaction and broadcast it to a node.
 
 ### Cancellation or error
 
@@ -141,3 +129,7 @@ SetTxParameter
 }
 ```
 * `reason` - 32 bit code of failure reason
+
+Note: Cancellation is possible only in specific moments of this flow. Receiver can cancel transaction only during invitation, i.e. after receiver has accepted invitation and sent his data to the sender, he has no guaranties that transactions will not be written into the blockchain. Sender can interrupt transaction only before he sent transaction to the node.
+
+
