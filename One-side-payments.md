@@ -52,7 +52,7 @@ In addition the sender now has an ability to prove that the payment was made by 
 
 This is important to allow multiple payments, as well as payments in terms of several instances of predefined values.
 
-# Additional nodes and caveats
+# Additional notes and caveats
 
 ## Potential problem with transaction replaying
 
