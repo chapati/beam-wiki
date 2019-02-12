@@ -1,4 +1,5 @@
 
+
 # Beam wallet protocol API (BETA)
 
 Wallet API has the same structure as Node Stratum API protocol (JSON RPC 2.0 over TCP connection) and should have an online connection to the node. However, it can work over HTTP if you will use `--api_use_http=1` option, send POST requests to `http://x.x.x.x:port/api/wallet` in this case.
@@ -286,12 +287,23 @@ Get current wallet status, height/hash/available/...
 ### get_utxo
 Get list of all unlocked UTXOs.
 
+To do a pagination use `count/skip` parameters:
+
+`count` - number of UTXO to get, all the UTXO will be returned by default.
+
+`skip` - number of UTXO to skip, default is `0`.
+
 `-->`
 ```json
 {
 	"jsonrpc":"2.0", 
 	"id": 6,
-	"method":"get_utxo"
+	"method":"get_utxo",
+	"params" :
+	{
+		"count" : 10,
+		"skip" : 0
+	}
 }
 ```
 
@@ -385,6 +397,12 @@ Unlock all UTXOs for specified session.
 ### tx_list
 Get all the transactions with specified `status/height...`.
 
+To do a pagination use `count/skip` parameters:
+
+`count` - number of transactions to get, all the transactions will be returned by default.
+
+`skip` - number of transactions to skip, default is `0`.
+
 `-->`
 ```json
 {
@@ -397,7 +415,9 @@ Get all the transactions with specified `status/height...`.
 		{
 			"status":4,
 			"height":1055,
-		}
+		},
+		"skip" : 0,
+		"count" : 10
 	}
 }
 ```
