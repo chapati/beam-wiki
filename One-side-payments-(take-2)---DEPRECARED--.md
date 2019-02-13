@@ -1,3 +1,9 @@
+# -- DEPRECATED --
+
+***
+
+
+
 In MW transactions are built interactively, means sender and receiver must collaborate to build a transaction. Here we'll describe a scheme where the sender can pay the receiver without the latter being involved during the payment.
 
 Previously we described such a scheme that allowed one-side payments, which demanded our extension to MW which we called _kernel fusion_. The idea was that the receiver prepares in advance its UTXO + kernel that compensates for its blinding factor. Then in order to pay the sender creates a transaction with this UTXO appended, and another kernel _fused_ with that given by the receiver. The drawback of this scheme is that it was possible to transfer fixed values only (that corresponded to the prepared UTXOs).
