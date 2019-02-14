@@ -16,7 +16,7 @@ Node explorer options:
 ```
 
 `./explorer-node.exe --peer eu-node01.mainnet.beam.mw:8100 --api_port=8080` for example.  
-It may take some time (some hours) on first start to load all the info from chain.
+It may take some time (a few hours) on the first start to load all the info from chain.
 
 ## API
 
