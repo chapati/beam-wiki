@@ -1,7 +1,7 @@
-CRITICAL VULNERABILITY IN BEAM WALLET 
-
-9.1.2019 20:20 GMT 
-
+<details>
+<summary>
+<i>info about CRITICAL VULNERABILITY IN BEAM WALLET 9.1.2019 20:20 GMT </i>
+</summary>
 Critical Vulnerability was found in Beam Wallet today.
 
 Vulnerability was discovered by Beam Dev Team and not reported anywhere else.
@@ -35,6 +35,14 @@ Make sure the SHA256 of the archive matches with the one published on the websit
 
 
 Details for the vulnerability and the CVE will be published within a week to avoid exploits.
+
+</details>
+
+
+
+
+
+
 
 
 
