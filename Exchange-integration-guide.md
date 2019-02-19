@@ -2,19 +2,25 @@
 
 ## Getting binaries
 First of all, you should decide on which network you want to play with Beam:
-- `mainnet` - it's the latest released version and you can get binaries from the official website https://www.beam.mw/downloads, from Github Releases https://github.com/BeamMW/beam/releases or build yourself from the sources ([mainnet branch](https://github.com/BeamMW/beam/tree/mainnet)).
-- `testnet` - download from Github Releases https://github.com/BeamMW/beam/releases or build from the [testnet branch](https://github.com/BeamMW/beam/tree/testnet).
+- `mainnet` - it's the latest released version and you can get binaries from the [official website](https://www.beam.mw/downloads), from [Github Releases](https://github.com/BeamMW/beam/releases) or build yourself from the sources ([mainnet branch](https://github.com/BeamMW/beam/tree/mainnet)).
+- `testnet` - download from [Github Releases](https://github.com/BeamMW/beam/releases) or build from the [testnet branch](https://github.com/BeamMW/beam/tree/testnet).
 - `master` - here you can test the latest changes we are working on, build it from the [master branch](https://github.com/BeamMW/beam/tree/master).
 
-Here are detailed instructions on how to build project for *Windows*, *Linux*, *Mac* platforms https://github.com/BeamMW/beam/wiki/How-to-build.
+Here are [detailed instructions on how to build project](https://github.com/BeamMW/beam/wiki/How-to-build) for *Windows*, *Linux*, *Mac* platforms .
 > Add `-DBEAM_NO_QT_UI_WALLET=On` command line parameter to the Cmake if you need only CLI version of the wallet without UI and QT5 library dependencies.
 
-At the end you will have to get four binaries: `beam-node`, `explorer-node`, `beam-wallet` and `wallet-api`.
+As a result you need 4 binaries: `beam-node`, `explorer-node`, `beam-wallet` and `wallet-api`.
  
 ## Initializing Wallet
-To create a new wallet run the following command:  
+
+To create a new wallet run the following command: 
+ 
 `./beam-wallet init`  
-and `wallet.db` will be created in the working folder, as output you will get something like
+
+and `wallet.db` will be created in the working folder.
+
+Output exmample for `init` operation:
+
 ```
 I 2019-02-19.15:28:55.500 Beam Wallet 1.2.4392 (master)
 I 2019-02-19.15:28:55.501 Rules signature: 7c360d0c2ee92d9e
@@ -40,6 +46,7 @@ I 2019-02-19.15:29:01.971 New address generated:
 
 I 2019-02-19.15:29:01.971 comment = default
 ```
+
 Once wallet is initialised, you have to export your *Owner Key* (it will be needed in the future to start own node).
 ```
 $ ./beam-wallet export_owner_key
