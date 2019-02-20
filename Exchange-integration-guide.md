@@ -46,6 +46,9 @@ I 2019-02-19.15:29:01.971 New address generated:
 
 I 2019-02-19.15:29:01.971 comment = default
 ```
+You can also restore wallet with your `seed_phrase` if you've already had it.
+
+`./beam-wallet restore --seed_phrase=<semicolon separated list of 12 seed phrase words>;`
 
 Once wallet is initialised, you have to export your *Owner Key* (it will be needed in the future to start own node).
 <details>
