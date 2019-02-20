@@ -48,6 +48,15 @@ I 2019-02-19.15:29:01.971 comment = default
 ```
 
 Once wallet is initialised, you have to export your *Owner Key* (it will be needed in the future to start own node).
+<details>
+<summary>
+More info about `owner key`
+</summary>
+The purpose of the `owner key` is to allow all nodes mining for you to be aware of all mining rewards mined by other nodes so that you would only need to connect to one node to collect all the rewards into your wallet. While in most other cryptocurrencies this is done by simply mining to a single address you control, in Mimblewimble it is not as simple since there are no addresses and the mining rewards should be coded with unique blinding factors which are deterministically derived from the `master key`, and then tagged by the single `owner key`.
+</details>
+
+Output exmample for `export_owner_key` operation:
+
 ```
 $ ./beam-wallet export_owner_key
 I 2019-02-19.15:32:16.217 Beam Wallet 1.2.4392 (master)
@@ -56,11 +65,20 @@ I 2019-02-19.15:32:16.219 starting a wallet...
 Enter password: ***
 Owner Viewer key: +SevBZ++xL1wEM+yyGbMI+ZElHahudX8mh6Hu/atJrdtzAOD2zpeb2LPIqQcnvry3JUQFBa9gTAHT98RMQMdcggr+LX0oqdGsVIx3KRkTxyvRdKBnw8lz9uAmMx0P2TNlk30E+M5MCnX7Ngp
 ```
+Owner Key should be kept secret. Owner Key does not allow to spend coins, however it will allow to see all coins mined for you by all miners that use this Owner Кey.
 
 ## Starting a Node
 Run the node with your _Owner Key_ and make sure it has completed the synchronization with the network:  
+
 `./beam-node.exe --peer=eu-node01.mainnet.beam.mw:8100 --key_owner=XPWoJ/ViEO1whRcYC1z/nylDH1C2lqLxpMYU0/AbqP67XI4sgYDkUIvJfUpMFjwdPYNz2A7PCHWo7c/kHHTZ2EDUNv2BJvQHb1KHZjLNZPFgV2wceHfzvCYIUF3cR9ADfVSBquTxEldipNgp`  
-Please, make sure you pass proper peer address for the current network you chosen before.
+
+>Please, make sure you pass proper peer address for the current network you have chosen before.
+
+<details>
+<summary>
+List of peers
+</summary>
+
 ```
 MASTER peers:
 eu-node01.masternet.beam.mw:8100
@@ -93,19 +111,38 @@ ap-node02.mainnet.beam.mw:8100
 ap-node03.mainnet.beam.mw:8100
 ap-node04.mainnet.beam.mw:8100
 ```
+</details>
+
 
 ## Starting Wallet API
-With API you can check current wallet status/balance, get all you utxo/transactions list, create/verify address and send money.
 
-There are two ways to send JSON RPC commands to the API, using TCP socket or via HTTP calls. With TCP you can hold only one connection, send JSON commands separated with `\n` symbol and receive callbacks from the API, in the one hand it's more flexible but a bit difficult to implement in the other hand. With HTTP you can do POST requests using CURL, for example.  
-So, to start API with HTTP support use the command:  
+With API you can 
+* check current [wallet status (balance)](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#wallet_status)
+* get all you [utxo](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#get_utxo)/[transactions](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_list) list
+* [create](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#create_address)/[verify](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#validate_address) address 
+* [send coins](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_send) and [cancel](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_cancel) transactions
+* make a [split of coins](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_split) - create a specific set of outputs with given set of values
+
+There are two ways to send JSON RPC commands to the API, 
+* using TCP socket 
+* via HTTP calls. 
+
+With TCP you can hold only one connection, send JSON commands separated with `\n` symbol and receive callbacks from the API, in the one hand it's more flexible but a bit difficult to implement in the other hand. 
+With HTTP you can do POST requests using CURL.  
+
+So, to start API with HTTP support use the command: 
+ 
 `./wallet-api --node_addr=x.x.x.x:port --api_use_http=1`  
 where `node_addr` is your node address and port.
 
-Here is detailed wallet API documentation https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API.
+Here is detailed [wallet API documentation](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API).
 
 ## Starting Node Explorer API
+
 With the *Node Explorer API* you can get information about current chain state and blocks using simple GET requests.
-To run explorer use the command:  
-`./explorer-node.exe --peer eu-node01.mainnet.beam.mw:8100 --api_port=8080`  
-Here is detailed explorer API documentation https://github.com/BeamMW/beam/wiki/Beam-Node-Explorer-API
+
+To run explorer use the command: 
+ 
+`./explorer-node.exe --peer eu-node01.mainnet.beam.mw:8100 --api_port=8080`
+  
+Here is detailed [explorer API documentation](https://github.com/BeamMW/beam/wiki/Beam-Node-Explorer-API)
