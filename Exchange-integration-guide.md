@@ -144,5 +144,7 @@ With the *Node Explorer API* you can get information about current chain state a
 To run explorer use the command: 
  
 `./explorer-node.exe --peer eu-node01.mainnet.beam.mw:8100 --api_port=8080`
+
+>Please, make sure you pass proper peer address for the current network you have chosen before.
   
 Here is detailed [explorer API documentation](https://github.com/BeamMW/beam/wiki/Beam-Node-Explorer-API)
