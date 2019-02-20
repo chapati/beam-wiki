@@ -1,3 +1,4 @@
+
 # Exchange integration guide (DRAFT)
 
 ## Getting binaries
@@ -19,7 +20,7 @@ To create a new wallet run the following command:
 
 and `wallet.db` will be created in the working folder.
 
-Output exmample for `init` operation:
+Output example for `init` operation:
 
 ```
 I 2019-02-19.15:28:55.500 Beam Wallet 1.2.4392 (master)
@@ -116,6 +117,8 @@ ap-node04.mainnet.beam.mw:8100
 ```
 </details>
 
+### Starting with mining support
+Beam Node also provides built in support for *Startum API* allowing to connect multiple external mining clients to a single node, [read more...](https://documentation.beam.mw/en/latest/rtd_pages/user_beam_node_guide.html#mining-mode).
 
 ## Starting Wallet API
 
