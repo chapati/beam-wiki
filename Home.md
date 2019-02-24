@@ -1,8 +1,6 @@
 ## IMPORTANT
+Updated **users** documentation is located here: https://documentation.beam.mw
 
-The information in this Wiki is outdated and is kept for historical reference only.
-
-Updated documentation is located here: https://documentation.beam.mw
 
 # Beam is currently in Mainnet
 
