@@ -2,23 +2,21 @@
 # Exchange integration guide (DRAFT)
 
 ## Getting binaries
-First of all, you should decide on which network you want to play with Beam:
-- `mainnet` - it's the latest released version and you can get binaries from the [official website](https://www.beam.mw/downloads), from [Github Releases](https://github.com/BeamMW/beam/releases) or build yourself from the sources ([mainnet branch](https://github.com/BeamMW/beam/tree/mainnet)).
-- `testnet` - download from [Github Releases](https://github.com/BeamMW/beam/releases) or build from the [testnet branch](https://github.com/BeamMW/beam/tree/testnet).
-- `master` - here you can test the latest changes we are working on, build it from the [master branch](https://github.com/BeamMW/beam/tree/master).
+First of all, define the network you'd like to "play" with:
+- `mainnet` - it's the latest released production version, working with real money and you can get binaries from the [official website](https://www.beam.mw/downloads), see [Github Releases](https://github.com/BeamMW/beam/releases) or build yourself from the sources of ([mainnet branch](https://github.com/BeamMW/beam/tree/mainnet)).
+- `testnet` - to check the features will be released soon to production, download from [Github Releases](https://github.com/BeamMW/beam/releases) or build from the [testnet branch](https://github.com/BeamMW/beam/tree/testnet).
+- `master` - to see the latest changes in development build the [master branch](https://github.com/BeamMW/beam/tree/master).
 
-Here are [detailed instructions on how to build project](https://github.com/BeamMW/beam/wiki/How-to-build) for *Windows*, *Linux*, *Mac* platforms .
+Here are [detailed instructions on how to build a project](https://github.com/BeamMW/beam/wiki/How-to-build) for *Windows*, *Linux*, *Mac* platforms .
 > Add `-DBEAM_NO_QT_UI_WALLET=On` command line parameter to the Cmake if you need only CLI version of the wallet without UI and QT5 library dependencies.
 
-As a result you need 4 binaries: `beam-node`, `explorer-node`, `beam-wallet` and `wallet-api`.
+You will need to build 4 binaries: `beam-node`, `explorer-node`, `beam-wallet` and `wallet-api`.
  
 ## Initializing Wallet
 
-To create a new wallet run the following command: 
+To create a new wallet run the following command (`wallet.db` will be created in the working folder): 
  
 `./beam-wallet init`  
-
-and `wallet.db` will be created in the working folder.
 
 Output example for `init` operation:
 
@@ -59,7 +57,7 @@ More info about `owner key`
 The purpose of the `owner key` is to allow all nodes mining for you to be aware of all mining rewards mined by other nodes so that you would only need to connect to one node to collect all the rewards into your wallet. While in most other cryptocurrencies this is done by simply mining to a single address you control, in Mimblewimble it is not as simple since there are no addresses and the mining rewards should be coded with unique blinding factors which are deterministically derived from the `master key`, and then tagged by the single `owner key`.
 </details>
 
-Output exmample for `export_owner_key` operation:
+Output example for `export_owner_key` operation:
 
 ```
 $ ./beam-wallet export_owner_key
@@ -69,9 +67,9 @@ I 2019-02-19.15:32:16.219 starting a wallet...
 Enter password: ***
 Owner Viewer key: +SevBZ++xL1wEM+yyGbMI+ZElHahudX8mh6Hu/atJrdtzAOD2zpeb2LPIqQcnvry3JUQFBa9gTAHT98RMQMdcggr+LX0oqdGsVIx3KRkTxyvRdKBnw8lz9uAmMx0P2TNlk30E+M5MCnX7Ngp
 ```
-Owner Key should be kept secret. Owner Key does not allow to spend coins, however it will allow to see all coins mined for you by all miners that use this Owner Кey.
+_Owner Key_ should be kept secret. _Owner Key_ does not allow to spend coins, however it will allow to see all coins mined for you by all miners that use this _Owner Кey_.
 
-Here you can read about all the `beam-wallet` commands https://documentation.beam.mw/en/latest/rtd_pages/user_cli_wallet_guide.html
+Here you can read about all the `beam-wallet` commands: https://documentation.beam.mw/en/latest/rtd_pages/user_cli_wallet_guide.html
 
 ## Starting a Node
 Run the node with your _Owner Key_ and make sure it has completed the synchronization with the network:  
@@ -119,35 +117,35 @@ ap-node04.mainnet.beam.mw:8100
 ```
 </details>
 
-### Starting with mining support
-Beam Node also provides built in support for *Startum API* allowing to connect multiple external mining clients to a single node, [read more...](https://documentation.beam.mw/en/latest/rtd_pages/user_beam_node_guide.html#mining-mode).
+### Mining support
+Beam Node also provides built-in support for *Stratum API* allowing to connect multiple external mining clients to a single node, [read more...](https://documentation.beam.mw/en/latest/rtd_pages/user_beam_node_guide.html#mining-mode).
 
-## Starting Wallet API
+## Wallet API
 
-With API you can 
-* check current [wallet status (balance)](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#wallet_status)
-* get all you [utxo](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#get_utxo)/[transactions](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_list) list
+With Wallet API you can 
+* check current [wallet status and (balance)](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#wallet_status)
+* get all your [UTXO](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#get_utxo)/[transactions](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_list) list
 * [create](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#create_address)/[verify](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#validate_address) address 
-* [send coins](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_send) and [cancel](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_cancel) transactions
-* make a [split of coins](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_split) - create a specific set of outputs with given set of values
+* [send funds](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_send) and [cancel](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_cancel) transactions
+* make a [split of UTXO](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API#tx_split) - create a specific set of outputs with given set of values
 
 There are two ways to send JSON RPC commands to the API, 
 * using TCP socket 
 * via HTTP calls. 
 
 With TCP you can hold only one connection, send JSON commands separated with `\n` symbol and receive callbacks from the API, in the one hand it's more flexible but a bit difficult to implement in the other hand. 
-With HTTP you can do POST requests using CURL.  
+With HTTP you can do POST requests using `curl` command.  
 
 So, to start API with HTTP support use the command: 
  
 `./wallet-api --node_addr=x.x.x.x:port --api_use_http=1`  
 where `node_addr` is your node address and port.
 
-Here is detailed [wallet API documentation](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API).
+See detailed [wallet API documentation](https://github.com/BeamMW/beam/wiki/Beam-wallet-protocol-API).
 
-## Starting Node Explorer API
+## Node Explorer API
 
-With the *Node Explorer API* you can get information about current chain state and blocks using simple GET requests.
+With this API you can get information about current blockchain state and blocks using simple GET requests.
 
 To run explorer use the command: 
  
@@ -155,4 +153,4 @@ To run explorer use the command:
 
 >Please, make sure you pass proper peer address for the current network you have chosen before.
   
-Here is detailed [explorer API documentation](https://github.com/BeamMW/beam/wiki/Beam-Node-Explorer-API)
+See detailed [explorer API documentation](https://github.com/BeamMW/beam/wiki/Beam-Node-Explorer-API)
