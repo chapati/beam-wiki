@@ -71,6 +71,8 @@ Owner Viewer key: +SevBZ++xL1wEM+yyGbMI+ZElHahudX8mh6Hu/atJrdtzAOD2zpeb2LPIqQcnv
 ```
 Owner Key should be kept secret. Owner Key does not allow to spend coins, however it will allow to see all coins mined for you by all miners that use this Owner Кey.
 
+Here you can read about all the `beam-wallet` commands https://documentation.beam.mw/en/latest/rtd_pages/user_cli_wallet_guide.html
+
 ## Starting a Node
 Run the node with your _Owner Key_ and make sure it has completed the synchronization with the network:  
 
