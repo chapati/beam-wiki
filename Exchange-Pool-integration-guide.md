@@ -1,5 +1,5 @@
 
-# Exchange integration guide 
+# Exchange/Pool integration guide 
 
 ## Getting binaries
 First of all, define the network you'd like to "play" with:
