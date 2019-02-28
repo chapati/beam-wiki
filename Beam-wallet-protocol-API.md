@@ -89,6 +89,12 @@ API will include the following methods:
 - [tx_cancel](#tx_cancel)
 - [wallet_status](#wallet_status)
 - [get_utxo](#get_utxo)
+- [tx_list](#tx_list)
+- [tx_cancel](#tx_cancel)
+- [ip_whitelist](#ip-whitelistening)
+- [use_acl](#user-authorization)
+- [use_tls](tls-encryption)
+
 
 ### create_address
 Creates new receiver address.
