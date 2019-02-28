@@ -1,6 +1,3 @@
-
-
-
 # Beam wallet protocol API (BETA)
 
 Wallet API has the same structure as Node Stratum API protocol (JSON RPC 2.0 over TCP connection) and should have an online connection to the node. However, it can work over HTTP if you will use `--api_use_http=1` option, send POST requests to `http://x.x.x.x:port/api/wallet` in this case.
@@ -10,13 +7,23 @@ Wallet API has the same structure as Node Stratum API protocol (JSON RPC 2.0 ove
 Find `wallet-api` binary in the `wallet` subdirectory, place it near your `wallet.db` file and run with the following arguments:
 
 ```
-Wallet API options:
-  -h [ --help ]                  list of all options
-  -p [ --port ] arg (=10000)     port to start server on
-  -n [ --node_addr ] arg         address of node
-  --wallet_path arg (=wallet.db) path to wallet file
-  --pass arg                     password for the wallet
-  --api_use_http arg (=0)        use JSON RPC over HTTP
+Wallet API general options:
+  -h [ --help ]                     list of all options
+  -p [ --port ] arg (=10000)        port to start server on
+  -n [ --node_addr ] arg            address of node
+  --wallet_path arg (=wallet.db)    path to wallet file
+  --pass arg                        password for the wallet
+  --use_http arg (=0)               use JSON RPC over HTTP
+  --ip_whitelist arg                IP whitelist
+
+User authorization options:
+  --use_acl arg (=0)                use Access Control List (ACL)
+  --acl_path arg (=wallet_api.acl)  path to ACL file
+
+TLS protocol options:
+  --use_tls arg (=0)                use TLS protocol
+  --tls_cert arg (=wallet_api.crt)  path to TLS certificate
+  --tls_key arg (=wallet_api.key)   path to TLS private key
 ```
 
 `./wallet-api --node_addr=172.104.249.212:8101 --pass=123` for example.
@@ -65,23 +72,23 @@ If you use JSONRPC over HTTP you can do POST requests using CURL.
 
 Here is an example to get current *wallet status*.
 
-`curl -d '{"jsonrpc":"2.0","id":1,"method":"wallet_status"}' -H "Content-Type: application/json" -X POST http://x.x.x.x:port/api/wallet`
+```
+curl -d '{"jsonrpc":"2.0","id":1,"method":"wallet_status"}' -H "Content-Type: application/json" -X POST http://x.x.x.x:port/api/wallet
+```
 
 ## API
 
 API will include the following methods:
 
-- [create_address](#create_address) `done`
-- [validate_address](#validate_address) `done`
-- [tx_send](#tx_send) `done without session`
-- [tx_status](#tx_status) `done`
-- [tx_split](#tx_split) `done without session`
-- [tx_list](#tx_list) `done`
-- [tx_cancel](#tx_cancel) `done`
-- [wallet_status](#wallet_status) `done`
-- [get_utxo](#get_utxo) `done`
-- [lock](#lock)
-- [unlock](#unlock)
+- [create_address](#create_address)
+- [validate_address](#validate_address)
+- [tx_send](#tx_send)
+- [tx_status](#tx_status)
+- [tx_split](#tx_split)
+- [tx_list](#tx_list)
+- [tx_cancel](#tx_cancel)
+- [wallet_status](#wallet_status)
+- [get_utxo](#get_utxo)
 
 ### create_address
 Creates new receiver address.
@@ -94,8 +101,7 @@ Creates new receiver address.
 	"method":"create_address", 
 	"params":
 	{
-		"lifetime": 24,
-		"metadata": "string encoded JSON metadata"
+		"lifetime": 24
 	}
 }
 ```
@@ -180,7 +186,7 @@ Returns transaction id or error code.
 ***
 
 ### tx_status
-Checks status of existing transaction. Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`
+Checks status of existing transaction. Status can be `Pending(0)`, `InProgress(1)`, `Cancelled(2)`, `Completed(3)`, `Failed(4)`, `Registering(5)`
 
 `-->`
 ```json
@@ -288,7 +294,7 @@ Get current wallet status, height/hash/available/...
 ### get_utxo
 Get list of all unlocked UTXOs.
 
-To do a pagination use `count/skip` parameters  (will be released with [Bright Boson 2.0](https://github.com/BeamMW/beam/projects/10)):
+To do a pagination use `count/skip` parameters:
 
 `count` - number of UTXO to get, all the UTXO will be returned by default.
 
@@ -330,75 +336,10 @@ To do a pagination use `count/skip` parameters  (will be released with [Bright B
 `type` can be `fees`, `mine`, `norm`, `chng`, `...`
 ***
 
-### lock
-`[not implemented]`
-
-Create session and lock UTXOs with specified IDs.
-
-`-->`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 6,
-	"method":"lock",
-	"params":
-	{
-		"session" : 345,
-		"ids" : [5,6,7,8]
-	}
-}
-```
-
-`<--`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 6,
-	"result":
-	{
-		"session" : 345,
-		"status" : "locked"
-	}
-}
-```
-***
-
-### unlock
-`[not implemented]`
-
-Unlock all UTXOs for specified session.
-
-`-->`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 6,
-	"method":"lock",
-	"params":
-	{
-		"session" : 345
-	}
-}
-```
-
-`<--`
-```json
-{
-	"jsonrpc":"2.0", 
-	"id": 6,
-	"result":
-	{
-		"session" : 345,
-		"status" : "unlocked"
-	}
-}
-```
-***
-
 ### tx_list
 Get all the transactions with specified `status/height...`.
 
-To do a pagination use `count/skip` parameters (will be released with [Bright Boson 2.0](https://github.com/BeamMW/beam/projects/10)):
+To do a pagination use `count/skip` parameters:
 
 `count` - number of transactions to get, all the transactions will be returned by default.
 
@@ -456,7 +397,7 @@ To do a pagination use `count/skip` parameters (will be released with [Bright Bo
 	]
 }
 ```
-Status can be `Pending(0), InProgress(1), Cancelled(2), Completed(3), Failed(4), Registered(5)`.
+Status can be `Pending(0)`, `InProgress(1)`, `Cancelled(2)`, `Completed(3)`, `Failed(4)`, `Registering(5)`.
 
 `height` and `confirmations` will be absent if transaction isn't in chain.
 ***
@@ -485,4 +426,37 @@ Cancels running transaction, return `true` if successfully canceled or error wit
 	"result": true
 }
 ```
-***
+## IP whitelistening
+
+Add `--ip_whitelist=192.168.0.1,192.168.0.2` parameter to enable access to the API by IP address.
+
+## User authorization
+The API methods can have access rights if you enable _Access Control List_ (ACL) in the command line using `--use_acl=1` parameter)
+```
+create_address      - write access
+validate_address    - read access
+tx_send             - write access
+tx_status           - read access
+tx_split            - write access
+tx_cancel           - write access
+get_utxo            - read access
+tx_list             - read access
+wallet_status       - read access
+```
+ACL file should look like a list with the access keys and `read/write` rights:
+```
+472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67 : write
+bd39333a66a8b7cb3804b5978d42312c841dbfa03a1c31fc2f0627eeed6e43f2 : read
+f287176bdd517e9c277778e4c012bf6a3e687dd614fc552a1ed22a3fee7d94f2 : read
+```
+Also, don't forget to send a user `key` in every JSONRPC request to the API now:
+``` json
+{"jsonrpc":"2.0","id":1,"method":"wallet_status","key":"bd39333a66a8b7cb3804b5978d42312c841dbfa03a1c31fc2f0627eeed6e43f2"}
+```
+
+## TLS encryption
+Add `--use_tls=1` to enable TLS encryption. Also, you have to buy the certificates or create self signed certificates on your local machine and pass them using `--tls_cert` and `--tls_key` parameters.
+
+If you are only testing you can download the sample certificate and key files from here:  
+[Certificate  File](https://documentation.beam.mw/en/latest/_downloads/stratum.crt)  
+[Certificate  Private Key  File](https://documentation.beam.mw/en/latest/_downloads/stratum.key)
