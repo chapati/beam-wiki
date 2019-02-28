@@ -91,9 +91,7 @@ API will include the following methods:
 - [get_utxo](#get_utxo)
 - [tx_list](#tx_list)
 - [tx_cancel](#tx_cancel)
-- [ip_whitelist](#ip-whitelistening)
-- [use_acl](#user-authorization)
-- [use_tls](tls-encryption)
+
 
 
 ### create_address
