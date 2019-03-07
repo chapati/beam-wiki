@@ -33,7 +33,7 @@ https://documentation.beam.mw
 * [Wallet application: main entities and their attributes](https://github.com/BeamMW/beam/wiki/Wallet:-main-entities-and-their-attributes)
    * [Payment Confirmation](https://github.com/BeamMW/beam/wiki/Payment-confirmation-(proof))
    * [One side payment](https://github.com/BeamMW/beam/wiki/One-side-payments)
-*  [Exchange and Pools Integration Guide](https://github.com/BeamMW/beam/wiki/Exchange-Pool-integration-guide)
+*  [Exchanges and Pools Integration Guide](https://github.com/BeamMW/beam/wiki/Exchange-Pool-integration-guide)
 
 
 # APIs
