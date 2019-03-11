@@ -25,7 +25,7 @@ https://documentation.beam.mw
   * [Blocks, headers, system states: concept, relevant structures and values](https://github.com/BeamMW/beam/wiki/Blocks,-headers,-system-states:-concept,-relevant-structures-and-values)
   * [System state in-depth](https://github.com/BeamMW/beam/wiki/System-state-in-depth)
   * Node
-    * [Initial synchronization](https://github.com/BeamMW/beam/wiki/Node-initial-synchronization)
+    * [Synchronization and cut-through](https://github.com/BeamMW/beam/wiki/UTXO-set,-horizons-and-cut-through)
 * [Beam Mining](https://github.com/BeamMW/beam/wiki/BEAM-Mining)
   * [Mining Difficulty](https://github.com/BeamMW/beam/wiki/Mining-Difficulty)
 * [Secure Bulletin Board System (SBBS)](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-(SBBS))
