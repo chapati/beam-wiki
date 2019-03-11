@@ -74,6 +74,51 @@ A typical use-case is a node/wallet that was offline for several days/weeks - wi
 
 Another advantage is that in order to support this the target node doesn't need to "work hard", generate a lot of data on-the-fly or prepare in advance (consuming extra storage), which can be exploited by the attacker. With proper data structures generation of sparse blocks can be nearly as fast as retrieving the original blocks.
 
-The price of this versatility is the need to keep the <u>reduced TXOs<u> for reasonably long duration. This is their role. As can be seen, in order to be able to create the sparse block, in particular include all the needed inputs, the target node must keep the information about spent TXOs: their commitment, create and spend heights.
+The price of this versatility is the need to keep the reduced TXOs for reasonably long duration. This is their role. As can be seen, in order to be able to create the sparse block, in particular include all the needed inputs, the target node must keep the information about spent TXOs: their commitment, create and spend heights.
 
-So that the `Lo-Horizon` parameter affects the ability of the node to generate the cut-through data for other nodes. A "selfish" node may set `Lo-Horizon` equal to `Hi-Horizon`, means it won't keep reduced UTXOs at all. Such a node will only be able to provide cut-through info for others from the genesis. But, as, we said, the reduced TXOs are dramatically smaller than full TXOs, so that keeping them for reasonable duration (months) should not affect the storage size significantly.
+So that the `Lo-Horizon` parameter affects the ability of the node to generate the cut-through data for other nodes. A "selfish" node may set `Lo-Horizon` equal to `Hi-Horizon`, means it won't keep reduced TXOs at all. Such a node will only be able to provide cut-through info for others from the genesis. But, as, we said, the reduced TXOs are dramatically smaller than full TXOs, so that keeping them for reasonable duration (months) should not affect the storage size significantly.
+
+## Cut-through verification
+
+After all the sparse blocks are downloaded, the following is verified:
+* For each block:
+    * Kernels are valid. `Heightlock` is in agreement with the block height, Schnorr's signature is valid.
+    * Kernel commitment (MMR root of the kernels of this block) corresponds to the header. This is very important, means all the original transactions are included.
+    * All inputs reference existing UTXOs in the current state (i.e. TXOs that are unspent yet).
+    * All non-reduced outputs have valid bulletproofs.
+    * All inputs and outputs are interpreted, and the UTXO set undergoes appropriate transformation.
+* For each block above or equal `Lo-Height` (in addition to the mentioned):
+    * UTXO set commitment corresponds to the header.
+        * This verification is possible only from `Lo-Height` and above, since below this height there may be some TXOs, info about which was totally omitted.
+        * This verification is not essential to prove the validity of the final state, however it should harden DOS attacks, where the attacker may provide fake inputs and appropriate outputs in later blocks, making this node generate incorrect sparse blocks for others later.
+* In addition, after verifying all individual blocks:
+    * Overall arithmetics. The sum of all outputs minus inputs corresponds to the overall blockchain subsidy for the specified height range.
+    * <u>No reduced UTXOs</u>. The current UTXO set (unspent TXOs) only contains well-formed TXOs with bulletproofs.
+
+# Node configuration and synchronization logic
+
+As we said, the horizons may be set to arbitrary values (as long as `Max-rollback-distance` <= `Hi-Horizon` <= `Lo-Horizon`). But practically we use only the following configurations:
+
+* Archiving node
+    * `Hi-Horizon` is infinite
+    * `Lo-Horizon` is infinite
+    * Always performs a comprehensive synchronization, never deletes history, and can generate any sparse block on request.
+* Standard node
+    * `Hi-Horizon` = `Max-rollback-distance` = 1440
+    * `Lo-Horizon` = 1440 * 180
+    * Keeps the most recent history, plus a half-year backlog in terms of reduced TXOs (very modest size). Supports sparse blocks to other standard nodes, unless they were offline for more than half a year.
+
+## Cut-through mode activation
+
+Cut-through mode is activated automatically when the following criterias are met:
+* Node is not already in the cut-through mode
+* There is a **proven** state with height which is at least current node height + `Hi-Horizon` * 1.5
+    *  _Proven_ means all the headers starting from this one down to the genesis are already downloaded and verified
+
+Once this happens - node enters the cut-through mode. 
+* `Target-Hi-Height` is set to `ProvenTip.Height` - `Hi-Horizon`
+* `Target-Lo-Height` is set to `ProvenTip.Height` - `Lo-Horizon`
+
+Note that once selected the `Target-Lo-Height` can **not** be changed till the end of the synchronization. The `Target-Hi-Height` however can, and will be increased each time the node will see a higher proven tip.
+
+Once all the sparse blocks are downloaded - they are verified (according to the scheme described above). If the verification passes - the node switches to the standard mode of operation. Otherwise all the downloaded sparse blocks are erased, and the process restarts.
