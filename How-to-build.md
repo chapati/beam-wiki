@@ -59,7 +59,9 @@ Details for the vulnerability and the CVE will be published within a week to avo
 1. Open project folder in Visual Studio, select your target (`Release-x64` for example, if you downloaded 64bit Boost and OpenSSL) and select `CMake -> Build All`.
 1. Go to `CMake -> Cache -> Open Cache Folder -> beam` (you'll find `beam.exe` in the `beam` subfolder, `beam-wallet.exe` in `ui` subfolder).
 
-# Linux (Ubuntu 14.04)
+# Linux 
+
+## Ubuntu 14.04
 1. Install `gcc7` `boost` `ssl` packages.
 ```
   sudo add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -82,6 +84,21 @@ Details for the vulnerability and the CVE will be published within a week to avo
 4. Add proper QT 5.11 repository depending on your system https://launchpad.net/~beineri (for example, choose `Qt 5.10.1 for /opt Trusty` if you have Ubuntu 14.04), install `sudo apt-get install qt510declarative qt510svg` packages and add `export PATH=/opt/qt511/bin:$PATH`.
 5. Go to Beam project folder and call `cmake -DCMAKE_BUILD_TYPE=Release . && make -j4`.
 6. You'll find _Beam_ binary in `bin` folder, `beam-wallet` in `ui` subfolder.
+
+## Fedora 29
+1. Install dependencies
+```
+sudo dnf install gcc-c++ libstdc++-static boost-devel openssl-devel qt5-devel 
+```
+2. Go to the Beam project folder and start the release build
+```
+cmake -DCMAKE_BUILD_TYPE=Release . && make -j4
+```
+3. You'll find the the `beam-node` binary (node) in the `beam` folder, `beam-wallet` (cli wallet) in the `wallet` folder and `BeamWallet` (GUI wallet) in the `ui` folder.
+
+At the moment step #2 can take a lot of time (a few hours) due to the bug in QT: [QTBUG-27936](https://bugreports.qt.io/browse/QTBUG-27936).
+Use `-DBEAM_NO_QT_UI_WALLET=On` to skip building the UI. 
+
 
 # Mac
 1. Install Brew Package Manager.
