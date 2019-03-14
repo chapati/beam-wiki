@@ -22,7 +22,7 @@ Starting from this version min and max height are set by receiver. If receiver g
 
 - if sender is in sync and receiver is out-of-sync and its known height is far below sender's (more than lifetime of transaction), then transaction will be failed by sender.
 
-- if sender is out-of-sync, but receiver is in sync and its known height is far below sender's, then transaction will be failed by sender.
+- if sender is out-of-sync, but receiver is in sync and its known height is far above sender's, then transaction will be failed by sender.
 
 - if both sender and receiver are out-of-sync and kernel's maximum height is below than current chain height, then transaction will be failed by the node
 
